@@ -1,0 +1,9 @@
+Talia
+Copyright 2026 Twenty First Capital Cyber Security Consultancy L.L.C
+(21st Capital)
+
+This product bundles third-party components under their own licences: the
+Bricolage Grotesque and Figtree fonts (SIL Open Font License 1.1), the native
+libraries built from the forks talia-bdk-ffi (MIT OR Apache-2.0) and
+talia-bitbox-ffi (Apache-2.0), and the npm packages the app ships with. See
+THIRD_PARTY_NOTICES.md for each component and its licence.

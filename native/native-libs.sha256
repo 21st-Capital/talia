@@ -1,0 +1,59 @@
+# SHA-256 of the native libraries that are linked into Talia but are NOT in git
+# (they are built locally by native/build-bitboxffi.sh and
+# native/build-bdkwallet.sh).
+# scripts/ios-archive.sh refuses an App Store / TestFlight archive whose libraries
+# differ from these lines, so the Bitcoin core inside a store build is tied to a
+# commit. native/bitboxffi/lib and native/bdkwallet/lib may hold ONLY the files
+# listed here (they are on the linker's search path), so the simulator
+# libraries the build scripts also write are pinned too.
+# Pinned 2026-10-01 from the libraries App Store build 20 was archived
+# with; the -sim.a lines added 2026-10-02 from the same build of each library.
+# The old engine's removal (decided 2026-11-04) took bdkffi (bdk-ffi 0.30,
+# the old engine) with its record and pins. The bdkwallet record below still
+# names its files in two "# gated" lines: that build's overlap gate judged
+# them, and the record is the build's own (archive-provenance.js
+# RETIRED_NATIVE_LIBS sets them aside).
+#
+# Each library's "# source" line (decided 2026-09-26) names the 21st Capital
+# repo and the full commit its pinned files were built from, and its "# built"
+# lines the digest of every file that build wrote. The build script writes
+# them itself, after building from a clean checkout whose HEAD it found on
+# that repo (scripts/native-sources.js). scripts/ios-archive.sh refuses, with
+# no override, an archive when a line is missing or malformed or names any
+# other repo, when a library's pins are not exactly the files its recorded
+# build wrote, or when a library on disk is not the pinned one; it copies the
+# record into the archive's provenance.
+# After a rebuild: test the libraries on the phone (scripts/ios-device.sh
+# takes the recorded build before it is pinned; an archive never does), then
+# pin them with
+#   node scripts/native-sources.js pin <bitboxffi|bdkwallet>
+# (it pins only the files the recorded build wrote; never edit a digest by
+# hand) and commit the record and the pins TOGETHER. To keep the old libraries
+# instead, put back this file AND the old files.
+# Every pinned file has a byte-identical copy, named <sha256>-<file name>, in
+# a talia-native-libs-<date> release of the private bdk-ffi-fork repo (since
+# 2026-10-22): upload a new pin's copies to a new release, add its tag to
+# COPIES.tags in scripts/native-sources.js, check them with
+#   node scripts/native-sources.js copies
+# and a checkout without the libraries gets them back, checked against these
+# pins and then verified, with
+#   node scripts/native-sources.js restore <bitboxffi|bdkwallet|all>
+# (bdkffi's copies stay in their releases: after reverting the removal
+# commit, restore bdkffi puts its pinned files back)
+
+# source bitboxffi https://github.com/21st-Capital/bitbox-ffi 0174d18bdf00dd5d864ce588775b549692f65b8d
+# built bitboxffi c749d6238fe212339aeaefd539968cd97a0c4a19d44fb3b484dc6372f8df8fa2 native/bitboxffi/lib/libbitboxffi-ios.a
+# built bitboxffi 6ad4da671b89edde51275bf4a8c37d3e3aecbd5722c3d9bd9f7eaa95c9126787 native/bitboxffi/lib/libbitboxffi-sim.a
+c749d6238fe212339aeaefd539968cd97a0c4a19d44fb3b484dc6372f8df8fa2  native/bitboxffi/lib/libbitboxffi-ios.a
+6ad4da671b89edde51275bf4a8c37d3e3aecbd5722c3d9bd9f7eaa95c9126787  native/bitboxffi/lib/libbitboxffi-sim.a
+# source bdkwallet https://github.com/21st-Capital/bdk-ffi-fork 45b8212887c61c8195cf86d5c599966a4c157619
+# built bdkwallet c254d5ee8ee21573c3a7c33e6231e28700add71361265cff8e45f4b26d1c59ce native/bdkwallet/lib/libbdkwallet-ios.a
+# built bdkwallet 8eff887f2c1bd5d2347e12f35d505732043f6a85c074e2baedd472111a2cd6c1 native/bdkwallet/lib/libbdkwallet-sim.a
+# generated bdkwallet a9c80fab71a6cc2fdc9ea9cb8a48ae49ec581e8a428720f7a906f359312390bc native/bdkwallet/BitcoinDevKit.swift
+# generated bdkwallet 1f4c8075f1d8a1733dee1f8c470f88f2b3eb6d10cac25f6192fe18f0b2155c1d native/bdkwallet/ffi/BitcoinDevKitFFI.h
+# generated bdkwallet 620c8b756b715d03e1f8c4e5fb2db88885c860fb949ba6d26ef7a6e93c1cab65 native/bdkwallet/duplicate-symbols.txt
+# xcode bdkwallet 27.2 27B52
+# gated bdkwallet c749d6238fe212339aeaefd539968cd97a0c4a19d44fb3b484dc6372f8df8fa2 native/bitboxffi/lib/libbitboxffi-ios.a
+# gated bdkwallet 6ad4da671b89edde51275bf4a8c37d3e3aecbd5722c3d9bd9f7eaa95c9126787 native/bitboxffi/lib/libbitboxffi-sim.a
+c254d5ee8ee21573c3a7c33e6231e28700add71361265cff8e45f4b26d1c59ce  native/bdkwallet/lib/libbdkwallet-ios.a
+8eff887f2c1bd5d2347e12f35d505732043f6a85c074e2baedd472111a2cd6c1  native/bdkwallet/lib/libbdkwallet-sim.a

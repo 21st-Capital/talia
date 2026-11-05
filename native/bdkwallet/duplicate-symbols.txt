@@ -1,0 +1,15 @@
+# Duplicate symbols the app's link may report (written by native/build-bdkwallet.sh
+# from the fork's symbol-overlap gate, run over EVERY pair of the libraries the app
+# links; never edit by hand). Each line: <slice> <library> <library> <symbol>. The
+# two libraries define the symbol in DIFFERENT objects whose code for it the gate
+# proved identical, so ld's choice of the first copy it loads changes nothing.
+# scripts/native-sources.js link-check refuses any duplicate not listed here for
+# exactly the slice and the pair of libraries it was linked from.
+ios bitboxffi bdkwallet _rustsecp256k1_v0_10_0_context_create
+ios bitboxffi bdkwallet _rustsecp256k1_v0_10_0_context_destroy
+ios bitboxffi bdkwallet _rustsecp256k1_v0_10_0_default_error_callback_fn
+ios bitboxffi bdkwallet _rustsecp256k1_v0_10_0_default_illegal_callback_fn
+sim bitboxffi bdkwallet _rustsecp256k1_v0_10_0_context_create
+sim bitboxffi bdkwallet _rustsecp256k1_v0_10_0_context_destroy
+sim bitboxffi bdkwallet _rustsecp256k1_v0_10_0_default_error_callback_fn
+sim bitboxffi bdkwallet _rustsecp256k1_v0_10_0_default_illegal_callback_fn

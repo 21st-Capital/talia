@@ -1,0 +1,4 @@
+module BitcoinDevKitFFI {
+    header "BitcoinDevKitFFI.h"
+    export *
+}

@@ -1,0 +1,13 @@
+[package]
+name = "liana-bip138-fixture"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Writes an encrypted descriptor backup (.bip138) the way Liana's GUI exports one, for a test fixture."
+
+[dependencies]
+# The library Liana v16.0 writes .bip138 backups with, at the exact version and
+# features v16.0 pins in its workspace Cargo.toml.
+bip138 = { version = "=0.2.0", default-features = false, features = ["miniscript_12", "rand", "base64", "v0", "descriptor_backup"] }
+# The miniscript release Liana v16.0's Cargo.lock resolves.
+miniscript = "=12.3.1"

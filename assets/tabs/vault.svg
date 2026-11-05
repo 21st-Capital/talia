@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <!-- VaultIcon (src/ui/components/VaultIcon.tsx) in black on a transparent ground.
+       The native tab bar draws it as a template image: only the alpha counts,
+       the bar paints the colour. Edit this file and re-render the PNGs
+       (rsvg-convert at 25, 50 and 75 px), never the PNGs themselves. -->
+  <rect x="6" y="6" width="36" height="32" rx="4" stroke="black" stroke-width="3"/>
+  <circle cx="22" cy="22" r="9" stroke="black" stroke-width="3"/>
+  <circle cx="22" cy="22" r="2" fill="black"/>
+  <line x1="22" y1="13" x2="22" y2="17" stroke="black" stroke-width="2.5"/>
+  <line x1="22" y1="27" x2="22" y2="31" stroke="black" stroke-width="2.5"/>
+  <line x1="13" y1="22" x2="17" y2="22" stroke="black" stroke-width="2.5"/>
+  <line x1="27" y1="22" x2="31" y2="22" stroke="black" stroke-width="2.5"/>
+  <line x1="37" y1="17" x2="37" y2="27" stroke="black" stroke-width="3" stroke-linecap="round"/>
+  <rect x="10" y="38" width="7" height="4" fill="black"/>
+  <rect x="31" y="38" width="7" height="4" fill="black"/>
+</svg>

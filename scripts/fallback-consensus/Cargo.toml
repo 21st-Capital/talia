@@ -1,0 +1,19 @@
+# The network's verdict on the fallback vectors (gen.mjs beside this file):
+# libbitcoinconsensus through the bitcoinconsensus crate. A dev tool
+# only; nothing in the app builds it.
+[package]
+name = "fallback-consensus"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[[bin]]
+name = "fallback-consensus"
+path = "check.rs"
+
+[dependencies]
+bitcoinconsensus = "=0.106.0"
+hex = "0.4"
+serde_json = { version = "1", features = ["preserve_order"] }
+
+[workspace]

@@ -1,0 +1,15 @@
+[package]
+name = "liana-wallet-backup-fixture"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Writes a wallet backup (.json) and a labels export (.jsonl) the way Liana's GUI writes them, for test fixtures."
+
+[dependencies]
+# The versions Liana v16.0's Cargo.lock resolves for the types its backup file
+# is made of (bitcoin's Network, Fingerprint and Txid) and for its writer.
+bitcoin = { version = "=0.32.5", features = ["serde"] }
+serde = { version = "=1.0.228", features = ["derive"] }
+serde_json = "=1.0.154"
+# The BIP-329 library Liana v16.0 writes labels with, at the commit it pins.
+bip329 = { git = "https://github.com/wizardsardine/bip329", rev = "77c9d91" }

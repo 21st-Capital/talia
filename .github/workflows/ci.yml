@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Every job reads the repository and writes nothing.
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Typecheck & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test -- --ci
+
+  # Warning only (decided 2026-09-26 and
+  # 2026-10-07). npm audit reads the lockfile alone, so nothing is installed
+  # and no install script runs. This job can never fail the run, so it never
+  # emails anyone: the job is continue-on-error and every command ends in
+  # `|| true`. What npm knows goes to the job summary and one warning line.
+  # Make it blocking only once the audit is clean.
+  audit:
+    name: npm audit (warning only)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: npm audit of the lockfile
+        run: |
+          npm audit --package-lock-only --json > "$RUNNER_TEMP/audit.json" 2> "$RUNNER_TEMP/audit.err" || true
+          node scripts/npm-audit-summary.js "$RUNNER_TEMP/audit.json" >> "$GITHUB_STEP_SUMMARY" || true
+          node scripts/npm-audit-summary.js --annotation "$RUNNER_TEMP/audit.json" || true

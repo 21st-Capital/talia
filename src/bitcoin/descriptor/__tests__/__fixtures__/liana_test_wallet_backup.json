@@ -1,0 +1,63 @@
+{
+  "name": "Liana-ffpaesuq",
+  "alias": "Savings test",
+  "accounts": [
+    {
+      "name": "Liana-ffpaesuq",
+      "descriptor": "tr(tpubD6NzVbkrYhZ4Wu6ZAFhXi5AdQC3pLCzAX6b7Rt48i11CBAwzRWUaUpWC2v1wRL7d2La7U3ZVcxN3bFRAbAjDmoKVtfNDrGoP7PRaM6XEtfJ/<0;1>/*,{multi_a(2,[3442193e/48'/1'/0'/2']tpubDEC8p4skY4i7mNjxt9yF3u7my5T6KtGLcvEDcH5rKA6XVtJN4JV3SsHWoePTqsHNh47WBkQ79r77KsUYc2PAmaqqasBJMvidbxiupZpJexg/<0;1>/*,[bd16bee5/48'/1'/0'/2']tpubDE5D8FnwpqS4CBcArpshds4FyP5GipL6RZCPqd4hyHbT6UCAZotECu3abj2YsvM8d8YQ71pAF32EQPD3D4Dwryu1WkfdMzRTLY5kvEKynNJ/<0;1>/*),and_v(v:pk([41d63b50/48'/1'/0'/2']tpubDEDJXpGEiMSQCdbt9YYHMuWhzK594qCZB8XpzDGhPBDbWAmUPnXnswEJrNsvCD6dNZGCcnNZ9NmUf5KcS2VsunMzEQPn99bVHxqa5AdwWWr/<0;1>/*),older(65535))})#ffpaesuq",
+      "receive_index": 2,
+      "change_index": 1,
+      "timestamp": 1793836800,
+      "keys": {
+        "3442193e": {
+          "key": "3442193e",
+          "alias": "Ledger test"
+        },
+        "41d63b50": {
+          "key": "41d63b50",
+          "alias": "Recovery test"
+        },
+        "bd16bee5": {
+          "key": "bd16bee5",
+          "alias": "BitBox test"
+        }
+      },
+      "labels": [
+        {
+          "type": "tx",
+          "ref": "1111111111111111111111111111111111111111111111111111111111111111",
+          "label": "Salary November"
+        },
+        {
+          "type": "tx",
+          "ref": "2222222222222222222222222222222222222222222222222222222222222222",
+          "label": "Rent"
+        },
+        {
+          "type": "tx",
+          "ref": "3333333333333333333333333333333333333333333333333333333333333333"
+        },
+        {
+          "type": "addr",
+          "ref": "tb1qw508d6qejxtdg4y5r3zarvary0c5xw7kxpjzsx",
+          "label": "Shop address"
+        },
+        {
+          "type": "output",
+          "ref": "1111111111111111111111111111111111111111111111111111111111111111:0",
+          "label": "Salary coin"
+        }
+      ],
+      "chain_tip": {
+        "block_height": 120000,
+        "block_hash": null
+      },
+      "proprietary": {
+        "liana_version": "16.0"
+      }
+    }
+  ],
+  "network": "testnet4",
+  "date": 1793836800,
+  "version": 0
+}

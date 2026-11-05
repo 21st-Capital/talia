@@ -1,0 +1,4 @@
+module bitboxFFI {
+    header "bitboxFFI.h"
+    export *
+}

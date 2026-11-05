@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <!-- the same glow as every page: brand green breathing up from behind the mark -->
+    <radialGradient id="glow" gradientUnits="userSpaceOnUse" cx="512" cy="0" r="800" fx="512" fy="0">
+      <stop offset="0" stop-color="#1B5C45" stop-opacity="1"/>
+      <stop offset="0.45" stop-color="#124A38" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#124A38" stop-opacity="0"/>
+    </radialGradient>
+    <!-- a glass sheen: light catching the top-left of the pane -->
+    <linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1024" y2="1024">
+      <stop offset="0" stop-color="#F4F1E8" stop-opacity="0.14"/>
+      <stop offset="0.5" stop-color="#F4F1E8" stop-opacity="0.03"/>
+      <stop offset="1" stop-color="#F4F1E8" stop-opacity="0"/>
+    </linearGradient>
+    <!-- a faint pane edge just inside the corner mask -->
+    <linearGradient id="edge" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="1024">
+      <stop offset="0" stop-color="#F4F1E8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#F4F1E8" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="#01120F"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <rect width="1024" height="1024" fill="url(#sheen)"/>
+  <rect x="14" y="14" width="996" height="996" rx="226" fill="none" stroke="url(#edge)" stroke-width="6"/>
+  <g transform="translate(0.5 1.2) scale(8.52)" fill="none" stroke="#F4F1E8" stroke-width="10" stroke-linecap="round">
+    <path d="M31 44 h50"/>
+    <path d="M54 22 v56 a17 17 0 1 0 17 -17"/>
+  </g>
+  <circle cx="792.9" cy="376.1" r="51.1" fill="#F2A900"/>
+</svg>

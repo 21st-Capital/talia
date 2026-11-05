@@ -1,0 +1,2026 @@
+{
+ "about": "Golden vectors of the 21C per-key proof contract (decided 2026-09-26). Made ONCE with 21st Capital's key tooling and NEVER regenerated; the same file is copied unchanged into the backend and Talia. Test values only: labelled test keys, made-up seeds, placeholder xpubs.",
+ "attestation_format": "21c-pool-attestation-v2",
+ "proof_format": "21c-key-proof-v1",
+ "attest_path": {
+  "mainnet": "m/44'/0'/99'/0/0",
+  "testnet4": "m/44'/1'/99'/0/0"
+ },
+ "statuses": [
+  "verified",
+  "unpinned",
+  "missing",
+  "invalid"
+ ],
+ "codes": [
+  "PROOF_FORMAT",
+  "PROOF_MANIFEST",
+  "PROOF_PURPOSE",
+  "PROOF_NETWORK",
+  "PROOF_SEED",
+  "PROOF_KEY_SHAPE",
+  "PROOF_ACCOUNT_RANGE",
+  "PROOF_INDEX",
+  "PROOF_PATH",
+  "PROOF_SIGNATURE",
+  "PROOF_WRONG_KEY"
+ ],
+ "check_order": [
+  "proof null -> missing",
+  "key fields -> PROOF_KEY_SHAPE, or PROOF_NETWORK when the origin path is on another chain",
+  "proof object: exactly format, manifest, signature, index, path; the format; the types (manifest and signature strings, index an integer, path a list) -> PROOF_FORMAT",
+  "manifest, strictly v2 -> PROOF_MANIFEST",
+  "purpose -> PROOF_PURPOSE, chain -> PROOF_NETWORK, seed -> PROOF_SEED",
+  "first <= account <= last -> PROOF_ACCOUNT_RANGE",
+  "index == account - first -> PROOF_INDEX",
+  "at most 32 lowercase 64-hex hashes, inclusion under the root (RFC 9162 2.1.3.2) -> PROOF_PATH",
+  "signature recovers a key (base64, 65 bytes, header 27-42, 0 < r,s < n, low S) -> PROOF_SIGNATURE",
+  "no usable pin for (network, purpose, seed): absent, or not a P2PKH address of the network (surrounding spaces trimmed) -> unpinned",
+  "P2PKH address of the compressed recovered key differs from the pin -> PROOF_WRONG_KEY",
+  "otherwise -> verified"
+ ],
+ "signers": {
+  "genuine": {
+   "label": "21c key-proof golden vectors: the genuine attestation key, NOT A REAL KEY",
+   "pubkey": "02e2475ea603b8b3cf32657cac68c2cc470b3bec2a45f3b837f9963ef1a0486ceb",
+   "address_mainnet": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f",
+   "address_testnet": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD"
+  },
+  "attacker": {
+   "label": "21c key-proof golden vectors: an attacker's attestation key, NOT A REAL KEY",
+   "pubkey": "02a7eacb9619a9293adf784ccb3f8817910eb4906d48fc5dd54ef4c417ee5b1be6",
+   "address_mainnet": "1H4XmvXWeCYitzyjDQLxkS5V8qLTmehCXv",
+   "address_testnet": "mwaV4ycVTDyyg7TLvyKLaMHozpwAhfTFYc"
+  }
+ },
+ "trees": [
+  {
+   "name": "size-1, testnet, rescue",
+   "coin": 1,
+   "network": "testnet4",
+   "purpose": "rescue",
+   "seed": "c3d4e5f6",
+   "first": 1000,
+   "last": 1000,
+   "count": 1,
+   "rows": [
+    {
+     "account": 1000,
+     "origin_path": "48'/1'/1000'/2'",
+     "fingerprint": "c3d4e5f6",
+     "xpub": "tpubTestVectorGenuineNotAKeyJFx61L6Yd"
+    }
+   ],
+   "leaves": [
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/1'\naccount 1000\nseed c3d4e5f6\npath 48'/1'/1000'/2'\nxpub tpubTestVectorGenuineNotAKeyJFx61L6Yd",
+     "hash": "cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409"
+    }
+   ],
+   "root": "cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+   "manifest": "21C key pool v2\npurpose rescue\nseed c3d4e5f6\nchain 48'/1'\naccounts 1000-1000\nkeys 1\nroot cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+   "attestation": {
+    "format": "21c-pool-attestation-v2",
+    "manifest": "21C key pool v2\npurpose rescue\nseed c3d4e5f6\nchain 48'/1'\naccounts 1000-1000\nkeys 1\nroot cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+    "path": "m/44'/1'/99'/0/0",
+    "pubkey": "02e2475ea603b8b3cf32657cac68c2cc470b3bec2a45f3b837f9963ef1a0486ceb",
+    "address": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD",
+    "signature": "IGj8L67QYpb4Ap5E18dICDYdY0eNrR5A6/3ImB+ztaWZbt+3cQSww/re9Iz5UYR7H8qhK2OOnwgRrlPlDQuLGjw="
+   },
+   "pins": {
+    "c3d4e5f6": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD"
+   },
+   "proofs": [
+    {
+     "account": 1000,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed c3d4e5f6\nchain 48'/1'\naccounts 1000-1000\nkeys 1\nroot cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+      "signature": "IGj8L67QYpb4Ap5E18dICDYdY0eNrR5A6/3ImB+ztaWZbt+3cQSww/re9Iz5UYR7H8qhK2OOnwgRrlPlDQuLGjw=",
+      "index": 0,
+      "path": []
+     }
+    }
+   ]
+  },
+  {
+   "name": "size-7, mainnet, co-signer",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "seed": "a1b2c3d4",
+   "first": 1000,
+   "last": 1006,
+   "count": 7,
+   "rows": [
+    {
+     "account": 1000,
+     "origin_path": "48'/0'/1000'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJFx58j3zb"
+    },
+    {
+     "account": 1001,
+     "origin_path": "48'/0'/1001'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJGx58j3zb"
+    },
+    {
+     "account": 1002,
+     "origin_path": "48'/0'/1002'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJHx58j3zb"
+    },
+    {
+     "account": 1003,
+     "origin_path": "48'/0'/1003'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb"
+    },
+    {
+     "account": 1004,
+     "origin_path": "48'/0'/1004'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJKx58j3zb"
+    },
+    {
+     "account": 1005,
+     "origin_path": "48'/0'/1005'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJLx58j3zb"
+    },
+    {
+     "account": 1006,
+     "origin_path": "48'/0'/1006'/2'",
+     "fingerprint": "a1b2c3d4",
+     "xpub": "xpubTestVectorGenuineNotAKeyJMx58j3zb"
+    }
+   ],
+   "leaves": [
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1000\nseed a1b2c3d4\npath 48'/0'/1000'/2'\nxpub xpubTestVectorGenuineNotAKeyJFx58j3zb",
+     "hash": "35118fca374f0568378047b6b8e2eae1289b2078d9bf84b5070fcbc51b87ab7a"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1001\nseed a1b2c3d4\npath 48'/0'/1001'/2'\nxpub xpubTestVectorGenuineNotAKeyJGx58j3zb",
+     "hash": "e11dea0ea74ed8fbc5078d6cfa2c060f4e4af4654891916b4d2df246d8c923c8"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1002\nseed a1b2c3d4\npath 48'/0'/1002'/2'\nxpub xpubTestVectorGenuineNotAKeyJHx58j3zb",
+     "hash": "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1003\nseed a1b2c3d4\npath 48'/0'/1003'/2'\nxpub xpubTestVectorGenuineNotAKeyJJx58j3zb",
+     "hash": "87a97f91a2ba5e3112d1735a0d887c66e107ac27abe3034497146fe759f3c9f2"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1004\nseed a1b2c3d4\npath 48'/0'/1004'/2'\nxpub xpubTestVectorGenuineNotAKeyJKx58j3zb",
+     "hash": "e00848f14dead6bb649a0722f3a1a99d338bcefbc5d1afed33a1b015b714bbb6"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1005\nseed a1b2c3d4\npath 48'/0'/1005'/2'\nxpub xpubTestVectorGenuineNotAKeyJLx58j3zb",
+     "hash": "6480168548f362e75f312f956f21ce4158ccf98d134feb8108f1fb53927b2afc"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose cosigner\nchain 48'/0'\naccount 1006\nseed a1b2c3d4\npath 48'/0'/1006'/2'\nxpub xpubTestVectorGenuineNotAKeyJMx58j3zb",
+     "hash": "d99fcdf2433b465f620020bb1fee8ef985ff5c4369b75673c95c31d719078898"
+    }
+   ],
+   "root": "10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+   "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+   "attestation": {
+    "format": "21c-pool-attestation-v2",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "path": "m/44'/0'/99'/0/0",
+    "pubkey": "02e2475ea603b8b3cf32657cac68c2cc470b3bec2a45f3b837f9963ef1a0486ceb",
+    "address": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680="
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "proofs": [
+    {
+     "account": 1000,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 0,
+      "path": [
+       "e11dea0ea74ed8fbc5078d6cfa2c060f4e4af4654891916b4d2df246d8c923c8",
+       "8b83e87a56102418e5d1c83e5e7170144e5d0de3e42f35edbe562d367d093dbc",
+       "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+      ]
+     }
+    },
+    {
+     "account": 1001,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 1,
+      "path": [
+       "35118fca374f0568378047b6b8e2eae1289b2078d9bf84b5070fcbc51b87ab7a",
+       "8b83e87a56102418e5d1c83e5e7170144e5d0de3e42f35edbe562d367d093dbc",
+       "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+      ]
+     }
+    },
+    {
+     "account": 1002,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 2,
+      "path": [
+       "87a97f91a2ba5e3112d1735a0d887c66e107ac27abe3034497146fe759f3c9f2",
+       "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+       "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+      ]
+     }
+    },
+    {
+     "account": 1003,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 3,
+      "path": [
+       "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+       "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+       "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+      ]
+     }
+    },
+    {
+     "account": 1004,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 4,
+      "path": [
+       "6480168548f362e75f312f956f21ce4158ccf98d134feb8108f1fb53927b2afc",
+       "d99fcdf2433b465f620020bb1fee8ef985ff5c4369b75673c95c31d719078898",
+       "f5e2ba9344d36110e056da281ffe39229fdfa8c55b6ff6795da2ee9e22118486"
+      ]
+     }
+    },
+    {
+     "account": 1005,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 5,
+      "path": [
+       "e00848f14dead6bb649a0722f3a1a99d338bcefbc5d1afed33a1b015b714bbb6",
+       "d99fcdf2433b465f620020bb1fee8ef985ff5c4369b75673c95c31d719078898",
+       "f5e2ba9344d36110e056da281ffe39229fdfa8c55b6ff6795da2ee9e22118486"
+      ]
+     }
+    },
+    {
+     "account": 1006,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+      "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+      "index": 6,
+      "path": [
+       "287007fa9aeecff03c12e729a89a655128faee101bdad16827028cea8a36c72f",
+       "f5e2ba9344d36110e056da281ffe39229fdfa8c55b6ff6795da2ee9e22118486"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "name": "size-8, mainnet, rescue",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "rescue",
+   "seed": "b2c3d4e5",
+   "first": 1000,
+   "last": 1007,
+   "count": 8,
+   "rows": [
+    {
+     "account": 1000,
+     "origin_path": "48'/0'/1000'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJFx5a2aGc"
+    },
+    {
+     "account": 1001,
+     "origin_path": "48'/0'/1001'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJGx5a2aGc"
+    },
+    {
+     "account": 1002,
+     "origin_path": "48'/0'/1002'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJHx5a2aGc"
+    },
+    {
+     "account": 1003,
+     "origin_path": "48'/0'/1003'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJJx5a2aGc"
+    },
+    {
+     "account": 1004,
+     "origin_path": "48'/0'/1004'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJKx5a2aGc"
+    },
+    {
+     "account": 1005,
+     "origin_path": "48'/0'/1005'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJLx5a2aGc"
+    },
+    {
+     "account": 1006,
+     "origin_path": "48'/0'/1006'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJMx5a2aGc"
+    },
+    {
+     "account": 1007,
+     "origin_path": "48'/0'/1007'/2'",
+     "fingerprint": "b2c3d4e5",
+     "xpub": "xpubTestVectorGenuineNotAKeyJNx5a2aGc"
+    }
+   ],
+   "leaves": [
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1000\nseed b2c3d4e5\npath 48'/0'/1000'/2'\nxpub xpubTestVectorGenuineNotAKeyJFx5a2aGc",
+     "hash": "29a79fc07adf04b020532615865e7bfd15819ea83858a99a1f5db62aa6b38074"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1001\nseed b2c3d4e5\npath 48'/0'/1001'/2'\nxpub xpubTestVectorGenuineNotAKeyJGx5a2aGc",
+     "hash": "9ebf6f1d33873edff0e959c26ddf9e6fd1e31cea5775141ae0656bc29b2ad5b3"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1002\nseed b2c3d4e5\npath 48'/0'/1002'/2'\nxpub xpubTestVectorGenuineNotAKeyJHx5a2aGc",
+     "hash": "f48fdca64068ba878676e67c54ad47507dacb5f12e94b234518bb3bbfc0ab092"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1003\nseed b2c3d4e5\npath 48'/0'/1003'/2'\nxpub xpubTestVectorGenuineNotAKeyJJx5a2aGc",
+     "hash": "0ae38a70034770833b6b2034a04a22893a2114000a4a78a419bebd3e48ff4fa7"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1004\nseed b2c3d4e5\npath 48'/0'/1004'/2'\nxpub xpubTestVectorGenuineNotAKeyJKx5a2aGc",
+     "hash": "bada39eafdf61e60c22dfc034d9f9492754bf0069830794e2b0d94c52d9269b2"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1005\nseed b2c3d4e5\npath 48'/0'/1005'/2'\nxpub xpubTestVectorGenuineNotAKeyJLx5a2aGc",
+     "hash": "f09b21d43bab64b19db12607b9b9a08c0e61691d581d1d2722eff5fae5b26ba4"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1006\nseed b2c3d4e5\npath 48'/0'/1006'/2'\nxpub xpubTestVectorGenuineNotAKeyJMx5a2aGc",
+     "hash": "ae1fc7f88b66f55db148f079b4f15cbe0a0c24f4ec2039c79ce0bdab53b1154f"
+    },
+    {
+     "text": "21C pool leaf v2\npurpose rescue\nchain 48'/0'\naccount 1007\nseed b2c3d4e5\npath 48'/0'/1007'/2'\nxpub xpubTestVectorGenuineNotAKeyJNx5a2aGc",
+     "hash": "14ba411a07f76809f3f3216ba8a6d60c79613cf7cec7a65acdbba6ae689c3672"
+    }
+   ],
+   "root": "eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+   "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+   "attestation": {
+    "format": "21c-pool-attestation-v2",
+    "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+    "path": "m/44'/0'/99'/0/0",
+    "pubkey": "02e2475ea603b8b3cf32657cac68c2cc470b3bec2a45f3b837f9963ef1a0486ceb",
+    "address": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f",
+    "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8="
+   },
+   "pins": {
+    "b2c3d4e5": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "proofs": [
+    {
+     "account": 1000,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 0,
+      "path": [
+       "9ebf6f1d33873edff0e959c26ddf9e6fd1e31cea5775141ae0656bc29b2ad5b3",
+       "78ebc95ecae040e19431930532ccf3d1eda5fecfc103ff34f033220233ee843e",
+       "b86967544cf480d430e87c28fd1b645449b3f84e3b2552edddcd39f01123d913"
+      ]
+     }
+    },
+    {
+     "account": 1001,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 1,
+      "path": [
+       "29a79fc07adf04b020532615865e7bfd15819ea83858a99a1f5db62aa6b38074",
+       "78ebc95ecae040e19431930532ccf3d1eda5fecfc103ff34f033220233ee843e",
+       "b86967544cf480d430e87c28fd1b645449b3f84e3b2552edddcd39f01123d913"
+      ]
+     }
+    },
+    {
+     "account": 1002,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 2,
+      "path": [
+       "0ae38a70034770833b6b2034a04a22893a2114000a4a78a419bebd3e48ff4fa7",
+       "b370b3354d7b951d677fb7451f25129c2c508df71a2d1112ae54ac0a2d6fecce",
+       "b86967544cf480d430e87c28fd1b645449b3f84e3b2552edddcd39f01123d913"
+      ]
+     }
+    },
+    {
+     "account": 1003,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 3,
+      "path": [
+       "f48fdca64068ba878676e67c54ad47507dacb5f12e94b234518bb3bbfc0ab092",
+       "b370b3354d7b951d677fb7451f25129c2c508df71a2d1112ae54ac0a2d6fecce",
+       "b86967544cf480d430e87c28fd1b645449b3f84e3b2552edddcd39f01123d913"
+      ]
+     }
+    },
+    {
+     "account": 1004,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 4,
+      "path": [
+       "f09b21d43bab64b19db12607b9b9a08c0e61691d581d1d2722eff5fae5b26ba4",
+       "381338266f68a4a33b68d67b6af3d4512dee6e934d374825d69d5aa72b155a6e",
+       "e4dd69bee8c3850d1f925005af74b61fc1d493d4916530ceb9bed0efc2a18c8a"
+      ]
+     }
+    },
+    {
+     "account": 1005,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 5,
+      "path": [
+       "bada39eafdf61e60c22dfc034d9f9492754bf0069830794e2b0d94c52d9269b2",
+       "381338266f68a4a33b68d67b6af3d4512dee6e934d374825d69d5aa72b155a6e",
+       "e4dd69bee8c3850d1f925005af74b61fc1d493d4916530ceb9bed0efc2a18c8a"
+      ]
+     }
+    },
+    {
+     "account": 1006,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 6,
+      "path": [
+       "14ba411a07f76809f3f3216ba8a6d60c79613cf7cec7a65acdbba6ae689c3672",
+       "2f3baedf7c5d81c58dbcbd20cef1b84730cabf696a722eeb4585dd3dc2d835d1",
+       "e4dd69bee8c3850d1f925005af74b61fc1d493d4916530ceb9bed0efc2a18c8a"
+      ]
+     }
+    },
+    {
+     "account": 1007,
+     "proof": {
+      "format": "21c-key-proof-v1",
+      "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+      "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+      "index": 7,
+      "path": [
+       "ae1fc7f88b66f55db148f079b4f15cbe0a0c24f4ec2039c79ce0bdab53b1154f",
+       "2f3baedf7c5d81c58dbcbd20cef1b84730cabf696a722eeb4585dd3dc2d835d1",
+       "e4dd69bee8c3850d1f925005af74b61fc1d493d4916530ceb9bed0efc2a18c8a"
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "cases": [
+  {
+   "name": "verified: mainnet co-signer key",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: the last key of a tree of 7 (its node moved up a level)",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1006'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJMx58j3zb",
+    "account": 1006
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 6,
+    "path": [
+     "287007fa9aeecff03c12e729a89a655128faee101bdad16827028cea8a36c72f",
+     "f5e2ba9344d36110e056da281ffe39229fdfa8c55b6ff6795da2ee9e22118486"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: tree of 8, rescue",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "rescue",
+   "key": {
+    "fingerprint": "b2c3d4e5",
+    "origin_path": "48'/0'/1005'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJLx5a2aGc",
+    "account": 1005
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+    "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+    "index": 5,
+    "path": [
+     "bada39eafdf61e60c22dfc034d9f9492754bf0069830794e2b0d94c52d9269b2",
+     "381338266f68a4a33b68d67b6af3d4512dee6e934d374825d69d5aa72b155a6e",
+     "e4dd69bee8c3850d1f925005af74b61fc1d493d4916530ceb9bed0efc2a18c8a"
+    ]
+   },
+   "pins": {
+    "b2c3d4e5": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: tree of 1, testnet, empty audit path",
+   "coin": 1,
+   "network": "testnet4",
+   "purpose": "rescue",
+   "key": {
+    "fingerprint": "c3d4e5f6",
+    "origin_path": "48'/1'/1000'/2'",
+    "xpub": "tpubTestVectorGenuineNotAKeyJFx61L6Yd",
+    "account": 1000
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed c3d4e5f6\nchain 48'/1'\naccounts 1000-1000\nkeys 1\nroot cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+    "signature": "IGj8L67QYpb4Ap5E18dICDYdY0eNrR5A6/3ImB+ztaWZbt+3cQSww/re9Iz5UYR7H8qhK2OOnwgRrlPlDQuLGjw=",
+    "index": 0,
+    "path": []
+   },
+   "pins": {
+    "c3d4e5f6": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: fingerprint in upper case",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "A1B2C3D4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: no account field from the server",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "verified: pin with surrounding spaces",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "  1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f "
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "missing: no proof",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": null,
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "missing",
+    "code": null
+   }
+  },
+  {
+   "name": "missing: no proof, even with a malformed key",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "xpub": "?"
+   },
+   "proof": null,
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "missing",
+    "code": null
+   }
+  },
+  {
+   "name": "unpinned: no pins at all",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {},
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "unpinned: a pin for another seed only",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "d4e5f6a7": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "unpinned: the pin is a testnet address, ignored on mainnet",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD"
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "unpinned: the pin is not an address, ignored",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "not an address"
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "unpinned: the testnet pin is a mainnet address, ignored",
+   "coin": 1,
+   "network": "testnet4",
+   "purpose": "rescue",
+   "key": {
+    "fingerprint": "c3d4e5f6",
+    "origin_path": "48'/1'/1000'/2'",
+    "xpub": "tpubTestVectorGenuineNotAKeyJFx61L6Yd",
+    "account": 1000
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed c3d4e5f6\nchain 48'/1'\naccounts 1000-1000\nkeys 1\nroot cc23b9276f407ac9d9f1e1e496ef493d11a5cc3b274cbdef7f4a84c486f7a409",
+    "signature": "IGj8L67QYpb4Ap5E18dICDYdY0eNrR5A6/3ImB+ztaWZbt+3cQSww/re9Iz5UYR7H8qhK2OOnwgRrlPlDQuLGjw=",
+    "index": 0,
+    "path": []
+   },
+   "pins": {
+    "c3d4e5f6": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "invalid: the server's account is not the origin path's",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1004
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: origin path with m/",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "m/48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: origin path with h for hardened",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48h/0h/1003h/2h",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: origin path with a leading zero",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/01003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: xpub with a space",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb ",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: fingerprint not 8 hex",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "invalid: key origin path on another chain",
+   "coin": 1,
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_NETWORK"
+   }
+  },
+  {
+   "name": "invalid: proof is not an object",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": "proof",
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: empty proof object",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {},
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: unknown proof format",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v0",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: an extra field in the proof",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ],
+    "note": "x"
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: index is a string",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": "3",
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: path is not a list",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": "00"
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "invalid: a v1 manifest and signature",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v1\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nsha256 b6e4ff8d34b4f627add8a9c4fd0e17bb1fb3f386ae0c27b3b675182741687c53",
+    "signature": "IB2cFLoY+WDKLv6lTvEw0lV8J0E6h9klCiARsSSzTTqQODtdWR+uBZefRrOoOldOUE7rX8AuHiS4jbNnLFMkky8=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "invalid: manifest with a trailing newline",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678\n",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "invalid: key count does not match the range",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 8\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "invalid: root in upper case",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10E5D93C4F0B7BFEBC98E5E5BBCF3C8585659F344E99EFC9E37A1505CBADA678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "invalid: a co-signer proof checked for the rescue slot",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "rescue",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PURPOSE"
+   }
+  },
+  {
+   "name": "invalid: a testnet key with a mainnet proof",
+   "coin": 1,
+   "network": "testnet4",
+   "purpose": "rescue",
+   "key": {
+    "fingerprint": "c3d4e5f6",
+    "origin_path": "48'/1'/1000'/2'",
+    "xpub": "tpubTestVectorGenuineNotAKeyJFx61L6Yd",
+    "account": 1000
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed b2c3d4e5\nchain 48'/0'\naccounts 1000-1007\nkeys 8\nroot eaa38f6c2665e697ecbd79cd44f17575c45b3d05c6553b545a89f02c8f0904aa",
+    "signature": "H2VEWG9pPfr+ZCA8pgRKWAGUiB5W0Ovw7HkP9BphMv81fkBtIy1Mli/vbCvU2lqZ9nIHHqC7kRpvuBKPCPbawk8=",
+    "index": 0,
+    "path": [
+     "9ebf6f1d33873edff0e959c26ddf9e6fd1e31cea5775141ae0656bc29b2ad5b3",
+     "78ebc95ecae040e19431930532ccf3d1eda5fecfc103ff34f033220233ee843e",
+     "b86967544cf480d430e87c28fd1b645449b3f84e3b2552edddcd39f01123d913"
+    ]
+   },
+   "pins": {
+    "c3d4e5f6": "n2dbXDCLdFm33CFHFmbB5zS6xTPLE1r9ZD"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_NETWORK"
+   }
+  },
+  {
+   "name": "invalid: a key of another seed",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "d4e5f6a7",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SEED"
+   }
+  },
+  {
+   "name": "invalid: an account outside the signed range",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1010'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJRx58j3zb",
+    "account": 1010
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_ACCOUNT_RANGE"
+   }
+  },
+  {
+   "name": "invalid: another account's proof",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1004'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJKx58j3zb",
+    "account": 1004
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_INDEX"
+   }
+  },
+  {
+   "name": "invalid: index changed",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 4,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_INDEX"
+   }
+  },
+  {
+   "name": "invalid: one hash of the audit path changed",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "0235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: audit path one hash short",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: audit path one hash too many",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: audit path of 33 hashes",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: audit path hash in upper case",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3B8426C0A9072B130FEEEFCE1CBACD4E8F15F4B4FF044432D213CF9A2B389AEF",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: the xpub swapped for another",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorSwappedNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "invalid: the same signature with a high S",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "HnHGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1X+koH1PYHs/q/ORUEhFHAmdI468hQEjZYLKB7/Ea6VXQ=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "invalid: signature header 43",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "K3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "invalid: signature of 64 bytes",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "ccaAPd2hcQkrJQIk0Rty6XWjG8IL09V2nL/oA87ZzVcFtfgrCfhMBUDG6vt7rj9k6HXxHl82aeOTMeKQiXvrzQ==",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "invalid: signature not base64",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "not base64!",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "invalid: one bit of the signature changed (recovers another key)",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7688=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_WRONG_KEY"
+   }
+  },
+  {
+   "name": "invalid: a swapped key in a tree the attacker signed",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorAttackerNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 87e10538f2c88933eb9ec5797165801ac085365d2c537f8ca34ca36d63e7e2d3",
+    "signature": "IPAfnSVrsHAnY4PwzK92EZdi34GMQlje0kcjlgkMy1dRMXJ++K96RbUzNj4h8nAxRJY9/BwS/dc8LUoP6Ff/xyU=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1N7eEA7MpEKnG5mfYCcoG5Dn6TndN2Et8f"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_WRONG_KEY"
+   }
+  },
+  {
+   "name": "unpinned: the attacker's tree with no pin is still not verified",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorAttackerNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 87e10538f2c88933eb9ec5797165801ac085365d2c537f8ca34ca36d63e7e2d3",
+    "signature": "IPAfnSVrsHAnY4PwzK92EZdi34GMQlje0kcjlgkMy1dRMXJ++K96RbUzNj4h8nAxRJY9/BwS/dc8LUoP6Ff/xyU=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {},
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "invalid: the genuine proof against a pin of another key",
+   "coin": 0,
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "key": {
+    "fingerprint": "a1b2c3d4",
+    "origin_path": "48'/0'/1003'/2'",
+    "xpub": "xpubTestVectorGenuineNotAKeyJJx58j3zb",
+    "account": 1003
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed a1b2c3d4\nchain 48'/0'\naccounts 1000-1006\nkeys 7\nroot 10e5d93c4f0b7bfebc98e5e5bbcf3c8585659f344e99efc9e37a1505cbada678",
+    "signature": "H3HGgD3doXEJKyUCJNEbcul1oxvCC9PVdpy/6APO2c1XBbX4Kwn4TAVAxur7e64/ZOh18R5fNmnjkzHikIl7680=",
+    "index": 3,
+    "path": [
+     "3b8426c0a9072b130feeefce1cbacd4e8f15f4b4ff044432d213cf9a2b389aef",
+     "8235396cad1acc2e20861554886daa045a965b00c3a84bc52e76e82cf32949dc",
+     "dd46ae73f016ccc8fc2dc2a6d1a4e871b80f1aabec13e48c4b2f1885ecb745f6"
+    ]
+   },
+   "pins": {
+    "a1b2c3d4": "1H4XmvXWeCYitzyjDQLxkS5V8qLTmehCXv"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_WRONG_KEY"
+   }
+  }
+ ]
+}

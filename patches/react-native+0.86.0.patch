@@ -1,0 +1,21 @@
+diff --git a/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec b/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec
+index 58e0039..bede7ae 100644
+--- a/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec
++++ b/node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec
+@@ -92,8 +92,15 @@ Pod::Spec.new do |spec|
+         "require.resolve(\"hermes-compiler\", {paths: [\"#{react_native_path}\"]})", __dir__]).strip
+       )
+ 
++      # Talia: name hermesc relative to the Pods folder, the way
++      # react_native_pods.rb writes REACT_NATIVE_PATH. This podspec's JSON is
++      # what Podfile.lock's SPEC CHECKSUM hashes, so an absolute path made the
++      # lockfile differ in every checkout and scripts/ios-archive.sh refuse it.
++      pods_dir_real = Pathname.new(Pod::Config.instance.sandbox_root.to_s).realpath
++      hermes_compiler_relative = Pathname.new(hermes_compiler_path).realpath.relative_path_from(pods_dir_real)
++
+       spec.user_target_xcconfig = {
+-        'HERMES_CLI_PATH' => "#{hermes_compiler_path}/hermesc/osx-bin/hermesc"
++        'HERMES_CLI_PATH' => File.join("${PODS_ROOT}", hermes_compiler_relative.to_s, "hermesc/osx-bin/hermesc")
+       }
+     end
+ 

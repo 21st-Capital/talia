@@ -1,0 +1,42 @@
+diff --git a/node_modules/react-native-mail/RNMail/RNMail.m b/node_modules/react-native-mail/RNMail/RNMail.m
+index 7c77eac..373ca51 100644
+--- a/node_modules/react-native-mail/RNMail/RNMail.m
++++ b/node_modules/react-native-mail/RNMail/RNMail.m
+@@ -2,6 +2,7 @@
+ #import "RNMail.h"
+ #import <React/RCTConvert.h>
+ #import <React/RCTLog.h>
++#import <React/RCTUtils.h>
+ 
+ @implementation RNMail
+ {
+@@ -149,11 +150,11 @@ + (BOOL)requiresMainQueueSetup
+             }
+         }
+         
+-        UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+-        
+-        while (root.presentedViewController) {
+-            root = root.presentedViewController;
+-        }
++        // Talia patch: React Native's own helper skips a controller that is
++        // still being dismissed (a fading dialog). The bare walk below landed
++        // the composer on exactly that controller, UIKit refused silently and
++        // the callback never fired (found in a phone test, 2026-09-02).
++        UIViewController *root = RCTPresentedViewController();
+         [root presentViewController:mail animated:YES completion:nil];
+     } else {
+         callback(@[@"not_available"]);
+@@ -188,11 +189,7 @@ - (void)mailComposeController:(MFMailComposeViewController *)controller didFinis
+     } else {
+         RCTLogWarn(@"No callback registered for mail: %@", controller.title);
+     }
+-    UIViewController *ctrl = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+-    while (ctrl.presentedViewController && ctrl != controller) {
+-        ctrl = ctrl.presentedViewController;
+-    }
+-    [ctrl dismissViewControllerAnimated:YES completion:nil];
++    [controller dismissViewControllerAnimated:YES completion:nil];
+ }
+ 
+ #pragma mark Private

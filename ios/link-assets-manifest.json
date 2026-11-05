@@ -1,0 +1,41 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/BricolageGrotesque-Bold.ttf",
+      "sha1": "ea5d69e24da79db36506e01789bd1983dded8919"
+    },
+    {
+      "path": "assets/fonts/BricolageGrotesque-ExtraBold.ttf",
+      "sha1": "4ca0afc10e517f9e32a05acfdce52637f767b296"
+    },
+    {
+      "path": "assets/fonts/BricolageGrotesque-Medium.ttf",
+      "sha1": "5852b0779430ded24d4bc3b75a45ed5ed4a05dd6"
+    },
+    {
+      "path": "assets/fonts/BricolageGrotesque-Regular.ttf",
+      "sha1": "39c1a32d13bbde6b9918a06009f921605d4cf6e2"
+    },
+    {
+      "path": "assets/fonts/BricolageGrotesque-SemiBold.ttf",
+      "sha1": "299fddbc5d83a89f329fd2d3c0a0d5099c881e49"
+    },
+    {
+      "path": "assets/fonts/Figtree-Bold.ttf",
+      "sha1": "b9a14d612fe75e5a760dbbc387dce3d2b97df5b2"
+    },
+    {
+      "path": "assets/fonts/Figtree-Medium.ttf",
+      "sha1": "2bf3ecc0d70eac5a4c3bb960ad5bf29b17681d6b"
+    },
+    {
+      "path": "assets/fonts/Figtree-Regular.ttf",
+      "sha1": "c63f9140747d5d98a1825dca595434bde207a376"
+    },
+    {
+      "path": "assets/fonts/Figtree-SemiBold.ttf",
+      "sha1": "214ba3ef2078a3d4bd634cd12ee9058461463110"
+    }
+  ]
+}

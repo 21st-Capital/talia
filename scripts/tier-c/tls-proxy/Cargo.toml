@@ -1,0 +1,15 @@
+# Tier C's TLS front for the regtest Electrum server (BDK upgrade, decided
+# 2026-10-15): the app's real bridge meets a self-signed certificate,
+# and a handshake signed with a key that is not the certificate's. Built and
+# run on the build machine only, by scripts/tier-c/run.py; never part of the app.
+[package]
+name = "talia-tierc-tls-proxy"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+# The same rustls the fork's vendored electrum-client builds against.
+rustls = { version = "=0.23.46", default-features = false, features = ["ring", "std", "tls12"] }
+
+[workspace]

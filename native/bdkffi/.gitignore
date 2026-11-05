@@ -1,0 +1,5 @@
+# The old engine's libraries (bdk-ffi 0.30) and its Android bridge, removed
+# with it (decided 2026-11-04): nothing else lives in this
+# folder. Never committed, and the archive refuses any file left in lib/
+# (delete them in every checkout).
+/lib/

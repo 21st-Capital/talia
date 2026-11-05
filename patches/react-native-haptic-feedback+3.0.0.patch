@@ -1,0 +1,38 @@
+diff --git a/node_modules/react-native-haptic-feedback/ios/RNHapticFeedback/RNHapticFeedback.mm b/node_modules/react-native-haptic-feedback/ios/RNHapticFeedback/RNHapticFeedback.mm
+index a8de79d..3afb41f 100644
+--- a/node_modules/react-native-haptic-feedback/ios/RNHapticFeedback/RNHapticFeedback.mm
++++ b/node_modules/react-native-haptic-feedback/ios/RNHapticFeedback/RNHapticFeedback.mm
+@@ -244,6 +244,17 @@ - (void)playEvents:(NSArray<CHHapticEvent *> *)events
+ {
+     BOOL enableVibrateFallback = [[options objectForKey:@"enableVibrateFallback"] boolValue];
+ #endif
++    // Talia (decided 2026-09-15): "selection" plays UIKit's own selection tick on
++    // every iPhone, the one iOS pickers use. On Core Haptics hardware this
++    // library otherwise plays a 0.2-intensity transient from an engine it
++    // starts on first use, which could not be felt at all on an iPhone 14 Pro.
++    // Talia (decided 2026-10-02): "notificationSuccess" (the Sent page's tick) goes
++    // the same way, to UINotificationFeedbackGenerator, iOS's own success
++    // haptic, instead of the library's faint two-transient pattern.
++    if ([type isEqual:@"selection"] || [type isEqual:@"notificationSuccess"]) {
++        [self playUIKitHaptic:type];
++        return;
++    }
+     if ([CHHapticEngine capabilitiesForHardware].supportsHaptics) {
+         // Best path: Core Haptics — per-type patterns on iPhone 8+ / iPad Pro
+         [self playEvents:[self eventsForType:type]];
+diff --git a/node_modules/react-native-haptic-feedback/package.json b/node_modules/react-native-haptic-feedback/package.json
+index d835aea..3b7b5ef 100644
+--- a/node_modules/react-native-haptic-feedback/package.json
++++ b/node_modules/react-native-haptic-feedback/package.json
+@@ -83,6 +83,11 @@
+     "jsSrcsDir": "./src/codegenSpec",
+     "android": {
+       "javaPackageName": "com.mkuczera.haptic"
++    },
++    "ios": {
++      "modulesProvider": {
++        "RNHapticFeedback": "RNHapticFeedback"
++      }
+     }
+   },
+   "devDependencies": {

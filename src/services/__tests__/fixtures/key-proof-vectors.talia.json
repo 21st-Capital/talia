@@ -1,0 +1,2359 @@
+{
+ "format": "21c-key-proof-vectors-v1",
+ "about": "Golden vectors for the per-key proof of 21C keys (decided 2026-09-26). Talia's own extra set, made ONCE with the v2 code of 21st Capital's key tooling (leaf, tree, manifest, key_proof, and every expectation checked by its check_key_proof), test keys and placeholder xpub strings; the shared set is key-proof-vectors.json. NEVER regenerate: a change of encoding must fail these, not move them. Every key here is a test key; no xpub is real.",
+ "leaf_example": {
+  "row": {
+   "account": 1000,
+   "fingerprint": "c0c0c0c0",
+   "xpub": "xpubTestVectorCosignerKeyJF"
+  },
+  "purpose": "cosigner",
+  "coin": 0,
+  "bytes_hex": "32314320706f6f6c206c6561662076320a707572706f736520636f7369676e65720a636861696e203438272f30270a6163636f756e7420313030300a736565642063306330633063300a70617468203438272f30272f31303030272f32270a78707562207870756254657374566563746f72436f7369676e65724b65794a46",
+  "hash": "4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f"
+ },
+ "merkle_rows": {
+  "seed": "c0c0c0c0",
+  "purpose": "cosigner",
+  "coin": 0,
+  "first": 1000,
+  "xpub": "xpubTestVectorCosignerKey<account in base58 digits>"
+ },
+ "merkle": [
+  {
+   "count": 1,
+   "root": "4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f"
+  },
+  {
+   "count": 2,
+   "root": "5fba3e25f3b6c0edeac101ae396c89837b85394988338abc6a2369b0d7abd309"
+  },
+  {
+   "count": 3,
+   "root": "f206b5bc2c6a0b98fe7c0e33df2022c4ee7f13c088fc6e7c5cf39468b76c15b6"
+  },
+  {
+   "count": 4,
+   "root": "58711a33b9da0fa4372f3d0a35b76d12b71b8f5099f4e313cd8971470f03d03f"
+  },
+  {
+   "count": 5,
+   "root": "1fd3cae9fba005857471c79f948b1e3bcbb4f80d0062623281b65ee891012c0a"
+  },
+  {
+   "count": 6,
+   "root": "1853314b603fa36edb096f0b392ee51ec9c75a7f992969033997eda64d5a5b33"
+  },
+  {
+   "count": 7,
+   "root": "ea697e6571eb0abac8cd67f7c09bea1a85edef549d043358a431104794b034cf"
+  },
+  {
+   "count": 8,
+   "root": "9739f352c4748dcee54f1d127c0a1dcb176fe8d8819c544cb751f5d496e1c834"
+  },
+  {
+   "count": 9,
+   "root": "407adcb0487ae5b1bd5042b02a6affa8a4e4c61d1a0dc7e15ef7a1bca2a1bdfc"
+  },
+  {
+   "count": 10,
+   "root": "3fd5e0d123d32c7bbad133cc03751a8e8e12fc0815f14ff7892c7e19b33ed6f4"
+  },
+  {
+   "count": 11,
+   "root": "5e5e2e57b406637f6649d7bb6d51f02a9af373d56e50bc306d011c2d056fbfe7"
+  },
+  {
+   "count": 12,
+   "root": "9aa08c911503dc6d037ad5019ef8d76ba3ebe4e59ef56f8c41a76fcc3b6da26b"
+  },
+  {
+   "count": 13,
+   "root": "536cdc1225e58832541c59e95c0685febb96d41e889079d76be651147d370e25"
+  },
+  {
+   "count": 14,
+   "root": "6e3e3cb0019510bd5f7470e278c6e10886e287de7a0ba1ad699c7cd90149059e"
+  },
+  {
+   "count": 15,
+   "root": "8183f7866c3548f619f7c6e62b61fd732f9954dce55a474976a28c8b02e1a67b"
+  },
+  {
+   "count": 16,
+   "root": "fe90930183f71168ea37c0d1259afa32572b885e051c86b605a7e8e139f8b46a"
+  },
+  {
+   "count": 17,
+   "root": "eb497dbb4b898b4224921505c776be8f7cfd013e82ab0899d0c4740c1dc2b95e"
+  },
+  {
+   "count": 18,
+   "root": "a65d6dead24ce53157395a3a6cddd67090b7e17b8cfa37b952509476cb6eee58"
+  },
+  {
+   "count": 19,
+   "root": "29c8de8c645f8af7ace67071b232abcc5f1d3aff365be921fdd9545c51dce46b"
+  },
+  {
+   "count": 20,
+   "root": "5e95f5a5595db7820a90d47b1c0f67d6db31d86edc7ad56aa3bdcd1dd2db8e84"
+  },
+  {
+   "count": 21,
+   "root": "3a7e5fbca8ef97fa4f0d1fed579dd445c1e26483eee6220f6ae9c24e6359888b"
+  },
+  {
+   "count": 22,
+   "root": "8be4dc7afb0ccf04e285740afa6ae9d8748fc81dc3b17a3b60ea897f61f0417e"
+  },
+  {
+   "count": 23,
+   "root": "c16a2febdf54f9c85ad2e9fb8fb1a15e32344dee07281231d53a0bed780b0283"
+  },
+  {
+   "count": 24,
+   "root": "074c1529861b5005d61ac63a464db0e482bc7d183cb29ffe1643de47f98e3ce2"
+  },
+  {
+   "count": 25,
+   "root": "b4e9ff228133bab97ab32275c9594ecb333a98f72ce23a317c6133c093ae48f4"
+  },
+  {
+   "count": 26,
+   "root": "bf3e601736693fe92418d21d0c71655cf7662a76e33294aa40b81685b4d5cab7"
+  },
+  {
+   "count": 27,
+   "root": "d23a6c9780f565e229f86d6d6fa06fade2c9597cb2cd8dbb09e298cfa65b8729"
+  },
+  {
+   "count": 28,
+   "root": "e8aea17c9457553d5595644821e5b2160514b675b3c8d0b1b207bec940d855be"
+  },
+  {
+   "count": 29,
+   "root": "424aa1795a2457b53c3dcdb264b25b6eaf6ad2e10439497b74265ab3037ecd7b"
+  },
+  {
+   "count": 30,
+   "root": "edc168b82c082e2493001eec12bd6b4bbaf25bca96b38a862d182709e110ca08"
+  },
+  {
+   "count": 31,
+   "root": "0c51b198f72e339c45aaf7e2d4af04cd6a2257ec45b37cd8c021afd1bd534a6b"
+  },
+  {
+   "count": 32,
+   "root": "756619a367fbf0871a53a4f16af05c3d6046765615c58ab87e7ffa35afbce0dd"
+  },
+  {
+   "count": 33,
+   "root": "837ba33a0fa2d5adf37eea905d026c4eace7a723f43c38cceb637c3b2c3152ca"
+  },
+  {
+   "count": 34,
+   "root": "13b2a2ba2db08316b1b3e5ea726ce0c09f587129c94214581d0ee59878e322c2"
+  },
+  {
+   "count": 35,
+   "root": "47eacd88676e9bc3fb873dacf39afc0640af365a48bd994b9bea28dca276a3c9"
+  },
+  {
+   "count": 36,
+   "root": "93e7b1fe160eb447ba4288e89ad0f1b6a8798f4eab0ec588c46f8c27348d3415"
+  },
+  {
+   "count": 37,
+   "root": "398827866705a4630e8a951c877690225ae0eeb6f70a0901465a5c1233d13d68"
+  },
+  {
+   "count": 38,
+   "root": "2a9450910a96936ef1eebaa864a5cd0e287501559648643eb0bb7c7d79f618b8"
+  },
+  {
+   "count": 39,
+   "root": "3809dbb8e5bf7d289d8d4aad27eff7e00e6ddc1817c5d2e0f5e0a7d8f7ea189a"
+  },
+  {
+   "count": 40,
+   "root": "fcd77f4d8bf89a0526464000a6b0cdafc1b6d30bfa444fdf3e4c556d4eb6b1e3"
+  }
+ ],
+ "pins": {
+  "mainnet": {
+   "cosigner": {
+    "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+   },
+   "rescue": {
+    "5e5e5e5e": "1KvBa7SNMJ7V9VGBCvqJwt6LkvvfjkJcna"
+   }
+  },
+  "testnet4": {
+   "cosigner": {
+    "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+   },
+   "rescue": {}
+  }
+ },
+ "trees": [
+  {
+   "name": "n1",
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "seed": "c0c0c0c0",
+   "first": 1000,
+   "count": 1,
+   "manifest": "21C key pool v2\npurpose cosigner\nseed c0c0c0c0\nchain 48'/0'\naccounts 1000-1000\nkeys 1\nroot 4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+   "root": "4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+   "leaf_hashes": [
+    "4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f"
+   ]
+  },
+  {
+   "name": "n7",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "seed": "5e5e5e5e",
+   "first": 2001,
+   "count": 7,
+   "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+   "root": "97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+   "leaf_hashes": [
+    "e3d7a837edc4b5f7942d948ffa7f97ac9f3a03b2dae59df1ce7be0dd2314f68a",
+    "debb7fd4b7ce7666dae3c6adb87da0040fe24887b6ea263853cd22a5df2129c4",
+    "b5f846f56e194fefba1ca6424191af9dd2f04e5e5cce790038971af9f3ddecaa",
+    "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+    "d4a377d7d729efb975cc43da51bab43c15bb4d7d0689113551e0e05dffe881e9",
+    "018a76c6086b9ec16776749e445a640c21fd38c13ae77af61c907e1533fdba30",
+    "4bd029abc101d902b424732d7315720fd3f3e9282c08afc699ea62ce68d49181"
+   ]
+  },
+  {
+   "name": "n8",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "seed": "c1c1c1c1",
+   "first": 0,
+   "count": 8,
+   "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+   "root": "10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+   "leaf_hashes": [
+    "dc8863b99b9cf04ab97d012c1b1e3e0d0058f6df8d2ade7767ae27b55c4b39c4",
+    "eb5dd2f50479db2f8e5fe74fc8d1767ddf8835f91204f3b54af9c76429f50748",
+    "29490709307547af46005d5376973c80f2bfc2182be2722f45218db1f34935a1",
+    "358cfef44e67ad69da046fb3c9a3912f50a31ffe2b7a1187c144513bec1af2d4",
+    "a4a32dc86c5f4b17447005fe25075f3d635199c480a3bd07ed0547d3225dfeee",
+    "83b0ff5f671de40fdbc53c343ebbe53c3853af61964734dd563cd417c637f421",
+    "f81c855e4337b7d6485ce3b6901db01cab3c7d2b7520521d3dc435a254470444",
+    "77798dd73d11d862a9369f5306686cc6ca09346e842390da54b74b127441e26d"
+   ]
+  }
+ ],
+ "cases": [
+  {
+   "name": "n1: account 1000 proves",
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "account": 1000,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c0c0c0c0",
+    "origin_path": "48'/0'/1000'/2'",
+    "xpub": "xpubTestVectorCosignerKeyJF"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c0c0c0c0\nchain 48'/0'\naccounts 1000-1000\nkeys 1\nroot 4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+    "signature": "H+edsDfMu0I+cBB7QikXa+bxWdgBXKeLgJvfkVUfVyAZK7ggJWNG+ysAmfGSMFdUsi9zbLcmOki8G2/EBjVYvNs=",
+    "index": 0,
+    "path": []
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2001 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2001,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2001'/2'",
+    "xpub": "xpubTestVectorRescueKeybW"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 0,
+    "path": [
+     "debb7fd4b7ce7666dae3c6adb87da0040fe24887b6ea263853cd22a5df2129c4",
+     "d85ae6e6b62c598b000c5bc818992787fee3106a1c08c191eaaa02d7dcf0c973",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2002 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2002,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2002'/2'",
+    "xpub": "xpubTestVectorRescueKeybX"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 1,
+    "path": [
+     "e3d7a837edc4b5f7942d948ffa7f97ac9f3a03b2dae59df1ce7be0dd2314f68a",
+     "d85ae6e6b62c598b000c5bc818992787fee3106a1c08c191eaaa02d7dcf0c973",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2003 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2004 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2004,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2004'/2'",
+    "xpub": "xpubTestVectorRescueKeybZ"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 3,
+    "path": [
+     "b5f846f56e194fefba1ca6424191af9dd2f04e5e5cce790038971af9f3ddecaa",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2005 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2005,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2005'/2'",
+    "xpub": "xpubTestVectorRescueKeyba"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 4,
+    "path": [
+     "018a76c6086b9ec16776749e445a640c21fd38c13ae77af61c907e1533fdba30",
+     "4bd029abc101d902b424732d7315720fd3f3e9282c08afc699ea62ce68d49181",
+     "31dfd54023038b57b3156a769fc370457e2ccb74e242aad9c432af50a6264c0a"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2006 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2006,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2006'/2'",
+    "xpub": "xpubTestVectorRescueKeybb"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 5,
+    "path": [
+     "d4a377d7d729efb975cc43da51bab43c15bb4d7d0689113551e0e05dffe881e9",
+     "4bd029abc101d902b424732d7315720fd3f3e9282c08afc699ea62ce68d49181",
+     "31dfd54023038b57b3156a769fc370457e2ccb74e242aad9c432af50a6264c0a"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n7: account 2007 proves",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2007,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2007'/2'",
+    "xpub": "xpubTestVectorRescueKeybc"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 6,
+    "path": [
+     "158afd993b5ea6aa82898b10e3da48bd0a5a91b5c7f8854fc7b8d48c45a090da",
+     "31dfd54023038b57b3156a769fc370457e2ccb74e242aad9c432af50a6264c0a"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 0 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 0,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/0'/2'",
+    "xpub": "tpubTestVectorCosignerKey1"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 0,
+    "path": [
+     "eb5dd2f50479db2f8e5fe74fc8d1767ddf8835f91204f3b54af9c76429f50748",
+     "7ef97b068959c047e20d882cc780d0fff4e4109012e1fdf7db0ee934a9e5847e",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 1 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 1,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/1'/2'",
+    "xpub": "tpubTestVectorCosignerKey2"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 1,
+    "path": [
+     "dc8863b99b9cf04ab97d012c1b1e3e0d0058f6df8d2ade7767ae27b55c4b39c4",
+     "7ef97b068959c047e20d882cc780d0fff4e4109012e1fdf7db0ee934a9e5847e",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 2 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 2,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/2'/2'",
+    "xpub": "tpubTestVectorCosignerKey3"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 2,
+    "path": [
+     "358cfef44e67ad69da046fb3c9a3912f50a31ffe2b7a1187c144513bec1af2d4",
+     "3a4e53f499d3cae72af3dd2ec8dfd9b78a4492eafab7430db214238a8cdf0bf4",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 3 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 3,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/3'/2'",
+    "xpub": "tpubTestVectorCosignerKey4"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 3,
+    "path": [
+     "29490709307547af46005d5376973c80f2bfc2182be2722f45218db1f34935a1",
+     "3a4e53f499d3cae72af3dd2ec8dfd9b78a4492eafab7430db214238a8cdf0bf4",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 4 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 4,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/4'/2'",
+    "xpub": "tpubTestVectorCosignerKey5"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 4,
+    "path": [
+     "83b0ff5f671de40fdbc53c343ebbe53c3853af61964734dd563cd417c637f421",
+     "2c5b492457b302e4c19810016b7cbab3208e04a6ff9f71902abf41cadd148527",
+     "f58020335a1a014fc0f2467e9217b2125da39be05bdaee80fffa924fe5d716ce"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 5 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 5,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/5'/2'",
+    "xpub": "tpubTestVectorCosignerKey6"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 5,
+    "path": [
+     "a4a32dc86c5f4b17447005fe25075f3d635199c480a3bd07ed0547d3225dfeee",
+     "2c5b492457b302e4c19810016b7cbab3208e04a6ff9f71902abf41cadd148527",
+     "f58020335a1a014fc0f2467e9217b2125da39be05bdaee80fffa924fe5d716ce"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 6 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 6,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/6'/2'",
+    "xpub": "tpubTestVectorCosignerKey7"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 6,
+    "path": [
+     "77798dd73d11d862a9369f5306686cc6ca09346e842390da54b74b127441e26d",
+     "9b8b16636e512e9d30a18cc8096a8ef2766521e27a8e6be9989a3578d8b30e41",
+     "f58020335a1a014fc0f2467e9217b2125da39be05bdaee80fffa924fe5d716ce"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "n8: account 7 proves",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 7,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/7'/2'",
+    "xpub": "tpubTestVectorCosignerKey8"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 7,
+    "path": [
+     "f81c855e4337b7d6485ce3b6901db01cab3c7d2b7520521d3dc435a254470444",
+     "9b8b16636e512e9d30a18cc8096a8ef2766521e27a8e6be9989a3578d8b30e41",
+     "f58020335a1a014fc0f2467e9217b2125da39be05bdaee80fffa924fe5d716ce"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "no proof is missing, never invalid",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": null,
+   "expect": {
+    "status": "missing",
+    "code": null
+   }
+  },
+  {
+   "name": "no account from the server: the origin path decides",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": null,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "no pin for the seed reads as unpinned",
+   "network": "testnet4",
+   "purpose": "cosigner",
+   "account": 3,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5e5e5e5e": "1KvBa7SNMJ7V9VGBCvqJwt6LkvvfjkJcna"
+     }
+    },
+    "testnet4": {
+     "cosigner": {},
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/1'/3'/2'",
+    "xpub": "tpubTestVectorCosignerKey4"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 3,
+    "path": [
+     "29490709307547af46005d5376973c80f2bfc2182be2722f45218db1f34935a1",
+     "3a4e53f499d3cae72af3dd2ec8dfd9b78a4492eafab7430db214238a8cdf0bf4",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "an empty placeholder pin reads as unpinned",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5e5e5e5e": ""
+     }
+    },
+    "testnet4": {
+     "cosigner": {
+      "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+     },
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "a pin of the other network is no pin",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5e5e5e5e": "mzS8sAXMAKYjvbjnvVogmoJfcvXNjDWo2q"
+     }
+    },
+    "testnet4": {
+     "cosigner": {
+      "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+     },
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "a pin that is not an address is no pin",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5e5e5e5e": "not-an-address"
+     }
+    },
+    "testnet4": {
+     "cosigner": {
+      "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+     },
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "wrong purpose",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 1000,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c0c0c0c0",
+    "origin_path": "48'/0'/1000'/2'",
+    "xpub": "xpubTestVectorCosignerKeyJF"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c0c0c0c0\nchain 48'/0'\naccounts 1000-1000\nkeys 1\nroot 4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+    "signature": "H+edsDfMu0I+cBB7QikXa+bxWdgBXKeLgJvfkVUfVyAZK7ggJWNG+ysAmfGSMFdUsi9zbLcmOki8G2/EBjVYvNs=",
+    "index": 0,
+    "path": []
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PURPOSE"
+   }
+  },
+  {
+   "name": "wrong network",
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "account": 3,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c1c1c1c1",
+    "origin_path": "48'/0'/3'/2'",
+    "xpub": "tpubTestVectorCosignerKey4"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c1c1c1c1\nchain 48'/1'\naccounts 0-7\nkeys 8\nroot 10a44e1814a8f5804f2aaab239406a278371b1f0b249ecc48cc1fca4c14e9d62",
+    "signature": "IM2O1eBraMcCf1EQrl7A1uiom2WV058Fa5bcTuuzhmdGF5EFoBrh7n4AJPZ3cI7gc5WjByK6kFFImIyaVXcWs8Y=",
+    "index": 3,
+    "path": [
+     "29490709307547af46005d5376973c80f2bfc2182be2722f45218db1f34935a1",
+     "3a4e53f499d3cae72af3dd2ec8dfd9b78a4492eafab7430db214238a8cdf0bf4",
+     "57db3257fcbbd11342d15851d9924f47f127fea29a9f47d8673323945ffccb98"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_NETWORK"
+   }
+  },
+  {
+   "name": "wrong seed",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5f",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SEED"
+   }
+  },
+  {
+   "name": "account outside the signed range",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2010,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2010'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_ACCOUNT_RANGE"
+   }
+  },
+  {
+   "name": "account the server named differs from the key's",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2004,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "wrong account inside the range",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2004,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2004'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_INDEX"
+   }
+  },
+  {
+   "name": "wrong index",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 3,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_INDEX"
+   }
+  },
+  {
+   "name": "another account's key relabelled with that account's index",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2004,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2004'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 3,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a changed hash in the path",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "06f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a path one hash short",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a path one hash long",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a path of more than 32 hashes",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "an upper-case hash",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "E6F5A2DAF51AEBCD94503DB106D1AFF0F0A9AEF4A97DEE9665C808F48230B6A3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "swapped xpub",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybZ"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "swapped xpub, tree of one",
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "account": 1000,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c0c0c0c0",
+    "origin_path": "48'/0'/1000'/2'",
+    "xpub": "xpubTestVectorSomebodyKeyJF"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c0c0c0c0\nchain 48'/0'\naccounts 1000-1000\nkeys 1\nroot 4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+    "signature": "H+edsDfMu0I+cBB7QikXa+bxWdgBXKeLgJvfkVUfVyAZK7ggJWNG+ysAmfGSMFdUsi9zbLcmOki8G2/EBjVYvNs=",
+    "index": 0,
+    "path": []
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a proof of one key for a tree of one with an extra hash",
+   "network": "mainnet",
+   "purpose": "cosigner",
+   "account": 1000,
+   "pins": "default",
+   "key": {
+    "fingerprint": "c0c0c0c0",
+    "origin_path": "48'/0'/1000'/2'",
+    "xpub": "xpubTestVectorCosignerKeyJF"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose cosigner\nseed c0c0c0c0\nchain 48'/0'\naccounts 1000-1000\nkeys 1\nroot 4bb037229586efa64579c41bafb378434dbfc1d40e5302c4d6cfabfebafb6f9f",
+    "signature": "H+edsDfMu0I+cBB7QikXa+bxWdgBXKeLgJvfkVUfVyAZK7ggJWNG+ysAmfGSMFdUsi9zbLcmOki8G2/EBjVYvNs=",
+    "index": 0,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "signed by another key",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "HwjekWqu45jSopq7o28+/n4ouzAFHM7PWMWw/Pic6JpKLDLDCc0d8UYL0EoqgI1PKi/SgsuyJA0+jtLxIleiS1E=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_WRONG_KEY"
+   }
+  },
+  {
+   "name": "an attacker's own tree and signature",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorAttackerKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 3588f8c89c82c2d4dccfaf0dd80d48e39b6a19479f6b482ae271ff862a675586",
+    "signature": "IHK3B312OvoC9VPl0YjTL2ayZlBXCjQeD0gGUWXQnYg/Gof/130rhuXaqWirDXj97ur4RmxKVhQR4VbISp14RY4=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_WRONG_KEY"
+   }
+  },
+  {
+   "name": "an attacker's own tree with no pin is only unpinned",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {},
+     "rescue": {}
+    },
+    "testnet4": {
+     "cosigner": {},
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorAttackerKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 3588f8c89c82c2d4dccfaf0dd80d48e39b6a19479f6b482ae271ff862a675586",
+    "signature": "IHK3B312OvoC9VPl0YjTL2ayZlBXCjQeD0gGUWXQnYg/Gof/130rhuXaqWirDXj97ur4RmxKVhQR4VbISp14RY4=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "unpinned",
+    "code": null
+   }
+  },
+  {
+   "name": "a high-S signature",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "HkNg7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEh87J0dVeLHO0oVtJI1WhRx9+tsMk6IUaTYvkrlMR3uw=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "an unknown signature header",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "K0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "a 64-byte signature",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "Q2Dv5MCrCp4RkcxZ+xkhH3osTVtas7v7YP49QzgVJIR4MTYuKqHTjEtepLbcql63mzAmI4pgGyFyRnnefSRiVQ==",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "a signature that is not base64",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "not base64!",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "a signature with r = 0",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "HwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_SIGNATURE"
+   }
+  },
+  {
+   "name": "a manifest with a trailing newline",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f\n",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a manifest whose count disagrees with its range",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 8\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a manifest with an upper-case seed",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5E5E5E5E\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a manifest with a leading zero",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 02001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a manifest with CRLF line ends",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\r\npurpose rescue\r\nseed 5e5e5e5e\r\nchain 48'/0'\r\naccounts 2001-2007\r\nkeys 7\r\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a v1 manifest inside a proof",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v1\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nsha256 27d5a2f2f87b35272f0dd049a873e39482226989eb186ff2413c017650cab636",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_MANIFEST"
+   }
+  },
+  {
+   "name": "a manifest of another root (signature no longer matches)",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 0000000000000000000000000000000000000000000000000000000000000000",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_PATH"
+   }
+  },
+  {
+   "name": "a v1 attestation record is not a proof",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-pool-attestation-v1",
+    "manifest": "21C key pool v1\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nsha256 27d5a2f2f87b35272f0dd049a873e39482226989eb186ff2413c017650cab636",
+    "path": "m/44'/0'/99'/0/0",
+    "pubkey": "02c9fbc522316ef6b3fae5a98b81e6065807c174c5ed9c2730eddabd0ba6fe5e30",
+    "address": "1KvBa7SNMJ7V9VGBCvqJwt6LkvvfjkJcna",
+    "signature": "IF8IrC7tv4PqdhZkeEirBAYhtQKC6dx9Yb70LNdf5TO7L9BDFAf+N8yRLoMj4bFdKKvKSelhAH4STPu+TBZjsH4="
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a proof of an unknown format",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v2",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a proof that is not an object",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": "proof",
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a proof that is a list",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": [
+    {
+     "format": "21c-key-proof-v1",
+     "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+     "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+     "index": 2,
+     "path": [
+      "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+      "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+      "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+     ]
+    }
+   ],
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "an index that is text",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": "2",
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "an index that is true",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": true,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a path that is not a list",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a634a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "an empty object",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {},
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "an upper-case key fingerprint is read in lower case",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5E5E5E5E",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "a fingerprint of 7 hex digits",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an origin path with m/",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": null,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "m/48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an origin path in h notation",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": null,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48h/0h/2003h/2h",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an origin path of another network",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/1'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_NETWORK"
+   }
+  },
+  {
+   "name": "an account above 2^31 - 1",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2147483648,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2147483648'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an xpub that is not base58",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY0"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an extra field in the proof",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ],
+    "note": "x"
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a manifest that is not text",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": 7,
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_FORMAT"
+   }
+  },
+  {
+   "name": "a manifest on another chain",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/2'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_NETWORK"
+   }
+  },
+  {
+   "name": "a seed pinned in upper case still pins",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5E5E5E5E": "1KvBa7SNMJ7V9VGBCvqJwt6LkvvfjkJcna"
+     }
+    },
+    "testnet4": {
+     "cosigner": {
+      "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+     },
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "a pin with spaces around it",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": {
+    "mainnet": {
+     "cosigner": {
+      "c0c0c0c0": "1FWae8CgsMA8W4Hr9iSbxUn35eYHDGzLAz"
+     },
+     "rescue": {
+      "5e5e5e5e": " 1KvBa7SNMJ7V9VGBCvqJwt6LkvvfjkJcna "
+     }
+    },
+    "testnet4": {
+     "cosigner": {
+      "c1c1c1c1": "mpUnaA6DTPpnbzthqxx4rUhJTSju4tQsrJ"
+     },
+     "rescue": {}
+    }
+   },
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "verified",
+    "code": null
+   }
+  },
+  {
+   "name": "an xpub with a space",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY "
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  },
+  {
+   "name": "an xpub with a newline",
+   "network": "mainnet",
+   "purpose": "rescue",
+   "account": 2003,
+   "pins": "default",
+   "key": {
+    "fingerprint": "5e5e5e5e",
+    "origin_path": "48'/0'/2003'/2'",
+    "xpub": "xpubTestVectorRescueKeybY\nseed 5e5e5e5e"
+   },
+   "proof": {
+    "format": "21c-key-proof-v1",
+    "manifest": "21C key pool v2\npurpose rescue\nseed 5e5e5e5e\nchain 48'/0'\naccounts 2001-2007\nkeys 7\nroot 97919470c8c9d31503f0e189033cc9352bfaa9b07267ceb957904378d3fe0e6f",
+    "signature": "H0Ng7+TAqwqeEZHMWfsZIR96LE1bWrO7+2D+PUM4FSSEeDE2Liqh04xLXqS23Kpet5swJiOKYBshckZ53n0kYlU=",
+    "index": 2,
+    "path": [
+     "e6f5a2daf51aebcd94503db106d1aff0f0a9aef4a97dee9665c808f48230b6a3",
+     "954738425518c154ff708882b472a6a4e6da3137088f86edb462e62c8ec587a6",
+     "34a02b158a2836e8cb933d1497379195d71619e47979fa1880ab6a029c753dc2"
+    ]
+   },
+   "expect": {
+    "status": "invalid",
+    "code": "PROOF_KEY_SHAPE"
+   }
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+# Podfile.lock's hermes-engine checksum hashes the podspec as node_modules
+# has it (patches/react-native+0.86.0.patch makes it the same in every
+# checkout), but CocoaPods reads a :podspec source only when it holds no
+# copy and otherwise keeps the one it read first. Drop that copy so every
+# install reads node_modules again.
+hermes_podspec_copy = File.join(Pod::Config.instance.sandbox_root.to_s, 'Local Podspecs', 'hermes-engine.podspec.json')
+File.delete(hermes_podspec_copy) if File.exist?(hermes_podspec_copy)
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'KeelWallet' do
+  config = use_native_modules!
+
+  # Talia's Bitcoin engine: the bdk-ffi 3.1.1 fork (Rust, branch talia-3)
+  # behind the app's own Swift bridge (BDK upgrade, decided 2026-10-15). Links
+  # native/bdkwallet/lib/libbdkwallet-ios.a in place; rebuild it with
+  # native/build-bdkwallet.sh. The old engine's TaliaBdk pod (bdk-ffi 0.30
+  # behind bdk-rn's bridge, native/bdkffi) was removed with the old engine (decided
+  # 2026-11-04).
+  pod 'TaliaBdkWallet', :path => '../native/bdkwallet'
+
+  # Talia's BitBox02 Nova protocol layer: Rust (bitbox-api) behind uniffi.
+  # Rebuild the vendored static lib with native/build-bitboxffi.sh.
+  pod 'BitBoxFFI', :path => '../native/bitboxffi'
+
+  # Secret copies: this phone only, and gone after a short while
+  # (decided 2026-09-26). JavaScript falls back to the
+  # ordinary copy until a build carries it (platform/clipboard.ts).
+  pod 'TaliaPasteboard', :path => '../native/taliapasteboard'
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+    # Xcode 27 (2026-09-18) REFUSES a deployment target below iOS 15, and a
+    # few pods still declare 9.0 or 12.4 of their own, which failed the whole
+    # build. Raise anything older to the app's own minimum; leave a pod that
+    # already asks for more alone.
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        current = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        if current.nil? || current.to_f < min_ios_version_supported.to_f
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = min_ios_version_supported
+        end
+      end
+    end
+  end
+end
