@@ -1,7 +1,19 @@
 #!/bin/bash
 # Rebuild the bitbox-ffi static libraries and refresh the committed bindings.
-# The crate is 21st Capital's PRIVATE repo https://github.com/21st-Capital/bitbox-ffi
-# (branch main); its checkout lives at ../bitbox-ffi, or $BITBOX_FFI_DIR.
+# The crate is built from 21st Capital's public repo
+# https://github.com/21st-Capital/talia-bitbox-ffi (branch main; the public
+# repo since 2026-11-06). It is developed in the private bitbox-ffi repo, and
+# each change is copied to talia-bitbox-ffi's main in one commit before it is
+# built from there. The checkout is $BITBOX_FFI_DIR (../bitbox-ffi when it
+# is not set). The pinned build was made from a clone at
+# /Users/Shared/talia-bitbox-ffi:
+#   git clone https://github.com/21st-Capital/talia-bitbox-ffi /Users/Shared/talia-bitbox-ffi
+#   BITBOX_FFI_DIR=/Users/Shared/talia-bitbox-ffi native/build-bitboxffi.sh [--rollback <commit>]
+# The checkout's absolute path is compiled into the library (panic locations),
+# and so are the home folder's ($HOME/.cargo, and the cargo program's path
+# under $HOME/.rustup: cargo-env passes no CARGO_HOME or RUSTUP_HOME), so a
+# byte-for-byte rebuild needs that checkout path and the same home folder (the
+# fork's README lists what else it needs).
 # Like native/build-bdkwallet.sh, the ~90MB .a files are NOT in git (see
 # .gitignore); run this after checking out fresh or after changing the crate.
 # Needs rustup with the iOS targets (rust-toolchain.toml in the crate pins
@@ -9,11 +21,11 @@
 #
 # Where the library came from (decided 2026-09-26): the build refuses
 # unless the checkout is exactly its HEAD commit, that commit is on the org
-# repo's main branch (fetched first; a change gets there through a
-# reviewed pull request, and a commit only on another branch is refused) and
-# contains the commit the record names, in the working tree and in the app's
-# last commit (so a build never goes backwards by accident), and no cargo
-# config or Rust toolchain file sits above the checkout. Building an OLDER
+# repo's main branch (fetched first; a commit only on another branch is
+# refused) and contains the commit the record names, in the working tree and
+# in the app's last commit (so a build never goes backwards by accident; a
+# record naming any other repo, the private one included, is refused), and no
+# cargo config or Rust toolchain file sits above the checkout. Building an OLDER
 # commit of the branch is a rollback, a release decision and never the way
 # past a refusal, and it is named:
 #   native/build-bitboxffi.sh --rollback <commit>

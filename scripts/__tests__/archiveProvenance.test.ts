@@ -58,8 +58,12 @@ const prov = require('../archive-provenance.js') as {
   linkedLibOf: (lib: string) => string;
 };
 
-const BDK_REPO = 'https://github.com/21st-Capital/bdk-ffi-fork';
-const BITBOX_REPO = 'https://github.com/21st-Capital/bitbox-ffi';
+// The public repos the libraries are built from (decided 2026-11-06).
+const BDK_REPO = 'https://github.com/21st-Capital/talia-bdk-ffi';
+const BITBOX_REPO = 'https://github.com/21st-Capital/talia-bitbox-ffi';
+// The private repos they are developed in, which the record named before.
+const BDK_PRIVATE_REPO = 'https://github.com/21st-Capital/bdk-ffi-fork';
+const BITBOX_PRIVATE_REPO = 'https://github.com/21st-Capital/bitbox-ffi';
 const BITBOX_COMMIT = 'b2'.repeat(20);
 const BITBOX_LIB = 'native/bitboxffi/lib/libbitboxffi-ios.a';
 const sha = (text: string) => require('crypto').createHash('sha256').update(text).digest('hex');
@@ -804,6 +808,10 @@ describe('where the native libraries were built from (decided 2026-09-26)', () =
     ['a fork in another org', B(`# source bitboxffi https://github.com/evil/bitbox-ffi ${BITBOX_COMMIT}`), "not 21st Capital's"],
     ['a lookalike org', B(`# source bitboxffi https://github.com/21st-Capita1/bitbox-ffi ${BITBOX_COMMIT}`), "not 21st Capital's"],
     ['another host', B(`# source bitboxffi https://gitlab.com/21st-Capital/bitbox-ffi ${BITBOX_COMMIT}`), "not 21st Capital's"],
+    // The private repos the libraries were built from before 2026-11-06: a
+    // record naming one is not taken until the library is built from its public repo.
+    ['its private development repo', B(`# source bitboxffi ${BITBOX_PRIVATE_REPO} ${BITBOX_COMMIT}`), "not 21st Capital's"],
+    ['the other library\'s private repo', B(`# source bitboxffi ${BDK_PRIVATE_REPO} ${BITBOX_COMMIT}`), "not 21st Capital's"],
     ['the other library\'s repo', B(`# source bitboxffi ${BDK_REPO} ${BITBOX_COMMIT}`), "not 21st Capital's"],
     ['another spelling of the URL', B(`# source bitboxffi ${BITBOX_REPO}.git ${BITBOX_COMMIT}`), "not 21st Capital's"],
     ['an all-zero commit', B(`# source bitboxffi ${BITBOX_REPO} ${'0'.repeat(40)}`), 'names no commit'],
@@ -1058,10 +1066,25 @@ describe('where the native libraries were built from (decided 2026-09-26)', () =
     }
     // Nothing tells anyone to write a digest by hand.
     expect(text).not.toMatch(/shasum/);
+  });
+
+  /**
+   * The repos themselves, in a test of their own (decided 2026-11-06): the one
+   * above stays red while a recorded build waits for its pin, and that must
+   * not hide which repos the archive holds a record to.
+   */
+  it('each library is built from its public repo, branch main, never the private one it is developed in', () => {
     expect(Object.fromEntries(Object.entries(prov.NATIVE_SOURCES).map(([k, v]) => [k, v.repo]))).toEqual({
       bitboxffi: BITBOX_REPO,
       bdkwallet: BDK_REPO,
     });
+    expect(Object.fromEntries(Object.entries(prov.NATIVE_SOURCES).map(([k, v]) => [k, v.branch]))).toEqual({
+      bitboxffi: 'main',
+      bdkwallet: 'main',
+    });
+    for (const s of Object.values(prov.NATIVE_SOURCES)) {
+      expect([BDK_PRIVATE_REPO, BITBOX_PRIVATE_REPO]).not.toContain(s.repo);
+    }
   });
 
   it("every library the repo's own record names is pinned (red while a recorded build waits for its pin)", () => {

@@ -3,11 +3,15 @@
  * Where Talia's native libraries come from (decided 2026-09-26).
  *
  * The signing-critical native code is built outside this repo: the bdk-ffi
- * fork (the Bitcoin core: the TaliaBdkWallet pod links its talia-3 line,
- * bdk-ffi 3.1.1, the only wallet library since the old engine's removal
- * took the TaliaBdk pod and its talia line, decided 2026-11-04) and the
- * BitBox bridge live in 21st Capital's own private repos (NATIVE_SOURCES in
- * archive-provenance.js). native/build-bitboxffi.sh and
+ * fork (the Bitcoin core: the TaliaBdkWallet pod links its bdk-ffi 3.1.1,
+ * the only wallet library since the old engine's removal took the TaliaBdk
+ * pod, decided 2026-11-04) and the BitBox bridge. Since 2026-11-06 they are
+ * built from 21st Capital's PUBLIC repos, talia-bdk-ffi and talia-bitbox-ffi,
+ * branch main in both (NATIVE_SOURCES in archive-provenance.js), so a public
+ * clone of the app can build them and check them against the pins. They are
+ * still developed in the private repos (bdk-ffi-fork, branch talia-3, and
+ * bitbox-ffi), and each change is copied to the public repo's main in one
+ * commit before it is built. native/build-bitboxffi.sh and
  * native/build-bdkwallet.sh call this script so every library they write
  * can be traced to an exact commit there:
  *
@@ -67,8 +71,9 @@
  *           through (decided 2026-10-16: not "tip only", so a rollback
  *           stays possible after a hotfix). A record that cannot say which
  *           commit that is (unreadable, a spoiled source line, pins without
- *           one) is refused; only a record holding nothing of the library is
- *           its first build. git's ancestry is read with replace refs, the
+ *           one, a source line naming any repo but the library's own) is
+ *           refused; only a record holding nothing of the library is its
+ *           first build. git's ancestry is read with replace refs, the
  *           grafts file and the commit-graph cache off. It also refuses a cargo
  *           config or a Rust toolchain file ABOVE the checkout (or in
  *           ~/.cargo): cargo and rustup read those for every build beneath
@@ -141,7 +146,9 @@
  *           byte-identical copies kept as release files on the PRIVATE fork
  *           repo (COPIES: the releases named in COPIES.tags, each read by its
  *           tag, each file named <sha256>-<file name>), read through the
- *           user's own gh sign-in. Nothing is written unless every download has exactly its
+ *           user's own gh sign-in: for maintainers with access to that repo
+ *           (a public clone builds the libraries from the public repos
+ *           instead). Nothing is written unless every download has exactly its
  *           pinned SHA-256; each lands in its library's own lib folder as a
  *           plain file, never over an existing file (one already pinned is
  *           kept, one that differs is refused), and it ends with verify. No
@@ -628,7 +635,10 @@ function readRecord(root) {
  * holding nothing of the library at all, no source, built, note or pin line,
  * so a source line spoiled by hand (a short commit, a second line), or pins
  * left without their source line, is refused rather than read as "no floor";
- * and `text` null (the record could not be read) is refused too.
+ * and `text` null (the record could not be read) is refused too. A source
+ * line naming any repo but the library's own (NATIVE_SOURCES[lib].repo,
+ * spelled exactly) is refused as well, its private development repo included
+ * (decided 2026-11-06): the public repo shares no history with it.
  */
 function recordFloor(text, lib, where = NATIVE_PIN) {
   if (text === null) {
@@ -803,23 +813,23 @@ function cmdCheck(args, root) {
     const remote = r.remote ? r.remote.name : '<remote>';
     const hint = {
       dirty: [
-        'Commit the change (or stash it, or delete the untracked files) and build',
-        'again. A change to the library reaches the app only through a reviewed',
-        `pull request into ${src.branch}, built once it is merged.`,
+        'Set the change aside (stash it, or delete the untracked files) and build',
+        'again. A change to the library is reviewed in its private repository and',
+        `copied to the public repository's ${src.branch} in one commit, then built.`,
       ],
       'no-remote': ['Add the repo as a remote and build again:', `    git -C ${where} remote add 21c ${src.repo}`],
-      fetch: ['Check the network and your access to the private repo, then build again.'],
+      fetch: ['Check the network and your access to the repo, then build again.'],
       unpushed: [
-        `A change reaches the app only through a reviewed pull request into ${src.branch}:`,
-        'push it to a branch of its own, open the pull request, and build from',
-        `${src.branch} once it is merged:`,
-        `    git -C ${where} push ${remote} HEAD:refs/heads/<a-new-branch-name>`,
+        'A change to the library is reviewed in its private repository and copied',
+        `to the public repository's ${src.branch} in one commit, then built: build from`,
+        'that commit once it is there, never from one made in this checkout.',
       ],
       'no-branch': [`Builds come from ${src.branch} alone. Check the repo, then build again.`],
       'off-branch': [
         `Only commits on ${src.branch} are built into the app, never one only on another`,
-        'branch (a feature branch, say). Merge the change into',
-        `${src.branch} through a reviewed pull request, then build from there.`,
+        'branch (a feature branch, say). A change to the library is reviewed in its',
+        `private repository and copied to the public repository's ${src.branch} in one`,
+        'commit, then built from there.',
       ],
       'rollback-mismatch': [
         "--rollback must name the commit being built, which is the checkout's HEAD.",
@@ -2206,7 +2216,11 @@ function cmdVerify(args, root, deps) {
  * e.g. talia-native-libs-2026-10-22), each file named copyName(sha, file).
  * Never a public repo. Release files are never edited or deleted: a new pin
  * gets a release of its own, and its tag is added to `tags` in the commit
- * that pins it.
+ * that pins it. The libraries are BUILT from the public repos since
+ * 2026-11-06 (NATIVE_SOURCES), but the copies stay on the private fork, named
+ * here on their own: `restore` and `copies` are for maintainers with access
+ * to it, and a public clone builds the libraries from the public repos
+ * instead.
  *
  * `tags` names every such release, and each is read BY ITS TAG (decided
  * 2026-10-22): GitHub's release LIST came back empty on most calls for half
@@ -2215,10 +2229,11 @@ function cmdVerify(args, root, deps) {
  * from one run to the next.
  */
 const COPIES = {
-  // The bdk-ffi fork, which holds every pinned library's copies (bitboxffi's too).
-  repo: NATIVE_SOURCES.bdkwallet.repo,
+  // The private bdk-ffi fork, which holds every pinned library's copies
+  // (bitboxffi's too); never NATIVE_SOURCES' public repo.
+  repo: 'https://github.com/21st-Capital/bdk-ffi-fork',
   tagPrefix: 'talia-native-libs-',
-  tags: ['talia-native-libs-2026-10-22', 'talia-native-libs-2026-10-27'],
+  tags: ['talia-native-libs-2026-10-22', 'talia-native-libs-2026-10-27', 'talia-native-libs-2026-11-06'],
 };
 const COPY_NAME = /^[0-9a-f]{64}-[A-Za-z0-9._-]+$/;
 const COPY_TAG = /^talia-native-libs-[0-9A-Za-z._-]+$/;

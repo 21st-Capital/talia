@@ -128,7 +128,7 @@ file by SHA-256 together with the commit it was built from.
 
 | Folder | Pod | Library | Built from |
 |---|---|---|---|
-| `native/bdkwallet` | `TaliaBdkWallet` | `lib/libbdkwallet-ios.a`, `lib/libbdkwallet-sim.a` | [talia-bdk-ffi](https://github.com/21st-Capital/talia-bdk-ffi), a fork of bdk-ffi 3.1.1 (branch `talia-3`) |
+| `native/bdkwallet` | `TaliaBdkWallet` | `lib/libbdkwallet-ios.a`, `lib/libbdkwallet-sim.a` | [talia-bdk-ffi](https://github.com/21st-Capital/talia-bdk-ffi), a fork of bdk-ffi 3.1.1 |
 | `native/bitboxffi` | `BitBoxFFI` | `lib/libbitboxffi-ios.a`, `lib/libbitboxffi-sim.a` | [talia-bitbox-ffi](https://github.com/21st-Capital/talia-bitbox-ffi): bitbox-api 0.13 over uniffi |
 | `native/taliapasteboard` | `TaliaPasteboard` | none (one Objective-C file) | this repository |
 
@@ -138,19 +138,47 @@ bdkwallet ones are pinned in `native/native-libs.sha256` as well.
 `native/bdkwallet/bridge` and `native/bitboxffi/BitboxModule.swift` are the
 app's own React Native modules over them.
 
-`native/build-bdkwallet.sh` and `native/build-bitboxffi.sh` build a library from
-a clean checkout of its fork and record the build; `node
-scripts/native-sources.js pin <library>` pins a tested build, and `node
-scripts/native-sources.js verify` checks what is on disk. In this copy that
-tooling still names the forks' original repositories, which are private
-(`NATIVE_SOURCES` in `scripts/archive-provenance.js`, `COPIES` in
-`scripts/native-sources.js`), so the build scripts and `native-sources.js
-restore` cannot run from a public clone yet. Until they name the public forks,
-build each library as its fork's README describes and put the files where the
-table says. Each fork's README also lists what a byte-for-byte rebuild needs
-(the same toolchain, Xcode and Cargo home folder, and for the BitBox library the
-same checkout path), without which your library will not match the pin and the
-scripts above will refuse it.
+The build tooling names the two public forks in the table, branch `main`
+(`NATIVE_SOURCES` in `scripts/archive-provenance.js`), so a public clone can
+build each library from its own repository and check it against the pins.
+Clone each fork and run its build script. Build the BitBox library first: the
+wallet library's build compares its symbols with it.
+
+```sh
+git clone https://github.com/21st-Capital/talia-bitbox-ffi /Users/Shared/talia-bitbox-ffi
+BITBOX_FFI_DIR=/Users/Shared/talia-bitbox-ffi native/build-bitboxffi.sh
+git clone https://github.com/21st-Capital/talia-bdk-ffi /Users/Shared/talia-bdk-ffi
+native/build-bdkwallet.sh --fork /Users/Shared/talia-bdk-ffi --branch main
+```
+
+Each script builds only from a clean checkout of a commit on `main` that
+contains the commit the record names, writes the library into the folder the
+table names, and records the build in `native/native-libs.sha256`, showing each
+file's digest beside its pin. `node scripts/native-sources.js verify` then
+passes only when every file is the pinned one.
+
+The pins are the maintainers' builds. A build of your own matches them byte
+for byte only with what each fork's README lists: the same commit, the same
+Rust toolchain and the same Xcode, from the same checkout folders and under
+the same Cargo home:
+
+- The checkout folders are the ones above, `/Users/Shared/talia-bitbox-ffi`
+  and `/Users/Shared/talia-bdk-ffi`, where the pinned libraries were built.
+  The BitBox library compiles its checkout's path into its bytes; the wallet
+  library's bytes do not depend on it.
+- The home folder: the build scripts pass cargo no `CARGO_HOME` or
+  `RUSTUP_HOME`, so cargo works from `$HOME/.cargo`, and the pinned libraries
+  were built under the maintainers' own home. Its path is compiled into both
+  libraries (`$HOME/.cargo`), and the BitBox library also carries the path of
+  the cargo program under `$HOME/.rustup`. A build under another home folder
+  therefore differs in the objects that carry those paths and in the
+  archive's symbol table.
+
+With anything else different your library will not match the pin, and the
+archive and `verify` will refuse it. `node scripts/native-sources.js pin
+<library>` pins a tested build; that, and restoring the prebuilt copies of the
+pinned files (`node scripts/native-sources.js restore`, which reads them from a
+private repository), are for the app's maintainers only.
 
 ## Services the app contacts
 

@@ -335,10 +335,14 @@ function compareTrackedFiles(root, commit, format, { docExempt = true } = {}) {
  * Every native library the app links, one row each (decided 2026-09-26;
  * generalised into this one table by the BDK upgrade,
  * 2026-10-16). The signing-critical native code is not in this repo: the
- * bdk-ffi fork (the Bitcoin core: its talia-3 line, bdk-ffi 3.1.1, since
- * the old engine's removal took the talia line's bdk-ffi 0.30, decided
- * 2026-11-04) and the BitBox bridge live in 21st Capital's own private
- * repos, and
+ * bdk-ffi fork (the Bitcoin core, bdk-ffi 3.1.1, since the old engine's
+ * removal took bdk-ffi 0.30, decided 2026-11-04) and the BitBox bridge are
+ * 21st Capital's own repos. Since 2026-11-06 each row names the library's
+ * PUBLIC repo (talia-bdk-ffi and talia-bitbox-ffi, one branch each, main),
+ * so a public clone of the app can build and check its libraries. The
+ * libraries are still developed in the private repos (bdk-ffi-fork, branch
+ * talia-3, and bitbox-ffi), which keep their history; each change is copied
+ * to the public repo's main in one commit, and the build is taken from there.
  * NATIVE_PIN names, beside each library's pins, the repo and the full commit
  * its pinned files were built from, and the digest of every file that build
  * wrote:
@@ -369,9 +373,13 @@ function compareTrackedFiles(root, commit, format, { docExempt = true } = {}) {
  * into the archive's provenance (nativeSources).
  *
  * Each row:
- *   repo      the org repo the library is built from.
+ *   repo      the org repo the library is built from: its public repo since
+ *             2026-11-06. A record written before then names the private
+ *             repo, and the archive refuses it until the library is built
+ *             again from the public one and pinned.
  *   branch    the ALLOWLISTED branch, the only one of the repo a build is
- *             taken from (decided 2026-10-16). scripts/native-sources.js
+ *             taken from (decided 2026-10-16; main in both public repos,
+ *             decided 2026-11-06). scripts/native-sources.js
  *             `check`, and so the build script, refuses a commit not reachable
  *             from it on the org repo (a feature branch, say) and one
  *             that does not contain the commit the library's "# source" line
@@ -411,8 +419,10 @@ function compareTrackedFiles(root, commit, format, { docExempt = true } = {}) {
  *             a library whose build does not run the gate.
  */
 const NATIVE_SOURCES = {
+  // The BitBox bridge: built from its public repo (decided 2026-11-06),
+  // developed in the private bitbox-ffi.
   bitboxffi: {
-    repo: 'https://github.com/21st-Capital/bitbox-ffi',
+    repo: 'https://github.com/21st-Capital/talia-bitbox-ffi',
     branch: 'main',
     libDir: 'native/bitboxffi/lib',
     ignore: 'native/bitboxffi/lib/',
@@ -427,12 +437,15 @@ const NATIVE_SOURCES = {
     toolCrates: null,
     duplicates: null,
   },
-  // The Bitcoin core (BDK upgrade, decided 2026-10-15): bdk-ffi 3.1.1 from the
-  // fork's talia-3 line, the only wallet library since the old engine's removal
-  // (decided 2026-11-04) took bdkffi (bdk-ffi 0.30 from the talia line).
+  // The Bitcoin core (BDK upgrade, decided 2026-10-15): bdk-ffi 3.1.1, the only
+  // wallet library since the old engine's removal (decided 2026-11-04) took
+  // bdkffi (bdk-ffi 0.30 from the private fork's talia line). Built from the
+  // public talia-bdk-ffi, main (decided 2026-11-06): a copy of the private
+  // fork's talia-3 line, where the library is developed, refreshed by one
+  // commit per change.
   bdkwallet: {
-    repo: 'https://github.com/21st-Capital/bdk-ffi-fork',
-    branch: 'talia-3',
+    repo: 'https://github.com/21st-Capital/talia-bdk-ffi',
+    branch: 'main',
     libDir: 'native/bdkwallet/lib',
     ignore: 'native/bdkwallet/lib/',
     files: ['native/bdkwallet/lib/libbdkwallet-ios.a', 'native/bdkwallet/lib/libbdkwallet-sim.a'],

@@ -1,25 +1,31 @@
 #!/bin/bash
-# Builds the wallet library, bdk-ffi 3.1.1 from 21st Capital's PRIVATE fork
-# https://github.com/21st-Capital/bdk-ffi-fork, branch talia-3 (BDK upgrade,
-# decided 2026-10-15), into native/bdkwallet: the static libraries for the
-# phone and the simulator, the Swift bindings and their C header, and the list
-# of duplicate symbols the app's link may report. The old library beside it
-# (native/bdkffi, branch talia) was removed with the old engine (decided
-# 2026-11-04). The Rust crate is still called bdkffi, so cargo's output is
-# libbdkffi.a; it is copied in as libbdkwallet-*.a.
+# Builds the wallet library, bdk-ffi 3.1.1 from 21st Capital's public fork
+# https://github.com/21st-Capital/talia-bdk-ffi, branch main (BDK upgrade,
+# decided 2026-10-15; the public repo since 2026-11-06), into native/bdkwallet:
+# the static libraries for the phone and the simulator, the Swift bindings and
+# their C header, and the list of duplicate symbols the app's link may report.
+# The library is developed in the private fork (bdk-ffi-fork, branch talia-3),
+# and each change is copied to talia-bdk-ffi's main in one commit before it is
+# built from there. The old library beside it (native/bdkffi, the private
+# fork's talia branch) was removed with the old engine (decided 2026-11-04).
+# The Rust crate is still called bdkffi, so cargo's output is libbdkffi.a; it
+# is copied in as libbdkwallet-*.a.
 #
-#   native/build-bdkwallet.sh --fork <checkout> --branch talia-3 [--rollback <commit>]
+#   git clone https://github.com/21st-Capital/talia-bdk-ffi <checkout>
+#   native/build-bdkwallet.sh --fork <checkout> --branch main [--rollback <commit>]
 #
 # The fork checkout and its branch are named, never found: the script refuses
 # a branch other than the one scripts/archive-provenance.js allowlists for
 # bdkwallet (NATIVE_SOURCES), and native-sources.js check then refuses unless
 # the checkout is exactly its HEAD commit, clean, reachable from that branch on
 # the org repo (fetched first) and containing the commit the record names
-# (none before the first build), and no cargo config or toolchain file sits
+# (none before the first build; a record naming any other repo, the private
+# fork included, is refused), and no cargo config or toolchain file sits
 # above it. An OLDER commit of the branch is a rollback, named with
 # --rollback <commit>, never the way past a refusal. Use a checkout of its
-# own for the build (git worktree add --detach <path> 21c/talia-3): the
-# fork's working copies may change under other builds.
+# own for the build (git worktree add --detach <path> <remote>/main, the
+# remote being the one that names talia-bdk-ffi): the fork's working copies
+# may change under other builds.
 #
 # Before anything reaches the app it also refuses unless:
 #   - bdk-ffi/Cargo.toml is bdk-ffi 3.1.1 with uniffi =0.31.2, the target the
@@ -65,7 +71,7 @@
 #
 # Then it writes the record (node scripts/native-sources.js record bdkwallet
 # <commit> <checkout> <work>, which refuses unless the checkout is still that
-# commit, clean and on talia-3, and every file in the app is byte for byte
+# commit, clean and on main, and every file in the app is byte for byte
 # this build's own output: the libraries in the checkout's target folder, the
 # bindings in the work folder, the duplicate list made again from the gate's
 # reports there; it is never run by hand): the commit, the digest of each
@@ -95,7 +101,7 @@ while [ $# -gt 0 ]; do
       shift 2
       ;;
     --branch)
-      [ $# -ge 2 ] && [ -n "$2" ] || { echo "✗ --branch needs the branch the checkout is on (talia-3)."; exit 64; }
+      [ $# -ge 2 ] && [ -n "$2" ] || { echo "✗ --branch needs the branch the checkout is on (main)."; exit 64; }
       BRANCH="$2"
       shift 2
       ;;
@@ -104,11 +110,11 @@ while [ $# -gt 0 ]; do
       ROLLBACK=(--rollback "$2")
       shift 2
       ;;
-    *) echo "usage: native/build-bdkwallet.sh --fork <checkout> --branch talia-3 [--rollback <commit>]"; exit 64 ;;
+    *) echo "usage: native/build-bdkwallet.sh --fork <checkout> --branch main [--rollback <commit>]"; exit 64 ;;
   esac
 done
 [ -n "$FORK_ARG" ] && [ -n "$BRANCH" ] || {
-  echo "usage: native/build-bdkwallet.sh --fork <checkout> --branch talia-3 [--rollback <commit>]"
+  echo "usage: native/build-bdkwallet.sh --fork <checkout> --branch main [--rollback <commit>]"
   exit 64
 }
 APP="$(cd "$(dirname "$0")/.." && pwd)"

@@ -5605,7 +5605,7 @@ public static func custom(persistence: Persistence) -> Persister  {
      *
      * TALIA FORK: a plain in-memory changeset instead of an in-memory SQLite database. Nothing
      * is written anywhere; the wallet is rebuilt from its descriptors and a fresh sync every
-     * time (decision D5). Still returns `Result`, as upstream's did.
+     * time (decided 2026-10-15). Still returns `Result`, as upstream's did.
      */
 public static func newInMemory()throws  -> Persister  {
     return try  FfiConverterTypePersister_lift(try rustCallWithError(FfiConverterTypePersistenceError_lift) {
@@ -9264,7 +9264,7 @@ public protocol WalletProtocol: AnyObject, Sendable {
      * finalization being the next device's working copy). On an error it is left exactly as it
      * came, as 0.28's `sign()` left it: the metadata update runs before the gates, and a slim
      * copy a gate refuses would otherwise come back with the vault's derivations written into
-     * it (decision 9 of 2026-10-17).
+     * it (decided 2026-10-17).
      */
     func finalizePsbtKeepingMetadata(psbt: Psbt, signOptions: SignOptions?) throws  -> Bool
     
@@ -9572,7 +9572,7 @@ public protocol WalletProtocol: AnyObject, Sendable {
     func unmarkUsed(keychain: KeychainKind, index: UInt32) throws  -> Bool
     
     /**
-     * TALIA FORK: the combine repair (plan 5.1). Run it after `original.combine(signed)`: a
+     * TALIA FORK: the combine repair (decided 2026-10-15). Run it after `original.combine(signed)`: a
      * combine lets the device copy's key origins win. For every input whose coin, and every
      * output whose script, belongs to this wallet, the origin of every key its descriptor
      * contains (`bip32_derivation`, or `tap_key_origins` with their leaf hashes for taproot) is
@@ -10113,7 +10113,7 @@ open func finalizePsbt(psbt: Psbt, signOptions: SignOptions? = nil)throws  -> Bo
      * finalization being the next device's working copy). On an error it is left exactly as it
      * came, as 0.28's `sign()` left it: the metadata update runs before the gates, and a slim
      * copy a gate refuses would otherwise come back with the vault's derivations written into
-     * it (decision 9 of 2026-10-17).
+     * it (decided 2026-10-17).
      */
 open func finalizePsbtKeepingMetadata(psbt: Psbt, signOptions: SignOptions? = nil)throws  -> Bool  {
     return try  FfiConverterBool.lift(try rustCallWithError(FfiConverterTypeSignerError_lift) {
@@ -10674,7 +10674,7 @@ open func unmarkUsed(keychain: KeychainKind, index: UInt32)throws  -> Bool  {
 }
     
     /**
-     * TALIA FORK: the combine repair (plan 5.1). Run it after `original.combine(signed)`: a
+     * TALIA FORK: the combine repair (decided 2026-10-15). Run it after `original.combine(signed)`: a
      * combine lets the device copy's key origins win. For every input whose coin, and every
      * output whose script, belongs to this wallet, the origin of every key its descriptor
      * contains (`bip32_derivation`, or `tap_key_origins` with their leaf hashes for taproot) is
@@ -22860,7 +22860,7 @@ private let initializationResult: InitializationResult = {
     if (uniffi_bdkffi_checksum_method_wallet_finalize_psbt() != 44890) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_bdkffi_checksum_method_wallet_finalize_psbt_keeping_metadata() != 62454) {
+    if (uniffi_bdkffi_checksum_method_wallet_finalize_psbt_keeping_metadata() != 30407) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_bdkffi_checksum_method_wallet_get_tx() != 211) {
@@ -22971,7 +22971,7 @@ private let initializationResult: InitializationResult = {
     if (uniffi_bdkffi_checksum_method_wallet_unmark_used() != 14749) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_bdkffi_checksum_method_wallet_update_psbt_with_descriptor() != 55597) {
+    if (uniffi_bdkffi_checksum_method_wallet_update_psbt_with_descriptor() != 4505) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_bdkffi_checksum_constructor_address_from_script() != 25444) {
@@ -23145,7 +23145,7 @@ private let initializationResult: InitializationResult = {
     if (uniffi_bdkffi_checksum_constructor_persister_custom() != 59293) {
         return InitializationResult.apiChecksumMismatch
     }
-    if (uniffi_bdkffi_checksum_constructor_persister_new_in_memory() != 25762) {
+    if (uniffi_bdkffi_checksum_constructor_persister_new_in_memory() != 2427) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_bdkffi_checksum_constructor_bumpfeetxbuilder_new() != 52203) {

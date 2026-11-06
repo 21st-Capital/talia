@@ -10,9 +10,12 @@
 #
 #   <commit>   the reviewed commit to export (any name git resolves).
 #   <outdir>   a new or empty folder outside the repository.
-#   --markers  a file of values that must appear nowhere in the copy, one per
-#              line (blank lines and lines starting with # are skipped). The
-#              scan never prints a value, only its line number in the file.
+#   --markers  a file of values that must appear nowhere in the copy, in
+#              "label value" lines such as "fingerprint <8 hex>" (blank lines
+#              and lines starting with # are skipped; public-export-scan.js
+#              says what counts as a value). The scan never prints a value,
+#              only its line number in the file, and stops with status 2 on
+#              a line it cannot read.
 #   --init     make <outdir> a git repository holding the copy as one commit,
 #              dated as <commit> (in UTC) and titled "Talia <version>". It
 #              needs --author: a role identity, never a person's. This makes

@@ -70,8 +70,13 @@ const prov = require('../archive-provenance.js') as {
   parseNativeSources: (text: string | null) => { sources: Entry[]; problems: string[] };
 };
 
-const BDK_REPO = 'https://github.com/21st-Capital/bdk-ffi-fork';
-const BITBOX_REPO = 'https://github.com/21st-Capital/bitbox-ffi';
+// The public repos the libraries are built from (decided 2026-11-06).
+const BDK_REPO = 'https://github.com/21st-Capital/talia-bdk-ffi';
+const BITBOX_REPO = 'https://github.com/21st-Capital/talia-bitbox-ffi';
+// The private repos they are developed in: a record naming one is refused, and
+// the release-file copies of the pinned libraries stay on the bdk-ffi one.
+const BDK_PRIVATE_REPO = 'https://github.com/21st-Capital/bdk-ffi-fork';
+const BITBOX_PRIVATE_REPO = 'https://github.com/21st-Capital/bitbox-ffi';
 const OLD = 'a1'.repeat(20); // made-up commit ids
 const NEW = 'c3'.repeat(20);
 const BDK = 'e5'.repeat(20);
@@ -449,7 +454,7 @@ describe('the allowlisted branch and the recorded commit', () => {
       opts: { repoUrl: BITBOX_REPO, branch: 'main', pinned: [{ commit: OLD, where: working }], rollback: null },
     });
     expect(src.checkRequest(['bdkwallet', crate, '--rollback', NEW.slice(0, 7)], app)).toMatchObject({
-      opts: { repoUrl: BDK_REPO, branch: 'talia-3', pinned: [{ commit: BDK }], rollback: NEW.slice(0, 7) },
+      opts: { repoUrl: BDK_REPO, branch: 'main', pinned: [{ commit: BDK }], rollback: NEW.slice(0, 7) },
     });
     // The old engine's library is no library to build any more.
     expect(src.checkRequest(['bdkffi', crate], app)).toBeNull();
@@ -521,9 +526,22 @@ describe('the allowlisted branch and the recorded commit', () => {
       [bitboxRecord(NEW) + bitboxRecord(OLD), '2 "# source bitboxffi" lines'],
       [`# source bitboxffi https://github.com/someone/bitbox-ffi ${OLD}\n`, 'is not "# source bitboxffi'],
       [bitboxRecord('0'.repeat(40)), 'is not "# source bitboxffi'],
+      // The private repo a library is developed in is not its repo, with a
+      // whole commit or not (decided 2026-11-06), nor the other library's.
+      [`# source bitboxffi ${BITBOX_PRIVATE_REPO} ${OLD}\n${built}`, 'is not "# source bitboxffi'],
+      [`# source bitboxffi ${BDK_PRIVATE_REPO} ${OLD}\n${built}`, 'is not "# source bitboxffi'],
+      [`# source bitboxffi ${BITBOX_PRIVATE_REPO}.git ${OLD}\n${built}`, 'is not "# source bitboxffi'],
+      [`# source bitboxffi ${BITBOX_PRIVATE_REPO} ${OLD.slice(0, 7)}\n${built}`, 'is not "# source bitboxffi'],
+      [`# source bitboxffi ${BITBOX_PRIVATE_REPO} ${OLD}\n${bitboxRecord(NEW)}`, '2 "# source bitboxffi" lines'],
     ] as [string | null, string][]) {
       expect(floor(text).problem).toContain(says);
     }
+    // The same for the wallet library: its public repo sets the floor, its
+    // private fork is refused (decided 2026-11-06).
+    expect(src.recordFloor(`# source bdkwallet ${BDK_REPO} ${BDK}\n`, 'bdkwallet')).toEqual({ commit: BDK });
+    expect(src.recordFloor(`# source bdkwallet ${BDK_PRIVATE_REPO} ${BDK}\n`, 'bdkwallet')).toEqual({
+      problem: `${prov.NATIVE_PIN}'s line ${JSON.stringify(`# source bdkwallet ${BDK_PRIVATE_REPO} ${BDK}`)} is not "# source bdkwallet <repo URL> <40-hex commit>"`,
+    });
     // Through the CLI: refused before the checkout is even looked at, and
     // nothing reaches stdout, so the build script stops.
     const live = fs.readFileSync(path.join(__dirname, '..', '..', prov.NATIVE_PIN), 'utf8');
@@ -547,6 +565,41 @@ describe('the allowlisted branch and the recorded commit', () => {
     expect(process.stdout.write).not.toHaveBeenCalled();
   });
 
+  it('a record naming the private repo a library is developed in is refused, never a first build (decided 2026-11-06)', () => {
+    const working = `the commit ${prov.NATIVE_PIN} records`;
+    const privateRecord = (commit: string) => `# source bitboxffi ${BITBOX_PRIVATE_REPO} ${commit}\n`;
+    const err = () =>
+      (process.stderr.write as unknown as jest.Mock).mock.calls.map((c) => String(c[0])).join('');
+    // In the working tree, in the app's last commit, or both: refused before
+    // the checkout is looked at, with nothing on stdout, so the build stops.
+    for (const [name, committedText, workingText, spoiled] of [
+      ['private-both', privateRecord(OLD), undefined, ['working', 'committed']],
+      ['private-working', bitboxRecord(A), privateRecord(OLD), ['working']],
+      ['private-committed', privateRecord(OLD), bitboxRecord(A), ['committed']],
+    ] as [string, string, string | undefined, string[]][]) {
+      const app = appWith(committedText, workingText, name);
+      const req = src.checkRequest(['bitboxffi', crate], app)!;
+      expect(req.spoiled).toEqual(spoiled);
+      expect(req.problems.join('\n')).toContain(`"# source bitboxffi ${BITBOX_PRIVATE_REPO} ${OLD}" is not "# source bitboxffi`);
+      (process.stderr.write as unknown as jest.Mock).mockClear();
+      expect(src.main(['check', 'bitboxffi', crate], app)).toBe(2);
+      expect(err()).toContain("its record cannot say which commit the app's");
+    }
+    expect(process.stdout.write).not.toHaveBeenCalled();
+    // The public repo's line is the floor, as for any record.
+    const pub = appWith(bitboxRecord(A), undefined, 'public');
+    expect(src.checkRequest(['bitboxffi', crate], pub)).toMatchObject({
+      problems: [],
+      spoiled: [],
+      opts: { repoUrl: BITBOX_REPO, branch: 'main', pinned: [{ commit: A, where: working }] },
+    });
+    expect(judgeRequest(pub)).toMatchObject({ ok: true, commit: B, floors: [{ commit: A, contained: true }] });
+    // Nothing of the transition is left: no former-repo table, no floor that
+    // names another repo.
+    expect(Object.keys(src)).not.toContain('FORMER_REPOS');
+    expect(fs.readFileSync(path.join(__dirname, '..', 'native-sources.js'), 'utf8')).not.toMatch(/FORMER_REPOS|\bformers?\b/);
+  });
+
   it('a grafts file cannot make another branch\'s commit, or an older one, read as talia\'s (decided 2026-10-16)', () => {
     const graft = (text: string) => fs.writeFileSync(path.join(crate, '.git', 'info', 'grafts'), text);
     // Plain git believes both of these (git 2.54 does, with a deprecation
@@ -566,52 +619,69 @@ describe('the allowlisted branch and the recorded commit', () => {
     expect(prov.gitEnv()).toMatchObject({ GIT_GRAFT_FILE: '/dev/null', GIT_NO_REPLACE_OBJECTS: '1' });
   });
 
-  it('no refusal prints a ready-made push onto the branch or a ready-made rollback (decided 2026-10-16)', () => {
+  it('no refusal prints a ready-made push or a ready-made rollback (decided 2026-10-16)', () => {
     const code = fs.readFileSync(path.join(__dirname, '..', 'native-sources.js'), 'utf8');
     const hints = code.slice(code.indexOf('const hint = {'), code.indexOf("}[r.why] || ["));
-    expect(hints).toContain('HEAD:refs/heads/<a-new-branch-name>');
     expect(hints).toContain('checkout --detach ${remote}/${src.branch}');
-    expect(hints).not.toMatch(/HEAD:\$\{src\.branch\}/);
+    // A change is reviewed in the private repository and copied to the public
+    // one's main in one commit, then built (decided 2026-11-06): no hint sends
+    // anyone to push, or to open a pull request, in the repo being built.
+    expect(hints).not.toMatch(/\bpush\b|pull request|HEAD:/);
+    for (const key of ['dirty: [', 'unpushed: [', "'off-branch': ["]) {
+      const hint = hints.slice(hints.indexOf(key) + key.length);
+      const said = hint
+        .slice(0, hint.indexOf('],'))
+        .match(/`[^`]*`|'[^']*'/g)!
+        .map((l) => l.slice(1, -1))
+        .join(' ');
+      expect(said).toMatch(/reviewed in its private repository and copied to the public repository's \$\{src\.branch\} in one commit, then built/);
+    }
     expect(hints).not.toMatch(/--rollback \$\{/);
     // The forward fix comes before any word about a rollback.
     const behind = hints.slice(hints.indexOf("'behind-pin'"));
     expect(behind.indexOf('checkout --detach')).toBeLessThan(behind.indexOf('ROLLBACK'));
   });
 
-  it('the allowlist: bitboxffi builds from main, bdkwallet from talia-3, and the live record gives each a floor', () => {
-    // bdkffi (branch talia) went with the old engine (decided 2026-11-04).
-    expect(Object.fromEntries(Object.entries(prov.NATIVE_SOURCES).map(([lib, s]) => [lib, s.branch]))).toEqual({
-      bitboxffi: 'main',
-      bdkwallet: 'talia-3',
+  it('the allowlist: both libraries build from main of their public repos, and the live record gives each a floor', () => {
+    // bdkffi (branch talia) went with the old engine (decided 2026-11-04);
+    // bdkwallet built from the private fork's talia-3 until 2026-11-06.
+    expect(Object.fromEntries(Object.entries(prov.NATIVE_SOURCES).map(([lib, s]) => [lib, [s.repo, s.branch]]))).toEqual({
+      bitboxffi: [BITBOX_REPO, 'main'],
+      bdkwallet: [BDK_REPO, 'main'],
     });
     // bdkwallet's first build had no floor (nothing recorded yet); once it is
     // recorded, every later build must contain that commit, as for the others.
     expect(src.recordFloor('# header\n', 'bdkwallet')).toEqual({ commit: null });
+    // The live record sets each library's floor: a full commit of its public
+    // repo (decided 2026-11-06).
     const live = fs.readFileSync(path.join(__dirname, '..', '..', prov.NATIVE_PIN), 'utf8');
     for (const lib of Object.keys(prov.NATIVE_SOURCES)) {
-      expect(src.recordFloor(live, lib).commit).toMatch(/^[0-9a-f]{40}$/);
+      expect(src.recordFloor(live, lib)).toEqual({ commit: expect.stringMatching(/^[0-9a-f]{40}$/) });
     }
   });
 });
 
 describe('a GitHub repo, however it is spelled', () => {
   it.each([
-    'https://github.com/21st-Capital/bitbox-ffi',
-    'https://github.com/21st-Capital/bitbox-ffi.git',
-    'https://github.com/21st-capital/Bitbox-FFI/',
-    'https://user@github.com/21st-Capital/bitbox-ffi.git',
-    'git@github.com:21st-Capital/bitbox-ffi.git',
-    'ssh://git@github.com/21st-Capital/bitbox-ffi',
+    'https://github.com/21st-Capital/talia-bitbox-ffi',
+    'https://github.com/21st-Capital/talia-bitbox-ffi.git',
+    'https://github.com/21st-capital/Talia-Bitbox-FFI/',
+    'https://user@github.com/21st-Capital/talia-bitbox-ffi.git',
+    'git@github.com:21st-Capital/talia-bitbox-ffi.git',
+    'ssh://git@github.com/21st-Capital/talia-bitbox-ffi',
   ])('%s is the org repo', (url) => {
     expect(src.repoKey(url)).toBe(src.repoKey(BITBOX_REPO));
   });
 
   it.each([
-    'https://github.com/bitcoindevkit/bitbox-ffi',
-    'https://github.com/21st-Capital/bitbox-ffi-evil',
-    'https://github.com.evil.example/21st-Capital/bitbox-ffi',
-    'https://gitlab.com/21st-Capital/bitbox-ffi',
-    '/Users/dev/bitbox-ffi.git',
+    'https://github.com/bitcoindevkit/talia-bitbox-ffi',
+    'https://github.com/21st-Capital/talia-bitbox-ffi-evil',
+    'https://github.com.evil.example/21st-Capital/talia-bitbox-ffi',
+    'https://gitlab.com/21st-Capital/talia-bitbox-ffi',
+    '/Users/dev/talia-bitbox-ffi.git',
+    // The private repo it is developed in is another repo (decided 2026-11-06).
+    BITBOX_PRIVATE_REPO,
+    'git@github.com:21st-Capital/bitbox-ffi.git',
   ])('%s is not', (url) => {
     expect(src.repoKey(url)).not.toBe(src.repoKey(BITBOX_REPO));
   });
@@ -1133,7 +1203,13 @@ describe('the record, written after a build', () => {
 
       it('names each copy by its SHA-256 and its file name in the lib folder, on the private fork', () => {
         expect(src.copyName(sha('wallet ios'), W_IOS)).toBe(`${sha('wallet ios')}-libbdkwallet-ios.a`);
-        expect(src.COPIES.repo).toBe(BDK_REPO);
+        // The copies stay on the private fork (decided 2026-10-22), named on
+        // their own since the libraries are built from the public repos
+        // (decided 2026-11-06): never a repo a build is taken from.
+        expect(src.COPIES.repo).toBe(BDK_PRIVATE_REPO);
+        for (const s of Object.values(prov.NATIVE_SOURCES)) {
+          expect(src.repoKey(src.COPIES.repo)).not.toBe(src.repoKey(s.repo));
+        }
         expect(src.COPIES.tagPrefix).toBe('talia-native-libs-');
         // The releases are named, never discovered from GitHub's release list.
         expect(REAL_TAGS).toContain('talia-native-libs-2026-10-22');
@@ -1251,7 +1327,7 @@ describe('the record, written after a build', () => {
           pause: () => undefined,
         };
         expect(restore(['bdkwallet'], down)).toBe(2);
-        expect(err()).toContain(`release ${TAG} of ${BDK_REPO} could not be read after 3 tries (gh: not signed in)`);
+        expect(err()).toContain(`release ${TAG} of ${BDK_PRIVATE_REPO} could not be read after 3 tries (gh: not signed in)`);
         expect(err()).toContain(`so the copy of ${W_IOS}`);
         expect(gone(W_IOS)).toBe(true);
       });
@@ -1270,7 +1346,7 @@ describe('the record, written after a build', () => {
         const r = release(LIBS, {}, 99);
         const err = errors();
         expect(restore(['bdkwallet'], r.copies)).toBe(2);
-        expect(err()).toContain(`release ${TAG} of ${BDK_REPO} could not be read after 3 tries (it listed no files)`);
+        expect(err()).toContain(`release ${TAG} of ${BDK_PRIVATE_REPO} could not be read after 3 tries (it listed no files)`);
         expect(err()).not.toContain('no release in COPIES.tags');
         expect(r.calls.fetched).toEqual([]);
         expect(gone(W_IOS)).toBe(true);
@@ -1327,7 +1403,7 @@ describe('the record, written after a build', () => {
         const partial = release(LIBS.filter(([f]) => f !== PIN_SIM));
         expect(src.main(['copies', 'bdkwallet'], app, { copies: partial.copies })).toBe(0);
         expect(src.main(['copies', 'all'], app, { copies: partial.copies })).toBe(2);
-        expect(err()).toContain(`✗ no release in COPIES.tags (${src.COPIES.tags.join(', ')}) of ${BDK_REPO} holds ${src.copyName(sha('old sim'), PIN_SIM)}`);
+        expect(err()).toContain(`✗ no release in COPIES.tags (${src.COPIES.tags.join(', ')}) of ${BDK_PRIVATE_REPO} holds ${src.copyName(sha('old sim'), PIN_SIM)}`);
         // Only a copy proven absent, every release having answered, gets the upload advice.
         expect(err()).toContain('Upload each missing file');
         expect(err()).toContain('add its tag to COPIES.tags');
@@ -1830,18 +1906,21 @@ describe('the build scripts', () => {
     for (const args of [
       [],
       ['--fork', nowhere],
-      ['--branch', 'talia-3'],
-      ['--fork', nowhere, '--branch', 'talia-3', '--force'],
-      ['--fork', nowhere, '--branch', 'talia-3', '--rollback'],
-      ['--fork', '', '--branch', 'talia-3'],
+      ['--branch', 'main'],
+      ['--fork', nowhere, '--branch', 'main', '--force'],
+      ['--fork', nowhere, '--branch', 'main', '--rollback'],
+      ['--fork', '', '--branch', 'main'],
     ]) {
       expect(run(...args).status).toBe(64);
     }
-    const other = run('--fork', nowhere, '--branch', 'talia');
-    expect(other.status).toBe(1);
-    expect(other.stdout).toContain("built from the fork's talia-3 branch alone, not talia");
+    // The private fork's branches are not the public repo's (decided 2026-11-06).
+    for (const branch of ['talia-3', 'talia']) {
+      const other = run('--fork', nowhere, '--branch', branch);
+      expect(other.status).toBe(1);
+      expect(other.stdout).toContain(`built from the fork's main branch alone, not ${branch}`);
+    }
     // Parsed, then it stops at the missing checkout, long before anything is built.
-    const parsed = run('--fork', nowhere, '--branch', 'talia-3', '--rollback', NEW.slice(0, 7));
+    const parsed = run('--fork', nowhere, '--branch', 'main', '--rollback', NEW.slice(0, 7));
     expect(parsed.status).toBe(1);
     expect(parsed.stdout).toContain(`No bdk-ffi fork checkout at ${nowhere}`);
   });

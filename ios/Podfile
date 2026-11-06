@@ -25,10 +25,11 @@ end
 target 'KeelWallet' do
   config = use_native_modules!
 
-  # Talia's Bitcoin engine: the bdk-ffi 3.1.1 fork (Rust, branch talia-3)
-  # behind the app's own Swift bridge (BDK upgrade, decided 2026-10-15). Links
-  # native/bdkwallet/lib/libbdkwallet-ios.a in place; rebuild it with
-  # native/build-bdkwallet.sh. The old engine's TaliaBdk pod (bdk-ffi 0.30
+  # Talia's Bitcoin engine: the bdk-ffi 3.1.1 fork (Rust) behind the app's
+  # own Swift bridge (BDK upgrade, decided 2026-10-15). Links
+  # native/bdkwallet/lib/libbdkwallet-ios.a in place, built from the public
+  # talia-bdk-ffi, branch main, with native/build-bdkwallet.sh (decided
+  # 2026-11-06). The old engine's TaliaBdk pod (bdk-ffi 0.30
   # behind bdk-rn's bridge, native/bdkffi) was removed with the old engine (decided
   # 2026-11-04).
   pod 'TaliaBdkWallet', :path => '../native/bdkwallet'
