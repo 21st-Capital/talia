@@ -30,6 +30,12 @@ const src = require('../native-sources.js') as {
   recordFloors: (root: string, lib: string) => { floors: Entry[]; problems: string[]; spoiled: string[] };
   buildConfigOutside: (root: string, home?: string) => string[];
   cargoEnv: (env: Record<string, string | undefined>) => { kept: Record<string, string>; dropped: string[] };
+  pathMaps: (
+    lib: string,
+    home: string | undefined,
+    checkout: string | undefined,
+    developer: string | undefined | null,
+  ) => { problem?: string; vars?: { CARGO_ENCODED_RUSTFLAGS: string; CFLAGS: string }; shown?: string };
   withSourceRecord: (
     text: string,
     lib: string,
@@ -51,6 +57,7 @@ const src = require('../native-sources.js') as {
     root?: string,
     deps?: {
       xcode?: () => { version: string; build: string } | null;
+      developer?: () => string | null;
       checkout?: (src: Entry, dir: string, commit: string) => { ok: boolean; root: string | null; problems: string[] };
       copies?: {
         release: (tag: string) => { tag: string; name: string; size: number; digest?: string | null }[];
@@ -690,6 +697,10 @@ describe('a GitHub repo, however it is spelled', () => {
 describe('the record, written after a build', () => {
   const PIN_IOS = 'native/bitboxffi/lib/libbitboxffi-ios.a';
   const PIN_SIM = 'native/bitboxffi/lib/libbitboxffi-sim.a';
+  // A BitBox library is judged for uniffi's bindgen crates too (decided
+  // 2026-11-06), so it is read as an archive: each stand-in is one, its one
+  // member named after the label.
+  const standIn = (label: string) => arOf([label.replace(/[^A-Za-z0-9]+/g, '_')]).toString('latin1');
   const built = (lib: string, content: string, file: string) => `# built ${lib} ${sha(content)} ${file}\n`;
   const gatedLines = (files: [string, string][]) => files.map(([f, c]) => `# gated bdkwallet ${sha(c)} ${f}\n`).join('');
   // The wallet library, recorded by its build with
@@ -719,8 +730,8 @@ describe('the record, written after a build', () => {
     '# xcode bdkwallet 27.1 27A9275\n' +
     // The other library's files its overlap gate judged (decided 2026-10-17).
     gatedLines([
-      [PIN_IOS, 'old ios'],
-      [PIN_SIM, 'old sim'],
+      [PIN_IOS, standIn('old ios')],
+      [PIN_SIM, standIn('old sim')],
     ]) +
     `${sha('wallet ios')}  ${W_IOS}\n` +
     `${sha('wallet sim')}  ${W_SIM}\n`;
@@ -730,14 +741,14 @@ describe('the record, written after a build', () => {
     `# source bitboxffi ${BITBOX_REPO} ${OLD}\n` +
     '# source-note bitboxffi: INFERRED FROM DATES,\n' +
     '# source-note bitboxffi: not recorded by a build.\n' +
-    built('bitboxffi', 'old ios', PIN_IOS) +
-    built('bitboxffi', 'old sim', PIN_SIM) +
-    `${sha('old ios')}  ${PIN_IOS}\n` +
-    `${sha('old sim')}  ${PIN_SIM}\n` +
+    built('bitboxffi', standIn('old ios'), PIN_IOS) +
+    built('bitboxffi', standIn('old sim'), PIN_SIM) +
+    `${sha(standIn('old ios'))}  ${PIN_IOS}\n` +
+    `${sha(standIn('old sim'))}  ${PIN_SIM}\n` +
     WALLET;
   const NEW_BUILT = [
-    { path: PIN_IOS, sha256: sha('new ios') },
-    { path: PIN_SIM, sha256: sha('new sim') },
+    { path: PIN_IOS, sha256: sha(standIn('new ios')) },
+    { path: PIN_SIM, sha256: sha(standIn('new sim')) },
   ];
   let app: string;
   const recordText = () => fs.readFileSync(path.join(app, prov.NATIVE_PIN), 'utf8');
@@ -753,8 +764,8 @@ describe('the record, written after a build', () => {
   beforeEach(() => {
     app = path.join(tmp, 'app');
     put(prov.NATIVE_PIN, RECORD, app);
-    put(PIN_IOS, 'old ios', app);
-    put(PIN_SIM, 'old sim', app);
+    put(PIN_IOS, standIn('old ios'), app);
+    put(PIN_SIM, standIn('old sim'), app);
     put(W_IOS, 'wallet ios', app);
     put(W_SIM, 'wallet sim', app);
     for (const [file, text] of [...W_GENERATED, ...OLD_GENERATED]) {
@@ -829,19 +840,19 @@ describe('the record, written after a build', () => {
     expect(next).toBe(
       '# header\n\n' +
         `# source bitboxffi ${BITBOX_REPO} ${NEW}\n` +
-        built('bitboxffi', 'new ios', PIN_IOS) +
-        built('bitboxffi', 'new sim', PIN_SIM) +
-        `${sha('old ios')}  ${PIN_IOS}\n` +
-        `${sha('old sim')}  ${PIN_SIM}\n` +
+        built('bitboxffi', standIn('new ios'), PIN_IOS) +
+        built('bitboxffi', standIn('new sim'), PIN_SIM) +
+        `${sha(standIn('old ios'))}  ${PIN_IOS}\n` +
+        `${sha(standIn('old sim'))}  ${PIN_SIM}\n` +
         WALLET,
     );
     // Recorded but not pinned: the archive refuses it until `pin`.
     const { sources, problems } = prov.parseNativeSources(next);
     expect(sources[0]).toEqual({ lib: 'bitboxffi', repo: BITBOX_REPO, commit: NEW, note: null, built: NEW_BUILT });
     expect(problems).toEqual([
-      `${PIN_IOS} is pinned ${sha('old ios')}, but the build of bitboxffi recorded ${sha('new ios')}: ` +
+      `${PIN_IOS} is pinned ${sha(standIn('old ios'))}, but the build of bitboxffi recorded ${sha(standIn('new ios'))}: ` +
         'the pins and the source record were not written together',
-      `${PIN_SIM} is pinned ${sha('old sim')}, but the build of bitboxffi recorded ${sha('new sim')}: ` +
+      `${PIN_SIM} is pinned ${sha(standIn('old sim'))}, but the build of bitboxffi recorded ${sha(standIn('new sim'))}: ` +
         'the pins and the source record were not written together',
     ]);
   });
@@ -849,8 +860,8 @@ describe('the record, written after a build', () => {
   it('puts a missing record above the library\'s pins, else at the end, and drops a second source line', () => {
     const without = RECORD.replace(`# source bitboxffi ${BITBOX_REPO} ${OLD}\n`, '');
     expect(src.withSourceRecord(without, 'bitboxffi', NEW, NEW_BUILT)).toContain(
-      `# source bitboxffi ${BITBOX_REPO} ${NEW}\n${built('bitboxffi', 'new ios', PIN_IOS)}` +
-        `${built('bitboxffi', 'new sim', PIN_SIM)}${sha('old ios')}  ${PIN_IOS}\n`,
+      `# source bitboxffi ${BITBOX_REPO} ${NEW}\n${built('bitboxffi', standIn('new ios'), PIN_IOS)}` +
+        `${built('bitboxffi', standIn('new sim'), PIN_SIM)}${sha(standIn('old ios'))}  ${PIN_IOS}\n`,
     );
     expect(src.withSourceRecord('# only a header', 'bitboxffi', OLD, [{ path: PIN_IOS, sha256: sha('x') }])).toBe(
       `# only a header\n# source bitboxffi ${BITBOX_REPO} ${OLD}\n# built bitboxffi ${sha('x')} ${PIN_IOS}\n`,
@@ -862,12 +873,12 @@ describe('the record, written after a build', () => {
   });
 
   it('record hashes the files the build copied into the app and shows them as not pinned yet', () => {
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     const err = errors();
     expect(record('bitboxffi')).toBe(0);
     expect(recordText()).toBe(src.withSourceRecord(RECORD, 'bitboxffi', NEW, NEW_BUILT, BITBOX_GENERATED, XCODE));
-    expect(err()).toContain(`${sha('new ios')}  ${PIN_IOS}  (NOT PINNED)`);
+    expect(err()).toContain(`${sha(standIn('new ios'))}  ${PIN_IOS}  (NOT PINNED)`);
     expect(err()).toContain('node scripts/native-sources.js pin bitboxffi');
     expect(err()).toContain('TOGETHER');
     expect(run(['record', 'bitboxffi', NEW.slice(0, 7), checkoutOf('bitboxffi')])).toBe(64);
@@ -886,22 +897,22 @@ describe('the record, written after a build', () => {
   });
 
   it('pin, after record, pins exactly the recorded files and leaves a record the archive accepts', () => {
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     expect(record('bitboxffi')).toBe(0);
     // The new library's overlap gate judged the OLD BitBox: pinning the new
     // one alone is refused until that build judges it (decided 2026-10-17).
     const err = errors();
     expect(run(['pin', 'bitboxffi'])).toBe(2);
     expect(err()).toContain(
-      `bdkwallet's overlap gate judged ${PIN_IOS} as ${sha('old ios')}, but it is pinned ${sha('new ios')}: the two were never compared`,
+      `bdkwallet's overlap gate judged ${PIN_IOS} as ${sha(standIn('old ios'))}, but it is pinned ${sha(standIn('new ios'))}: the two were never compared`,
     );
     regate();
     expect(run(['pin', 'bitboxffi'])).toBe(0);
     const text = recordText();
     expect(src.pinsOf(text, 'bitboxffi')).toEqual([
-      { path: PIN_IOS, pinned: sha('new ios') },
-      { path: PIN_SIM, pinned: sha('new sim') },
+      { path: PIN_IOS, pinned: sha(standIn('new ios')) },
+      { path: PIN_SIM, pinned: sha(standIn('new sim')) },
     ]);
     // The other library is untouched, and the archive accepts the record.
     expect(src.pinsOf(text, 'bdkwallet')).toEqual([
@@ -915,19 +926,19 @@ describe('the record, written after a build', () => {
   });
 
   it('pin refuses a file the recorded build did not write: a hand copy, after a build dropped the note', () => {
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     expect(record('bitboxffi')).toBe(0);
     const recorded = recordText();
     put(PIN_IOS, 'copied by hand, or a dirty manual cargo build', app);
     const err = errors();
     expect(run(['pin', 'bitboxffi'])).toBe(2);
     expect(recordText()).toBe(recorded);
-    expect(err()).toContain(`${PIN_IOS} is ${sha('copied by hand, or a dirty manual cargo build')}; the build wrote ${sha('new ios')}`);
+    expect(err()).toContain(`${PIN_IOS} is ${sha('copied by hand, or a dirty manual cargo build')}; the build wrote ${sha(standIn('new ios'))}`);
   });
 
   it('pin refuses a file copied over a hand-written record (no build recorded it)', () => {
-    put(PIN_IOS, 'copied by hand', app);
+    put(PIN_IOS, standIn('copied by hand'), app);
     expect(run(['pin', 'bitboxffi'])).toBe(2);
     expect(recordText()).toBe(RECORD);
   });
@@ -938,8 +949,8 @@ describe('the record, written after a build', () => {
     // Another library's record is broken: pinning this one would not make the record acceptable.
     const broken = src.withSourceRecord(RECORD, 'bitboxffi', NEW, NEW_BUILT).replace(`# source bdkwallet ${BDK_REPO} ${W_COMMIT}\n`, '');
     put(prov.NATIVE_PIN, broken, app);
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     const err = errors();
     expect(run(['pin', 'bitboxffi'])).toBe(2);
     expect(recordText()).toBe(broken);
@@ -947,8 +958,8 @@ describe('the record, written after a build', () => {
   });
 
   it('pin takes two libraries rebuilt together in one write, where neither alone leaves a record the archive accepts', () => {
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     // The wallet library is pinned only as a real archive with no bindgen tool in it.
     const walletIos = arOf(['bdk_wallet', 'serde_json']);
     const walletSim = arOf(['bdk_wallet', 'serde_json', 'sim']);
@@ -971,8 +982,8 @@ describe('the record, written after a build', () => {
       { path: W_SIM, pinned: sha(walletSim) },
     ]);
     expect(src.pinsOf(text, 'bitboxffi')).toEqual([
-      { path: PIN_IOS, pinned: sha('new ios') },
-      { path: PIN_SIM, pinned: sha('new sim') },
+      { path: PIN_IOS, pinned: sha(standIn('new ios')) },
+      { path: PIN_SIM, pinned: sha(standIn('new sim')) },
     ]);
     expect(prov.parseNativeSources(text).problems).toEqual([]);
     expect(run(['pin', 'bitboxffi', 'bdkwallet'])).toBe(0);
@@ -980,8 +991,8 @@ describe('the record, written after a build', () => {
   });
 
   it('pin of several writes nothing when any one of them is not what its recorded build wrote', () => {
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     put(W_IOS, 'new wallet ios', app);
     put(W_SIM, 'new wallet sim', app);
     expect(record('bitboxffi')).toBe(0);
@@ -996,16 +1007,16 @@ describe('the record, written after a build', () => {
   });
 
   it('pin adds a pin for a recorded file that had none, after the library\'s other pins', () => {
-    const noSim = RECORD.replace(`${sha('old sim')}  ${PIN_SIM}\n`, '');
+    const noSim = RECORD.replace(`${sha(standIn('old sim'))}  ${PIN_SIM}\n`, '');
     put(prov.NATIVE_PIN, noSim, app);
-    put(PIN_IOS, 'new ios', app);
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_IOS, standIn('new ios'), app);
+    put(PIN_SIM, standIn('new sim'), app);
     expect(record('bitboxffi')).toBe(0);
     regate();
     expect(run(['pin', 'bitboxffi'])).toBe(0);
-    const regated = WALLET.replace(gatedLines([[PIN_IOS, 'old ios'], [PIN_SIM, 'old sim']]), gatedLines([[PIN_IOS, 'new ios'], [PIN_SIM, 'new sim']]));
+    const regated = WALLET.replace(gatedLines([[PIN_IOS, standIn('old ios')], [PIN_SIM, standIn('old sim')]]), gatedLines([[PIN_IOS, standIn('new ios')], [PIN_SIM, standIn('new sim')]]));
     expect(regated).not.toBe(WALLET);
-    expect(recordText().endsWith(`${sha('new ios')}  ${PIN_IOS}\n${sha('new sim')}  ${PIN_SIM}\n${regated}`)).toBe(true);
+    expect(recordText().endsWith(`${sha(standIn('new ios'))}  ${PIN_IOS}\n${sha(standIn('new sim'))}  ${PIN_SIM}\n${regated}`)).toBe(true);
     expect(prov.parseNativeSources(recordText()).problems).toEqual([]);
   });
 
@@ -1023,11 +1034,26 @@ describe('the record, written after a build', () => {
       const err = errors();
       expect(run(['verify'])).toBe(0);
       expect(err()).toContain('Every native library is the one pinned');
-      expect(err()).toContain(`${sha('old sim')}  ${PIN_SIM}`);
+      expect(err()).toContain(`${sha(standIn('old sim'))}  ${PIN_SIM}`);
+    });
+
+    it('refuses a pinned BitBox library that holds uniffi\'s bindings tool, and says to rebuild it, not to put it back (decided 2026-11-06)', () => {
+      // The pinned device library as an older build left it: clap inside.
+      const withTool = standIn('clap');
+      put(prov.NATIVE_PIN, recordText().split(sha(standIn('old ios'))).join(sha(withTool)), app);
+      put(PIN_IOS, withTool, app);
+      const err = errors();
+      expect(run(['verify'])).toBe(2);
+      expect(err()).toContain('holds uniffi\'s bindings tool, so nothing is built');
+      expect(err()).toContain(`${PIN_IOS} holds clap`);
+      expect(err()).toContain('gives\n  uniffi\'s "cli" feature to the uniffi-bindgen binary alone');
+      expect(err()).not.toContain('Put back the pinned files');
+      // A phone or simulator test build may still try it.
+      expect(run(['verify', '--test-build'])).toBe(0);
     });
 
     it.each([
-      ['a library that differs from its pin', () => put(PIN_IOS, 'swapped', app), `${PIN_IOS} is ${sha('swapped')}, pinned ${sha('old ios')}`],
+      ['a library that differs from its pin', () => put(PIN_IOS, standIn('swapped'), app), `${PIN_IOS} is ${sha(standIn('swapped'))}, pinned ${sha(standIn('old ios'))}`],
       ['a missing library', () => fs.rmSync(path.join(app, W_SIM)), `${W_SIM} is missing, pinned ${sha('wallet sim')}`],
       ['a file the linker would find', () => put('native/bdkwallet/lib/libbdkwallet.a', 'stock', app), 'native/bdkwallet/lib/libbdkwallet.a is not pinned'],
       // Decided 2026-10-07: a scratch file left beside the libraries (a symbol
@@ -1048,19 +1074,19 @@ describe('the record, written after a build', () => {
     describe('--test-build: a rebuilt library is tested on the phone BEFORE it is pinned (decided 2026-10-07)', () => {
       // A BitBox rebuild, and the new library's build that judges it (decided 2026-10-17).
       const rebuilt = () => {
-        put(PIN_IOS, 'new ios', app);
-        put(PIN_SIM, 'new sim', app);
+        put(PIN_IOS, standIn('new ios'), app);
+        put(PIN_SIM, standIn('new sim'), app);
         expect(record('bitboxffi')).toBe(0);
         regate();
       };
 
       it('refuses a rebuilt library the new library\'s overlap gate never judged', () => {
-        put(PIN_IOS, 'new ios', app);
-        put(PIN_SIM, 'new sim', app);
+        put(PIN_IOS, standIn('new ios'), app);
+        put(PIN_SIM, standIn('new sim'), app);
         expect(record('bitboxffi')).toBe(0);
         const err = errors();
         expect(run(['verify', '--test-build'])).toBe(2);
-        expect(err()).toContain(`bdkwallet's overlap gate judged ${PIN_SIM} as ${sha('old sim')}, but it is pinned ${sha('new sim')}`);
+        expect(err()).toContain(`bdkwallet's overlap gate judged ${PIN_SIM} as ${sha(standIn('old sim'))}, but it is pinned ${sha(standIn('new sim'))}`);
         expect(err()).toContain('rebuild bdkwallet (native/build-bdkwallet.sh)');
         regate();
         expect(run(['verify', '--test-build'])).toBe(0);
@@ -1074,7 +1100,7 @@ describe('the record, written after a build', () => {
         // ...the phone build takes it, and says so.
         const err = errors();
         expect(run(['verify', '--test-build'])).toBe(0);
-        expect(err()).toContain(`${sha('new ios')}  ${PIN_IOS}  (recorded build, NOT PINNED)`);
+        expect(err()).toContain(`${sha(standIn('new ios'))}  ${PIN_IOS}  (recorded build, NOT PINNED)`);
         expect(err()).toContain(`${sha('wallet ios')}  ${W_IOS}\n`);
         expect(err()).toContain(`bitboxffi: this build tests the libraries built from ${NEW}, not pinned yet`);
         expect(err()).toContain('node scripts/native-sources.js pin bitboxffi');
@@ -1089,17 +1115,17 @@ describe('the record, written after a build', () => {
 
       it('refuses a library that is neither pinned nor what the recorded build wrote', () => {
         rebuilt();
-        put(PIN_SIM, 'copied by hand', app);
+        put(PIN_SIM, standIn('copied by hand'), app);
         const err = errors();
         expect(run(['verify', '--test-build'])).toBe(2);
-        expect(err()).toContain(`${PIN_SIM} is ${sha('copied by hand')}, pinned ${sha('old sim')}`);
+        expect(err()).toContain(`${PIN_SIM} is ${sha(standIn('copied by hand'))}, pinned ${sha(standIn('old sim'))}`);
         expect(err()).toContain('only when its');
       });
 
       it('refuses the old pinned files kept under a new record (the record names another commit)', () => {
         rebuilt();
-        put(PIN_IOS, 'old ios', app);
-        put(PIN_SIM, 'old sim', app);
+        put(PIN_IOS, standIn('old ios'), app);
+        put(PIN_SIM, standIn('old sim'), app);
         const err = errors();
         expect(run(['verify', '--test-build'])).toBe(2);
         expect(err()).toContain('the pins and the source record were not written together');
@@ -1134,8 +1160,8 @@ describe('the record, written after a build', () => {
         src.COPIES.tags.splice(0, src.COPIES.tags.length, ...REAL_TAGS);
       });
       const LIBS: [string, string][] = [
-        [PIN_IOS, 'old ios'],
-        [PIN_SIM, 'old sim'],
+        [PIN_IOS, standIn('old ios')],
+        [PIN_SIM, standIn('old sim')],
         [W_IOS, 'wallet ios'],
         [W_SIM, 'wallet sim'],
       ];
@@ -1403,7 +1429,7 @@ describe('the record, written after a build', () => {
         const partial = release(LIBS.filter(([f]) => f !== PIN_SIM));
         expect(src.main(['copies', 'bdkwallet'], app, { copies: partial.copies })).toBe(0);
         expect(src.main(['copies', 'all'], app, { copies: partial.copies })).toBe(2);
-        expect(err()).toContain(`✗ no release in COPIES.tags (${src.COPIES.tags.join(', ')}) of ${BDK_PRIVATE_REPO} holds ${src.copyName(sha('old sim'), PIN_SIM)}`);
+        expect(err()).toContain(`✗ no release in COPIES.tags (${src.COPIES.tags.join(', ')}) of ${BDK_PRIVATE_REPO} holds ${src.copyName(sha(standIn('old sim')), PIN_SIM)}`);
         // Only a copy proven absent, every release having answered, gets the upload advice.
         expect(err()).toContain('Upload each missing file');
         expect(err()).toContain('add its tag to COPIES.tags');
@@ -1513,8 +1539,8 @@ describe('the record, written after a build', () => {
     expect(text).toContain(
       '# xcode bdkwallet 27.1 27A9275\n' +
         gatedLines([
-          [PIN_IOS, 'old ios'],
-          [PIN_SIM, 'old sim'],
+          [PIN_IOS, standIn('old ios')],
+          [PIN_SIM, standIn('old sim')],
         ]),
     );
     expect(text.match(/# gated bdkwallet/g)).toHaveLength(2);
@@ -1561,7 +1587,7 @@ describe('the record, written after a build', () => {
     });
 
     it.each([
-      ['a library copied by hand', () => put(PIN_IOS, 'hand-made', app), `${PIN_IOS} is ${sha('hand-made')}; the build left ${sha('old ios')} at`],
+      ['a library copied by hand', () => put(PIN_IOS, standIn('hand-made'), app), `${PIN_IOS} is ${sha(standIn('hand-made'))}; the build left ${sha(standIn('old ios'))} at`],
       ['bindings edited by hand', () => put('native/bitboxffi/bitbox.swift', 'edited', app), `native/bitboxffi/bitbox.swift is ${sha('edited')}; the build left`],
       ['a library the build never wrote', () => fs.rmSync(path.join(checkoutOf('bitboxffi'), 'target/aarch64-apple-ios-sim/release/libbitboxffi.a')), 'the build left nothing at'],
     ])('refuses %s: only the build\'s own output is recorded', (_what, spoil, says) => {
@@ -1603,17 +1629,17 @@ describe('the record, written after a build', () => {
     it('refuses the new library\'s record when a library changed after its gate judged it', () => {
       leaveOutputs('bdkwallet');
       // BitBox rebuilt and recorded after the gate ran: accepted as a peer, but never judged.
-      put(PIN_IOS, 'new ios', app);
-      put(PIN_SIM, 'new sim', app);
+      put(PIN_IOS, standIn('new ios'), app);
+      put(PIN_SIM, standIn('new sim'), app);
       expect(record('bitboxffi')).toBe(0);
       const before = recordText();
       const err = errors();
       expect(recordOnly('bdkwallet', W_COMMIT)).toBe(2);
-      expect(err()).toContain(`the gate judged ${path.join(app, PIN_SIM)} as ${sha('old sim')}; it is ${sha('new sim')} now`);
+      expect(err()).toContain(`the gate judged ${path.join(app, PIN_SIM)} as ${sha(standIn('old sim'))}; it is ${sha(standIn('new sim'))} now`);
       expect(recordText()).toBe(before);
       // The build again: its gate judges the new BitBox, and the record follows.
       expect(record('bdkwallet', W_COMMIT)).toBe(0);
-      expect(recordText()).toContain(`# gated bdkwallet ${sha('new sim')} ${PIN_SIM}\n`);
+      expect(recordText()).toContain(`# gated bdkwallet ${sha(standIn('new sim'))} ${PIN_SIM}\n`);
     });
 
     it('the build scripts copy from exactly where record looks, and call it with the checkout', () => {
@@ -1647,10 +1673,10 @@ describe('the record, written after a build', () => {
   });
 
   it('record of the new library refuses when a library its gate judged is not what the app links', () => {
-    put(PIN_SIM, 'copied by hand', app);
+    put(PIN_SIM, standIn('copied by hand'), app);
     const err = errors();
     expect(record('bdkwallet')).toBe(2);
-    expect(err()).toContain(`${PIN_SIM} is ${sha('copied by hand')}, pinned ${sha('old sim')}, recorded ${sha('old sim')}`);
+    expect(err()).toContain(`${PIN_SIM} is ${sha(standIn('copied by hand'))}, pinned ${sha(standIn('old sim'))}, recorded ${sha(standIn('old sim'))}`);
     expect(recordText()).toBe(RECORD);
   });
 
@@ -1703,9 +1729,9 @@ describe('the record, written after a build', () => {
       out += x;
       return true;
     });
-    put(PIN_SIM, 'new sim', app);
+    put(PIN_SIM, standIn('new sim'), app);
     expect(run(['peers', 'bdkwallet', 'sim'])).toBe(2);
-    put(PIN_IOS, 'new ios', app);
+    put(PIN_IOS, standIn('new ios'), app);
     expect(record('bitboxffi')).toBe(0);
     out = '';
     expect(run(['peers', 'bdkwallet', 'sim'])).toBe(0);
@@ -1727,11 +1753,11 @@ describe('the record, written after a build', () => {
     expect(run(['peers', 'bitboxffi', 'ios'])).toBe(0);
     expect(out.split('\n').filter(Boolean)).toEqual([path.join(app, W_IOS)]);
     out = '';
-    put(PIN_SIM, 'not the pinned one', app);
+    put(PIN_SIM, standIn('not the pinned one'), app);
     const err = errors();
     expect(run(['peers', 'bdkwallet', 'sim'])).toBe(2);
     expect(out).toBe('');
-    expect(err()).toContain(`${PIN_SIM} is ${sha('not the pinned one')}, pinned ${sha('old sim')}`);
+    expect(err()).toContain(`${PIN_SIM} is ${sha(standIn('not the pinned one'))}, pinned ${sha(standIn('old sim'))}`);
     expect(run(['peers', 'bdkwallet', 'tv'])).toBe(64);
     expect(run(['peers', 'otherffi', 'ios'])).toBe(64);
   });
@@ -1757,7 +1783,7 @@ describe('the record, written after a build', () => {
 
   it('withPins rewrites only that library\'s digests', () => {
     expect(src.withPins(RECORD, 'bitboxffi', { [PIN_IOS]: sha('x') })).toBe(
-      RECORD.replace(`${sha('old ios')}  ${PIN_IOS}`, `${sha('x')}  ${PIN_IOS}`),
+      RECORD.replace(`${sha(standIn('old ios'))}  ${PIN_IOS}`, `${sha('x')}  ${PIN_IOS}`),
     );
   });
 });
@@ -1805,21 +1831,50 @@ describe('the build environment (decided 2026-10-05)', () => {
     expect(dropped).not.toContain('UNSET');
   });
 
-  it('cargo-env hands the build scripts exactly the kept pairs, NUL-separated', () => {
+  it('cargo-env hands the build scripts exactly the kept pairs and its own path maps, NUL-separated', () => {
     const before = { ...process.env };
+    const checkout = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'cargo-env-')));
+    // The Xcode folder is this Mac's (xcode-select -p); the test names one, so it runs anywhere.
+    const xcodeDir = path.join(checkout, 'Xcode.app', 'Contents', 'Developer');
+    const deps = { developer: () => xcodeDir };
+    const run = (argv: string[]) => src.main(argv, undefined, deps);
     try {
       process.env.RUSTFLAGS = '--cfg evil';
+      process.env.CARGO_ENCODED_RUSTFLAGS = '-Cevil';
+      process.env.CFLAGS = '-DEVIL';
       process.env.CARGO_TARGET_DIR = '/tmp/elsewhere';
       let out = '';
       (process.stdout.write as unknown as jest.Mock).mockImplementation((s: string) => {
         out += s;
         return true;
       });
-      expect(src.main(['cargo-env'])).toBe(0);
+      // The library and the checkout are required: no build runs without its maps.
+      expect(run(['cargo-env'])).toBe(64);
+      expect(run(['cargo-env', 'bitboxffi'])).toBe(64);
+      expect(out).toBe('');
+      // The checkout is the folder above the Xcode one here: nested, so first a checkout of its own.
+      const own = path.join(checkout, 'clone');
+      fs.mkdirSync(own);
+      expect(run(['cargo-env', 'bitboxffi', own])).toBe(0);
       const pairs = out.split('\0').filter(Boolean);
-      expect(pairs).toEqual(Object.entries(src.cargoEnv(process.env).kept).map(([k, v]) => `${k}=${v}`));
+      const maps = src.pathMaps('bitboxffi', process.env.HOME, own, xcodeDir).vars!;
+      expect(pairs).toEqual([
+        ...Object.entries(src.cargoEnv(process.env).kept).map(([k, v]) => `${k}=${v}`),
+        `CARGO_ENCODED_RUSTFLAGS=${maps.CARGO_ENCODED_RUSTFLAGS}`,
+        `CFLAGS=${maps.CFLAGS}`,
+      ]);
+      // The shell's own flags never get through; only the maps do.
       expect(pairs.some((p) => p.startsWith('RUSTFLAGS=') || p.startsWith('CARGO_TARGET_DIR='))).toBe(false);
+      expect(pairs.filter((p) => p.startsWith('CARGO_ENCODED_RUSTFLAGS='))).toEqual([`CARGO_ENCODED_RUSTFLAGS=${maps.CARGO_ENCODED_RUSTFLAGS}`]);
+      expect(pairs.filter((p) => p.startsWith('CFLAGS='))).toEqual([`CFLAGS=${maps.CFLAGS}`]);
       expect(pairs.some((p) => p.startsWith('PATH='))).toBe(true);
+      // A checkout the maps refuse stops cargo-env, and prints nothing for env -i.
+      out = '';
+      expect(run(['cargo-env', 'bitboxffi', path.join(checkout, 'missing')])).toBe(2);
+      expect(run(['cargo-env', 'nolib', own])).toBe(2);
+      // No Xcode selected: no maps, so no build.
+      expect(src.main(['cargo-env', 'bitboxffi', own], undefined, { developer: () => null })).toBe(2);
+      expect(out).toBe('');
     } finally {
       for (const k of Object.keys(process.env)) {
         if (!(k in before)) {
@@ -1827,6 +1882,104 @@ describe('the build environment (decided 2026-10-05)', () => {
         }
       }
       Object.assign(process.env, before);
+      fs.rmSync(checkout, { recursive: true, force: true });
+    }
+  });
+
+  it('the path maps name the Cargo home, the physical checkout and the Xcode folder, each by a fixed name (decided 2026-11-06)', () => {
+    const t = fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(), 'path-maps-')));
+    try {
+      const home = path.join(t, 'home');
+      const checkout = path.join(t, 'clones', 'talia-bitbox-ffi');
+      const xcode = path.join(t, 'Xcode.app', 'Contents', 'Developer');
+      for (const d of [home, checkout, xcode]) {
+        fs.mkdirSync(d, { recursive: true });
+      }
+      expect(src.pathMaps('bitboxffi', home, checkout, xcode)).toEqual({
+        vars: {
+          CARGO_ENCODED_RUSTFLAGS: `--remap-path-prefix=${home}/.cargo=/cargo\x1f--remap-path-prefix=${checkout}=/talia-bitbox-ffi`,
+          CFLAGS: `-ffile-prefix-map=${home}/.cargo=/cargo -ffile-prefix-map=${checkout}=/talia-bitbox-ffi -ffile-prefix-map=${xcode}=/xcode`,
+        },
+        shown: `${home}/.cargo → /cargo, ${checkout} → /talia-bitbox-ffi, ${xcode} → /xcode`,
+      });
+      // A HOME ending in a slash names the same Cargo home cargo uses.
+      expect(src.pathMaps('bitboxffi', `${home}/`, checkout, xcode).vars!.CFLAGS).toContain(`-ffile-prefix-map=${home}/.cargo=/cargo `);
+      // Each library's checkout is named after its public repo.
+      for (const lib of Object.keys(prov.NATIVE_SOURCES)) {
+        const name = `/${prov.NATIVE_SOURCES[lib].repo.split('/').pop()}`;
+        expect(name).toMatch(/^\/talia-(bitbox|bdk)-ffi$/);
+        expect(src.pathMaps(lib, home, checkout, xcode).vars!.CARGO_ENCODED_RUSTFLAGS.endsWith(`=${name}`)).toBe(true);
+      }
+      // The same names whatever the home, the checkout and the Xcode folder: the bytes cannot tell them apart.
+      const other = src.pathMaps('bdkwallet', '/Users/someone', checkout, '/Applications/Xcode_27.2.app/Contents/Developer').vars!;
+      expect(other.CARGO_ENCODED_RUSTFLAGS).toContain('--remap-path-prefix=/Users/someone/.cargo=/cargo\x1f');
+      expect(other.CFLAGS).toContain('-ffile-prefix-map=/Applications/Xcode_27.2.app/Contents/Developer=/xcode');
+      // Only clang hears of Xcode: rustc writes no SDK path.
+      expect(other.CARGO_ENCODED_RUSTFLAGS).not.toContain('/xcode');
+      // A Cargo home or an Xcode reached through a link is mapped by both paths:
+      // rustc sees the one cargo was given, clang records the folder getcwd gives.
+      const realCargo = path.join(t, 'disk', 'cargo');
+      const realXcode = path.join(t, 'disk', 'Xcode-27.2.app');
+      fs.mkdirSync(realCargo, { recursive: true });
+      fs.mkdirSync(path.join(realXcode, 'Contents', 'Developer'), { recursive: true });
+      fs.symlinkSync(realCargo, path.join(home, '.cargo'));
+      const linkedXcode = path.join(t, 'Xcode-link.app');
+      fs.symlinkSync(realXcode, linkedXcode);
+      const linked = src.pathMaps('bitboxffi', home, checkout, path.join(linkedXcode, 'Contents', 'Developer')).vars!;
+      expect(linked.CARGO_ENCODED_RUSTFLAGS.split('\x1f')).toEqual([
+        `--remap-path-prefix=${home}/.cargo=/cargo`,
+        `--remap-path-prefix=${realCargo}=/cargo`,
+        `--remap-path-prefix=${checkout}=/talia-bitbox-ffi`,
+      ]);
+      expect(linked.CFLAGS.split(' ')).toEqual([
+        `-ffile-prefix-map=${home}/.cargo=/cargo`,
+        `-ffile-prefix-map=${realCargo}=/cargo`,
+        `-ffile-prefix-map=${checkout}=/talia-bitbox-ffi`,
+        `-ffile-prefix-map=${linkedXcode}/Contents/Developer=/xcode`,
+        `-ffile-prefix-map=${realXcode}/Contents/Developer=/xcode`,
+      ]);
+      // A logical checkout through a link is refused: cargo reads the physical one, which the map would miss.
+      const link = path.join(t, 'link');
+      fs.symlinkSync(checkout, link);
+      expect(src.pathMaps('bitboxffi', home, link, xcode).problem).toContain('physical path');
+      // Paths the flags cannot carry or cargo would read differently, unknown libraries, and missing values.
+      for (const [lib, h, c, x] of [
+        ['bitboxffi', home, path.join(t, 'with space'), xcode],
+        ['bitboxffi', home, path.join(t, 'a=b'), xcode],
+        ['bitboxffi', home, path.join(t, 'unit\x1fsep'), xcode],
+        ['bitboxffi', home, 'relative/checkout', xcode],
+        ['bitboxffi', 'relative-home', checkout, xcode],
+        ['bitboxffi', path.join(t, 'my home'), checkout, xcode],
+        ['bitboxffi', `${t}/x/../home`, checkout, xcode],
+        ['bitboxffi', `${t}//home`, checkout, xcode],
+        ['bitboxffi', `${t}/./home`, checkout, xcode],
+        ['bitboxffi', undefined, checkout, xcode],
+        ['bitboxffi', home, undefined, xcode],
+        ['bitboxffi', home, path.join(t, 'missing'), xcode],
+        ['bitboxffi', home, checkout, null],
+        ['bitboxffi', home, checkout, '/Applications/My Xcode.app/Contents/Developer'],
+        ['nolib', home, checkout, xcode],
+        ['constructor', home, checkout, xcode],
+        ['__proto__', home, checkout, xcode],
+      ] as [string, string | undefined, string | undefined, string | null][]) {
+        if (c && path.isAbsolute(c) && !c.endsWith('missing')) {
+          fs.mkdirSync(c, { recursive: true });
+        }
+        const r = src.pathMaps(lib, h, c, x);
+        expect(r.problem).toBeTruthy();
+        expect(r.vars).toBeUndefined();
+      }
+      // One folder inside another would be mapped twice.
+      fs.unlinkSync(path.join(home, '.cargo'));
+      const inHome = path.join(home, '.cargo', 'checkout');
+      fs.mkdirSync(inHome, { recursive: true });
+      expect(src.pathMaps('bitboxffi', home, inHome, xcode).problem).toContain('one inside the other');
+      expect(src.pathMaps('bitboxffi', home, path.join(home, '.cargo'), xcode).problem).toContain('one inside the other');
+      const inXcode = path.join(xcode, 'clone');
+      fs.mkdirSync(inXcode);
+      expect(src.pathMaps('bitboxffi', home, inXcode, xcode).problem).toContain('one inside the other');
+    } finally {
+      fs.rmSync(t, { recursive: true, force: true });
     }
   });
 
@@ -2010,7 +2163,18 @@ describe('the build scripts', () => {
         `COMMIT="\\$\\(node "\\$SOURCES" check ${lib} "\\$[A-Z]+" \\$\\{ROLLBACK\\[@\\]\\+"\\$\\{ROLLBACK\\[@\\]\\}"\\}\\)" \\|\\| exit 1`,
       ),
     );
-    const env = at(/done < <\(node "\$SOURCES" cargo-env\)/);
+    // cargo-env is told the library and the checkout's physical path, the one cargo reads it at.
+    const env = at(new RegExp(`done < <\\(node "\\$SOURCES" cargo-env ${lib} "\\$(CRATE|FORK)"\\)`));
+    expect(code).toMatch(/\n(CRATE|FORK)="\$\(cd "\$(CRATE_DIR|FORK_ARG)" && pwd -P\)"\n/);
+    // The bindings generator is built for its tool alone, which asks for uniffi's
+    // "cli" feature by name: the library itself never holds it (decided 2026-11-06).
+    const bindgen = lines.filter((l) => / --bin uniffi-bindgen /.test(l));
+    expect(bindgen.length).toBeGreaterThan(0);
+    for (const line of bindgen) {
+      expect(line).toMatch(/ --features uniffi\/cli[ ,]/);
+      // A swiftformat on the PATH would change the bindings the record names.
+      expect(line).toMatch(/ --no-format$/);
+    }
     const clean = at(/\nrm -f /);
     const firstCargo = at(/\nclean_env cargo /);
     const lastCargo = code.lastIndexOf('\nclean_env cargo ');

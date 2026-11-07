@@ -60,14 +60,13 @@
 # own ffi/module.modulemap. The tool needs uniffi's "cli" and "cargo-metadata"
 # features (the second makes it read uniffi.toml, the Swift module names, in
 # library mode), which the bindgen run asks for by name (--features
-# uniffi/cli,uniffi/cargo-metadata). In talia-3 of 2026-10-16 they are still normal
-# dependency features, so the bindgen crates (uniffi_bindgen, clap, goblin,
-# askama, cargo_metadata and others) are inside the static library too, and a
-# few of their shared generic functions reach the app: record warns, and pin
-# and the archive refuse such a library (NATIVE_SOURCES toolCrates). Once the
-# fork gives both features to the tool alone ([[bin]] required-features, no
-# default features on the library's uniffi), the library holds none of them and
-# this script needs no change.
+# uniffi/cli,uniffi/cargo-metadata). The fork gives both features to the tool
+# alone ([[bin]] required-features, no default features on the library's
+# uniffi), so the library holds none of the bindgen crates (uniffi_bindgen,
+# clap, goblin, askama, cargo_metadata and others); in talia-3 of 2026-10-16
+# they were normal dependency features and sat in the static library. A
+# library that holds them again is warned about by record and refused by pin
+# and the archive (NATIVE_SOURCES toolCrates).
 #
 # Then it writes the record (node scripts/native-sources.js record bdkwallet
 # <commit> <checkout> <work>, which refuses unless the checkout is still that
@@ -88,7 +87,14 @@
 # compiler its rust-toolchain.toml names, AND the Xcode installed here: the C
 # code inside (secp256k1, ring) is compiled by Xcode's own clang against its
 # iOS SDK, so a rebuild after an Xcode update gives other bytes (the record
-# keeps the Xcode; verify warns when this Mac's differs).
+# keeps the Xcode; verify warns when this Mac's differs). Not on the checkout's
+# folder, the home folder or Xcode's folder (decided 2026-11-06): cargo-env's
+# path maps replace the checkout with /talia-bdk-ffi, the Cargo home
+# ($HOME/.cargo) with /cargo and, for clang, the Xcode folder (xcode-select
+# -p) with /xcode in every path rustc and clang write into the library (panic
+# locations, and the debug information of ring's C and assembly objects,
+# which ring builds with -gfull: their source paths and the SDK's and clang's
+# include folders). Paths with spaces or "=" are refused.
 set -euo pipefail
 FORK_ARG=""
 BRANCH=""
@@ -125,7 +131,9 @@ ALLOWED="$(node -e 'process.stdout.write(require(process.argv[1]).NATIVE_SOURCES
   exit 1
 }
 [ -d "$FORK_ARG" ] || { echo "✗ No bdk-ffi fork checkout at $FORK_ARG."; exit 1; }
-FORK="$(cd "$FORK_ARG" && pwd)"
+# The physical path: the one cargo reads the fork at, and so the one the path
+# maps must name.
+FORK="$(cd "$FORK_ARG" && pwd -P)"
 
 COMMIT="$(node "$SOURCES" check bdkwallet "$FORK" ${ROLLBACK[@]+"${ROLLBACK[@]}"})" || exit 1
 
@@ -138,7 +146,7 @@ grep -Eq '^uniffi = \{ version = "=0\.31\.2"' "$MANIFEST" || { echo "✗ $MANIFE
 source "$HOME/.cargo/env"
 # The only environment cargo and the tools it drives get (see above).
 CARGO_ENV=()
-while IFS= read -r -d '' KV; do CARGO_ENV+=("$KV"); done < <(node "$SOURCES" cargo-env)
+while IFS= read -r -d '' KV; do CARGO_ENV+=("$KV"); done < <(node "$SOURCES" cargo-env bdkwallet "$FORK")
 [ "${#CARGO_ENV[@]}" -gt 0 ] || { echo "✗ Could not prepare cargo's environment."; exit 1; }
 clean_env() { env -i "${CARGO_ENV[@]}" "$@"; }
 

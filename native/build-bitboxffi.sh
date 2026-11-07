@@ -5,16 +5,19 @@
 # repo since 2026-11-06). It is developed in the private bitbox-ffi repo, and
 # each change is copied to talia-bitbox-ffi's main in one commit before it is
 # built from there. The checkout is $BITBOX_FFI_DIR (../bitbox-ffi when it
-# is not set). The pinned build was made from a clone at
-# /Users/Shared/talia-bitbox-ffi:
-#   git clone https://github.com/21st-Capital/talia-bitbox-ffi /Users/Shared/talia-bitbox-ffi
-#   BITBOX_FFI_DIR=/Users/Shared/talia-bitbox-ffi native/build-bitboxffi.sh [--rollback <commit>]
-# The checkout's absolute path is compiled into the library (panic locations),
-# and so are the home folder's ($HOME/.cargo, and the cargo program's path
-# under $HOME/.rustup: cargo-env passes no CARGO_HOME or RUSTUP_HOME), so a
-# byte-for-byte rebuild needs that checkout path and the same home folder (the
-# fork's README lists what else it needs).
-# Like native/build-bdkwallet.sh, the ~90MB .a files are NOT in git (see
+# is not set), in any folder:
+#   git clone https://github.com/21st-Capital/talia-bitbox-ffi ../talia-bitbox-ffi
+#   BITBOX_FFI_DIR=../talia-bitbox-ffi native/build-bitboxffi.sh [--rollback <commit>]
+# Neither the checkout's folder, the home folder nor Xcode's folder enters the
+# library (decided 2026-11-06): cargo-env's path maps replace the checkout
+# with /talia-bitbox-ffi, the Cargo home ($HOME/.cargo) with /cargo and, for
+# clang, the Xcode folder (xcode-select -p) with /xcode in every path rustc
+# and clang write into it, and the crate builds uniffi's bindings generator,
+# which compiled the cargo program's path in, only for its uniffi-bindgen
+# tool (--features uniffi/cli below; --no-format, so a swiftformat on the
+# PATH cannot change the bindings). Paths with spaces or "=" are refused.
+# The fork's README lists what a byte-for-byte rebuild needs.
+# Like native/build-bdkwallet.sh, the .a files are NOT in git (see
 # .gitignore); run this after checking out fresh or after changing the crate.
 # Needs rustup with the iOS targets (rust-toolchain.toml in the crate pins
 # them, so `cargo build` installs what it needs).
@@ -31,7 +34,8 @@
 #   native/build-bitboxffi.sh --rollback <commit>
 # It still has to be on the branch. cargo runs with an allowlisted environment
 # (scripts/native-sources.js cargo-env: no CARGO_TARGET_DIR,
-# RUSTFLAGS, RUSTC_WRAPPER, CC, ...) into a target folder it is told, after
+# RUSTFLAGS, RUSTC_WRAPPER, CC, ... from the shell; only its own path maps)
+# into a target folder it is told, after
 # the files the app takes are deleted, so nothing an earlier build left can be
 # copied as this one's. If the checkout moved while cargo read it, nothing is
 # copied into the app; otherwise the script writes the commit and the digest
@@ -63,7 +67,9 @@ done
 APP="$(cd "$(dirname "$0")/.." && pwd)"
 CRATE_DIR="${BITBOX_FFI_DIR:-$APP/../bitbox-ffi}"
 [ -d "$CRATE_DIR" ] || { echo "✗ No bitbox-ffi checkout at $CRATE_DIR (set BITBOX_FFI_DIR)."; exit 1; }
-CRATE="$(cd "$CRATE_DIR" && pwd)"
+# The physical path: the one cargo reads the crate at, and so the one the path
+# maps must name.
+CRATE="$(cd "$CRATE_DIR" && pwd -P)"
 OUT="$APP/native/bitboxffi"
 SOURCES="$APP/scripts/native-sources.js"
 
@@ -75,7 +81,7 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 # The only environment cargo and the tools it drives get (see above).
 CARGO_ENV=()
-while IFS= read -r -d '' KV; do CARGO_ENV+=("$KV"); done < <(node "$SOURCES" cargo-env)
+while IFS= read -r -d '' KV; do CARGO_ENV+=("$KV"); done < <(node "$SOURCES" cargo-env bitboxffi "$CRATE")
 [ "${#CARGO_ENV[@]}" -gt 0 ] || { echo "✗ Could not prepare cargo's environment."; exit 1; }
 clean_env() { env -i "${CARGO_ENV[@]}" "$@"; }
 
@@ -93,7 +99,7 @@ echo "▸ C code compiled by: $(clean_env /usr/bin/xcodebuild -version 2>/dev/nu
 # --locked: the dependencies are the ones the commit's Cargo.lock names.
 clean_env cargo build --locked --target-dir "$TARGET" --release --target aarch64-apple-ios
 clean_env cargo build --locked --target-dir "$TARGET" --release --target aarch64-apple-ios-sim
-clean_env cargo run --locked --target-dir "$TARGET" --release --bin uniffi-bindgen -- generate src/bitbox.udl --language swift --out-dir generated
+clean_env cargo run --locked --target-dir "$TARGET" --release --features uniffi/cli --bin uniffi-bindgen -- generate src/bitbox.udl --language swift --out-dir generated --no-format
 
 # Still exactly that commit, after cargo read it? Only then into the app.
 node "$SOURCES" recheck bitboxffi "$CRATE" "$COMMIT" > /dev/null || exit 1

@@ -613,13 +613,22 @@ describe('uniffi\'s bindgen tool inside the new library (decided 2026-10-17)', (
   });
 
   it('judges the new library alone, the pinned device file, and lists what it holds', () => {
+    const BITBOX_IOS = 'native/bitboxffi/lib/libbitboxffi-ios.a';
     expect(prov.NATIVE_SOURCES.bdkwallet.toolCrates).toEqual(
       expect.arrayContaining(['uniffi_bindgen', 'clap', 'goblin', 'askama', 'cargo_metadata']),
     );
-    // The BitBox library carries the same crates today and is not judged.
-    expect(prov.NATIVE_SOURCES.bitboxffi.toolCrates).toBeNull();
+    // The BitBox library is judged too since its crate gave uniffi's "cli"
+    // feature to the bindgen tool alone (decided 2026-11-06); the crates its
+    // older builds carried are all on its list.
+    expect(prov.NATIVE_SOURCES.bitboxffi.toolCrates).toEqual(
+      expect.arrayContaining(['uniffi_bindgen', 'uniffi_testing', 'weedle', 'clap', 'clap_lex', 'goblin', 'askama', 'cargo_metadata', 'camino']),
+    );
     put(WALLET, ar([[rust('bdk_wallet'), OURS_IOS], [rust('askama'), OURS_IOS], [rust('clap'), OURS_IOS]]));
     expect(prov.toolCrateFindings(tmp, [{ path: WALLET }])).toEqual([{ lib: 'bdkwallet', path: WALLET, crates: ['askama', 'clap'] }]);
+    put(BITBOX_IOS, ar([[rust('bitboxffi'), OURS_IOS], [rust('uniffi_testing'), OURS_IOS], [rust('camino'), OURS_IOS]]));
+    expect(prov.toolCrateFindings(tmp, [{ path: BITBOX_IOS }])).toEqual([{ lib: 'bitboxffi', path: BITBOX_IOS, crates: ['camino', 'uniffi_testing'] }]);
+    put(BITBOX_IOS, ar([[rust('bitboxffi'), OURS_IOS], [rust('bitbox_api'), OURS_IOS]]));
+    expect(prov.toolCrateFindings(tmp, [{ path: BITBOX_IOS }])).toEqual([]);
     // Not pinned: not judged here (refused as unpinned anyway).
     expect(prov.toolCrateFindings(tmp, [])).toEqual([]);
     put(WALLET, ar([[rust('bdk_wallet'), OURS_IOS], [rust('serde_json'), OURS_IOS]]));

@@ -411,7 +411,8 @@ function compareTrackedFiles(root, commit, format, { docExempt = true } = {}) {
  *             2026-10-17). Its pinned device library is refused by the
  *             archive, plain verify and `pin` when it holds a member of one;
  *             verify --test-build only warns, so a build can still be tried.
- *             The BitBox library carries them too and is not judged.
+ *             The BitBox library is judged too since its crate gave uniffi's
+ *             "cli" feature to its bindgen tool alone (decided 2026-11-06).
  *   duplicates the generated file listing the symbols the app's link may
  *             report as duplicates (scripts/native-sources.js link-check), each
  *             for the pair of libraries the overlap gate proved it identical
@@ -434,7 +435,17 @@ const NATIVE_SOURCES = {
     judgePod: false,
     podDependencies: ['React-Core'],
     fullRecord: false,
-    toolCrates: null,
+    toolCrates: [
+      'uniffi_bindgen',
+      'uniffi_testing',
+      'weedle',
+      'clap',
+      'clap_lex',
+      'goblin',
+      'askama',
+      'cargo_metadata',
+      'camino',
+    ],
     duplicates: null,
   },
   // The Bitcoin core (BDK upgrade, decided 2026-10-15): bdk-ffi 3.1.1, the only

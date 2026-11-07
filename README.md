@@ -145,10 +145,10 @@ Clone each fork and run its build script. Build the BitBox library first: the
 wallet library's build compares its symbols with it.
 
 ```sh
-git clone https://github.com/21st-Capital/talia-bitbox-ffi /Users/Shared/talia-bitbox-ffi
-BITBOX_FFI_DIR=/Users/Shared/talia-bitbox-ffi native/build-bitboxffi.sh
-git clone https://github.com/21st-Capital/talia-bdk-ffi /Users/Shared/talia-bdk-ffi
-native/build-bdkwallet.sh --fork /Users/Shared/talia-bdk-ffi --branch main
+git clone https://github.com/21st-Capital/talia-bitbox-ffi ../talia-bitbox-ffi
+BITBOX_FFI_DIR=../talia-bitbox-ffi native/build-bitboxffi.sh
+git clone https://github.com/21st-Capital/talia-bdk-ffi ../talia-bdk-ffi
+native/build-bdkwallet.sh --fork ../talia-bdk-ffi --branch main
 ```
 
 Each script builds only from a clean checkout of a commit on `main` that
@@ -158,21 +158,17 @@ file's digest beside its pin. `node scripts/native-sources.js verify` then
 passes only when every file is the pinned one.
 
 The pins are the maintainers' builds. A build of your own matches them byte
-for byte only with what each fork's README lists: the same commit, the same
-Rust toolchain and the same Xcode, from the same checkout folders and under
-the same Cargo home:
-
-- The checkout folders are the ones above, `/Users/Shared/talia-bitbox-ffi`
-  and `/Users/Shared/talia-bdk-ffi`, where the pinned libraries were built.
-  The BitBox library compiles its checkout's path into its bytes; the wallet
-  library's bytes do not depend on it.
-- The home folder: the build scripts pass cargo no `CARGO_HOME` or
-  `RUSTUP_HOME`, so cargo works from `$HOME/.cargo`, and the pinned libraries
-  were built under the maintainers' own home. Its path is compiled into both
-  libraries (`$HOME/.cargo`), and the BitBox library also carries the path of
-  the cargo program under `$HOME/.rustup`. A build under another home folder
-  therefore differs in the objects that carry those paths and in the
-  archive's symbol table.
+for byte with what each fork's README lists: the same commit, the same Rust
+toolchain and the same Xcode version. Where you clone the forks, which home
+folder you build under and where Xcode is installed do not matter (decided
+2026-11-06), as long as those paths hold no spaces and no `=`: the build
+scripts give cargo two variables of their own (`native-sources.js
+cargo-env`), which replace the Cargo home (`$HOME/.cargo`) with `/cargo`, the
+checkout with `/talia-bitbox-ffi` or `/talia-bdk-ffi` and, for clang, the
+Xcode folder (`xcode-select -p`) with `/xcode` in every path rustc and clang
+write into a library (`--remap-path-prefix` in `CARGO_ENCODED_RUSTFLAGS`,
+`-ffile-prefix-map` in `CFLAGS`), and neither library holds uniffi's bindings
+generator.
 
 With anything else different your library will not match the pin, and the
 archive and `verify` will refuse it. `node scripts/native-sources.js pin

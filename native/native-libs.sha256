@@ -41,22 +41,22 @@
 # (bdkffi's copies stay in their releases: after reverting the removal
 # commit, restore bdkffi puts its pinned files back)
 
-# source bitboxffi https://github.com/21st-Capital/talia-bitbox-ffi 7fc6f9c8a34a1e16613767a34ed7824785f521a3
-# built bitboxffi 7ca7a758b9dbec3f242bfd7006d2bbf0ea5322c85c510ec9a88b08a900342985 native/bitboxffi/lib/libbitboxffi-ios.a
-# built bitboxffi 13790ce42e4a25f240b0375dbad4680b67d3c07d7a4f0c2cbd7a1480c6eccea9 native/bitboxffi/lib/libbitboxffi-sim.a
+# source bitboxffi https://github.com/21st-Capital/talia-bitbox-ffi 71516080815dd1cc84a56cb79d0be34145d7da7d
+# built bitboxffi a98007c6613354c2b03beb2800b2afb47749a635d528928c5c71cf1bb22407c6 native/bitboxffi/lib/libbitboxffi-ios.a
+# built bitboxffi d899ccd42f57dd0d7a2ee0a7f5984c277361a133ef6bc5aa424d8ab0d1591de1 native/bitboxffi/lib/libbitboxffi-sim.a
 # generated bitboxffi 9b0a1f2115f8a62a97e295156296d2845bfe95452ae001a8728dee9f164ebb22 native/bitboxffi/bitbox.swift
 # generated bitboxffi 50c0a890a4d3cac52945cc3481d3123131e1cbec95fb9c8b06c591a8d12dfe2b native/bitboxffi/ffi/bitboxFFI.h
 # xcode bitboxffi 27.2 27B52
-7ca7a758b9dbec3f242bfd7006d2bbf0ea5322c85c510ec9a88b08a900342985  native/bitboxffi/lib/libbitboxffi-ios.a
-13790ce42e4a25f240b0375dbad4680b67d3c07d7a4f0c2cbd7a1480c6eccea9  native/bitboxffi/lib/libbitboxffi-sim.a
-# source bdkwallet https://github.com/21st-Capital/talia-bdk-ffi a665b5a49c493e99eedccb4912bc595d5545f8f7
-# built bdkwallet 4d739f602ea14817b004f0aac2112abde3467cffa892e15a838edb748eba2b7a native/bdkwallet/lib/libbdkwallet-ios.a
-# built bdkwallet bb7524870ca2ea92e1bbfa9d138541088aab45dcbde0b646db4aad501a7c509f native/bdkwallet/lib/libbdkwallet-sim.a
+a98007c6613354c2b03beb2800b2afb47749a635d528928c5c71cf1bb22407c6  native/bitboxffi/lib/libbitboxffi-ios.a
+d899ccd42f57dd0d7a2ee0a7f5984c277361a133ef6bc5aa424d8ab0d1591de1  native/bitboxffi/lib/libbitboxffi-sim.a
+# source bdkwallet https://github.com/21st-Capital/talia-bdk-ffi c168b8cf9e51d1db4777ccc9060ccd86c43f2939
+# built bdkwallet 2b70c0419b078a48466343a9a56ccc71b0f2763f8257f34e645b6213e1de62f6 native/bdkwallet/lib/libbdkwallet-ios.a
+# built bdkwallet 517c288eba5d29994f6f0de4d939305416d2d0547496b12a0ac62de0261bafb0 native/bdkwallet/lib/libbdkwallet-sim.a
 # generated bdkwallet 2aa006dc35ab2452ccaa77e785ca9da50946598f0ea4d67579622708317ae4dd native/bdkwallet/BitcoinDevKit.swift
 # generated bdkwallet 1f4c8075f1d8a1733dee1f8c470f88f2b3eb6d10cac25f6192fe18f0b2155c1d native/bdkwallet/ffi/BitcoinDevKitFFI.h
 # generated bdkwallet 620c8b756b715d03e1f8c4e5fb2db88885c860fb949ba6d26ef7a6e93c1cab65 native/bdkwallet/duplicate-symbols.txt
 # xcode bdkwallet 27.2 27B52
-# gated bdkwallet 7ca7a758b9dbec3f242bfd7006d2bbf0ea5322c85c510ec9a88b08a900342985 native/bitboxffi/lib/libbitboxffi-ios.a
-# gated bdkwallet 13790ce42e4a25f240b0375dbad4680b67d3c07d7a4f0c2cbd7a1480c6eccea9 native/bitboxffi/lib/libbitboxffi-sim.a
-4d739f602ea14817b004f0aac2112abde3467cffa892e15a838edb748eba2b7a  native/bdkwallet/lib/libbdkwallet-ios.a
-bb7524870ca2ea92e1bbfa9d138541088aab45dcbde0b646db4aad501a7c509f  native/bdkwallet/lib/libbdkwallet-sim.a
+# gated bdkwallet a98007c6613354c2b03beb2800b2afb47749a635d528928c5c71cf1bb22407c6 native/bitboxffi/lib/libbitboxffi-ios.a
+# gated bdkwallet d899ccd42f57dd0d7a2ee0a7f5984c277361a133ef6bc5aa424d8ab0d1591de1 native/bitboxffi/lib/libbitboxffi-sim.a
+2b70c0419b078a48466343a9a56ccc71b0f2763f8257f34e645b6213e1de62f6  native/bdkwallet/lib/libbdkwallet-ios.a
+517c288eba5d29994f6f0de4d939305416d2d0547496b12a0ac62de0261bafb0  native/bdkwallet/lib/libbdkwallet-sim.a

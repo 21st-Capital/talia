@@ -16,7 +16,7 @@
  * can be traced to an exact commit there:
  *
  *   node scripts/native-sources.js check     <lib> <checkout> [--rollback <commit>]
- *   node scripts/native-sources.js cargo-env
+ *   node scripts/native-sources.js cargo-env <lib> <checkout>
  *   node scripts/native-sources.js recheck   <lib> <checkout> <commit>
  *   node scripts/native-sources.js record    <lib> <commit> <checkout> [<work folder>]
  *   node scripts/native-sources.js pin       <lib> [<lib> ...]
@@ -85,6 +85,13 @@
  *           TMPDIR, the terminal, the ssh agent and proxies. Nothing else in
  *           the shell (CARGO_TARGET_DIR, CARGO_BUILD_*, CARGO_PROFILE_*,
  *           RUSTFLAGS, RUSTC_WRAPPER, CC, CFLAGS, SDKROOT, ...) reaches it.
+ *           It adds two variables of its own, the path maps (pathMaps,
+ *           decided 2026-11-06): CARGO_ENCODED_RUSTFLAGS and CFLAGS replace
+ *           the Cargo home, the checkout <checkout> (its physical path) and,
+ *           for clang, the Xcode folder xcode-select names with fixed names
+ *           in every path the build writes into <lib>, so neither the home
+ *           folder, the checkout's folder nor Xcode's folder changes its
+ *           bytes.
  * recheck   (after the build, before anything is copied into the app)
  *           refuses unless the checkout is still clean at that commit. No
  *           network.
@@ -466,7 +473,9 @@ function buildConfigOutside(root, home) {
  * CARGO_PROFILE_*, CARGO_TARGET_<triple>_*, RUSTFLAGS and
  * CARGO_ENCODED_RUSTFLAGS, RUSTC, RUSTC_WRAPPER, RUSTC_WORKSPACE_WRAPPER,
  * RUSTUP_TOOLCHAIN, CARGO_HOME, CC/CFLAGS/AR (secp256k1 and SQLite are C),
- * SDKROOT, DEVELOPER_DIR, *_DEPLOYMENT_TARGET.
+ * SDKROOT, DEVELOPER_DIR, *_DEPLOYMENT_TARGET. cargo-env then adds its own
+ * path maps (pathMaps) as CARGO_ENCODED_RUSTFLAGS and CFLAGS, the only values
+ * of either that reach cargo; the shell's are dropped here like the rest.
  */
 const CARGO_ENV_KEEP = new Set([
   'HOME',
@@ -506,6 +515,131 @@ function cargoEnv(env) {
     }
   }
   return { kept, dropped: dropped.sort() };
+}
+
+/**
+ * The path maps (decided 2026-11-06): the paths of the build machine a build
+ * of `lib` would write into the library, each replaced by a fixed name.
+ * cargo-env gives cargo no CARGO_HOME, so its home is `<HOME>/.cargo` taken
+ * literally (as cargo and rustup take it), and the crates.io sources sit
+ * under it: that becomes `/cargo`. The checkout, which the build scripts hand
+ * over as its physical path (`pwd -P`, the path cargo reads it at, and the
+ * root of their --target-dir), becomes `/` plus the public repo's name. The
+ * Xcode that `xcode-select -p` names (`developer`, its Developer folder: the
+ * one cc's xcrun and clang use once cargo-env drops DEVELOPER_DIR) becomes
+ * `/xcode`: ring compiles its C and assembly with -gfull on Apple targets,
+ * so their debug information holds the SDK's and clang's include folders.
+ * rustc takes the first two as `--remap-path-prefix` in
+ * CARGO_ENCODED_RUSTFLAGS (panic locations; the flags are separated by
+ * 0x1f), clang all three as `-ffile-prefix-map` in CFLAGS, which the cc
+ * crate passes to every C and assembly file. A folder reached through a
+ * link is mapped by its physical path too, because clang records the
+ * folder it runs in as getcwd gives it. Neither compiler writes the flags
+ * themselves into the library, so a build under any home folder, in any
+ * checkout folder and with the same Xcode installed anywhere gives the same
+ * bytes. Each fork's README gives the same variables for a build of one's
+ * own.
+ *
+ * CARGO_ENCODED_RUSTFLAGS takes the place of any rustflags the checkout's
+ * own cargo config sets (cargo reads one source of rustflags only): the bdk
+ * fork's apply to Android alone, and the BitBox crate sets none. A path
+ * holding whitespace (CFLAGS is split on it), "=" (both flags split FROM=TO
+ * on it), 0x1f or a NUL, a relative or unnormalised one (cargo takes HOME
+ * as it is, so a map built from a tidied copy would miss), a checkout given
+ * other than by its physical path, and one folder inside another are
+ * refused: the map would be ambiguous or silently miss.
+ */
+function pathMaps(lib, home, checkout, developer) {
+  if (!Object.prototype.hasOwnProperty.call(NATIVE_SOURCES, lib || '')) {
+    return { problem: `${lib} is not one of the libraries (${Object.keys(NATIVE_SOURCES).join(', ')}).` };
+  }
+  const src = NATIVE_SOURCES[lib];
+  const as = `/${src.repo.split('/').pop()}`;
+  const bad = (p) => typeof p !== 'string' || !path.isAbsolute(p) || /[\s=\x1f\0]/.test(p) || path.resolve(p) !== p.replace(/(.)\/+$/, '$1');
+  if (bad(home)) {
+    return { problem: `HOME (${home}) must be an absolute, normalised path with no whitespace and no "=": cargo's home under it is mapped to /cargo.` };
+  }
+  if (bad(checkout)) {
+    return { problem: `The checkout (${checkout}) must be an absolute, normalised path with no whitespace and no "=".` };
+  }
+  if (bad(developer)) {
+    return { problem: `The Xcode folder xcode-select names (${developer}) must be an absolute, normalised path with no whitespace and no "=".` };
+  }
+  const physical = (p) => {
+    try {
+      return fs.realpathSync(p);
+    } catch {
+      return null;
+    }
+  };
+  const checkoutPhysical = physical(checkout);
+  if (!checkoutPhysical) {
+    return { problem: `The checkout (${checkout}) does not exist.` };
+  }
+  if (checkoutPhysical !== path.resolve(checkout)) {
+    return { problem: `The checkout must be given as its physical path (${checkoutPhysical}), the one cargo reads it at.` };
+  }
+  const cargoHome = path.join(home.replace(/(.)\/+$/, '$1'), '.cargo');
+  const homePhysical = physical(home);
+  const cargoHomePhysical = physical(cargoHome) || (homePhysical && path.join(homePhysical, '.cargo')) || cargoHome;
+  const developerPhysical = physical(developer) || developer;
+  for (const p of [cargoHomePhysical, developerPhysical]) {
+    if (bad(p)) {
+      return { problem: `The physical path ${p} must hold no whitespace and no "=".` };
+    }
+  }
+  const both = (logical, real) => (real === logical ? [logical] : [logical, real]);
+  const groups = [
+    { froms: both(cargoHome, cargoHomePhysical), to: '/cargo', rustc: true },
+    { froms: [checkoutPhysical], to: as, rustc: true },
+    { froms: both(path.resolve(developer), developerPhysical), to: '/xcode', rustc: false },
+  ];
+  const inside = (a, b) => a === b || a.startsWith(b.endsWith('/') ? b : `${b}/`);
+  for (const [i, g] of groups.entries()) {
+    for (const h of groups.slice(i + 1)) {
+      for (const a of g.froms) {
+        for (const b of h.froms) {
+          if (inside(a, b) || inside(b, a)) {
+            return { problem: `${a} and ${b} must not be one inside the other: the checkout, cargo's home and the Xcode folder are each mapped once.` };
+          }
+        }
+      }
+    }
+  }
+  const pairs = (rustcOnly) => groups.filter((g) => !rustcOnly || g.rustc).flatMap((g) => g.froms.map((from) => [from, g.to]));
+  return {
+    vars: {
+      CARGO_ENCODED_RUSTFLAGS: pairs(true)
+        .map(([from, to]) => `--remap-path-prefix=${from}=${to}`)
+        .join('\x1f'),
+      CFLAGS: pairs(false)
+        .map(([from, to]) => `-ffile-prefix-map=${from}=${to}`)
+        .join(' '),
+    },
+    shown: pairs(false)
+      .map(([from, to]) => `${from} → ${to}`)
+      .join(', '),
+  };
+}
+
+/**
+ * The Developer folder of the Xcode `xcode-select -p` names, the one a cargo
+ * build under cargo-env compiles its C code with (DEVELOPER_DIR, TOOLCHAINS
+ * and SDKROOT dropped, as installedXcode does), or null.
+ */
+function selectedDeveloperDir() {
+  const env = {};
+  for (const [k, v] of Object.entries(process.env)) {
+    if (!['DEVELOPER_DIR', 'TOOLCHAINS', 'SDKROOT'].includes(k) && v !== undefined) {
+      env[k] = v;
+    }
+  }
+  try {
+    const out = execFileSync('/usr/bin/xcode-select', ['-p'], { encoding: 'utf8', env, stdio: ['ignore', 'pipe', 'ignore'], timeout: 30 * 1000 });
+    return out.trim() || null;
+  } catch {
+    return null;
+  }
 }
 
 // ---------------------------------------------------------------- the record
@@ -730,7 +864,7 @@ const block = (p) => `    ${p.split('\n').join('\n      ')}`;
 
 function usage() {
   say([
-    'usage: native-sources.js check <lib> <checkout> [--rollback <commit>] | cargo-env |',
+    'usage: native-sources.js check <lib> <checkout> [--rollback <commit>] | cargo-env <lib> <checkout> |',
     '                         recheck <lib> <checkout> <commit> | record <lib> <commit> <checkout> [<work>] |',
     `                         pin <lib>... | verify [--test-build]   (lib: ${Object.keys(NATIVE_SOURCES).join(', ')})`,
     '                         peers <lib> <ios|sim> | gate <lib> <checkout> <work> <sysroot> |',
@@ -887,18 +1021,27 @@ function cmdCheck(args, root) {
   return 0;
 }
 
-function cmdCargoEnv() {
+function cmdCargoEnv([lib, checkout, ...extra], developerDir = selectedDeveloperDir) {
+  if (!lib || !checkout || extra.length > 0) {
+    return usage();
+  }
   const { kept, dropped } = cargoEnv(process.env);
   if (!kept.PATH || !kept.HOME) {
     say(['✗ PATH and HOME must be set: cargo cannot be found or run without them.']);
     return 2;
   }
+  const maps = pathMaps(lib, kept.HOME, checkout, developerDir());
+  if (maps.problem) {
+    say([`✗ ${maps.problem}`]);
+    return 2;
+  }
   const notable = dropped.filter((n) => NOTABLE_CARGO_DROPPED.test(n));
   say([
-    `▸ cargo runs with only: ${Object.keys(kept).join(' ')}.`,
+    `▸ cargo runs with only: ${Object.keys(kept).join(' ')}, and the path maps (${maps.shown}).`,
     ...(notable.length > 0 ? [`  Left out on purpose, as they change a build: ${notable.join(' ')}`] : []),
   ]);
-  process.stdout.write(Object.entries(kept).map(([k, v]) => `${k}=${v}\0`).join(''));
+  const env = { ...kept, ...maps.vars };
+  process.stdout.write(Object.entries(env).map(([k, v]) => `${k}=${v}\0`).join(''));
   return 0;
 }
 
@@ -2154,11 +2297,25 @@ function cmdVerify(args, root, deps) {
   ];
   if (problems.length > 0) {
     const missing = state.libs.filter((l) => l.sha256 === null);
+    // Pinned files that hold uniffi's bindings tool are the pinned ones: putting them back changes nothing.
+    const tools = testBuild ? [] : state.toolCrates;
+    const onlyTools = tools.length > 0 && problems.length === tools.length;
     say([
-      `✗ The native libraries are not the ones pinned in ${NATIVE_PIN}, so nothing is built:`,
+      onlyTools
+        ? `✗ A native library pinned in ${NATIVE_PIN} holds uniffi's bindings tool, so nothing is built:`
+        : `✗ The native libraries are not the ones pinned in ${NATIVE_PIN}, so nothing is built:`,
       ...problems.map(block),
       '',
-      ...(missing.length > 0
+      ...(tools.length > 0
+        ? [
+            '  A library that holds the bindings tool is rebuilt from a fork commit that gives',
+            '  uniffi\'s "cli" feature to the uniffi-bindgen binary alone ([[bin]]',
+            '  required-features), tested, and pinned with node scripts/native-sources.js pin <lib>.',
+          ]
+        : []),
+      ...(onlyTools
+        ? []
+        : missing.length > 0
         ? [
             '  A missing library: build it with its script, which records what it wrote',
             `  (${Object.values(NATIVE_SOURCES)
@@ -2233,7 +2390,7 @@ const COPIES = {
   // (bitboxffi's too); never NATIVE_SOURCES' public repo.
   repo: 'https://github.com/21st-Capital/bdk-ffi-fork',
   tagPrefix: 'talia-native-libs-',
-  tags: ['talia-native-libs-2026-10-22', 'talia-native-libs-2026-10-27', 'talia-native-libs-2026-11-06'],
+  tags: ['talia-native-libs-2026-10-22', 'talia-native-libs-2026-10-27', 'talia-native-libs-2026-11-06', 'talia-native-libs-2026-11-07'],
 };
 const COPY_NAME = /^[0-9a-f]{64}-[A-Za-z0-9._-]+$/;
 const COPY_TAG = /^talia-native-libs-[0-9A-Za-z._-]+$/;
@@ -2650,17 +2807,24 @@ function cmdCopies(asked, root, deps) {
 
 /**
  * `deps` lets the tests answer for this Mac: `xcode()` is the Xcode a build
- * here compiles C code with (installedXcode), and `copies` reads the release
+ * here compiles C code with (installedXcode), `developer()` its Developer
+ * folder (selectedDeveloperDir, for cargo-env's path maps), and `copies` reads the release
  * files (ghReleaseCopies, ghFetchCopy).
  */
 function main(argv, root = path.resolve(__dirname, '..'), deps = {}) {
-  const d = { xcode: installedXcode, checkout: builtCheckout, copies: { release: ghReleaseCopies, fetch: ghFetchCopy }, ...deps };
+  const d = {
+    xcode: installedXcode,
+    developer: selectedDeveloperDir,
+    checkout: builtCheckout,
+    copies: { release: ghReleaseCopies, fetch: ghFetchCopy },
+    ...deps,
+  };
   const [cmd, ...rest] = argv;
   switch (cmd) {
     case 'check':
       return cmdCheck(rest, root);
     case 'cargo-env':
-      return cmdCargoEnv();
+      return cmdCargoEnv(rest, d.developer);
     case 'recheck':
       return cmdRecheck(rest);
     case 'record':
@@ -2698,6 +2862,8 @@ module.exports = {
   recordFloors,
   buildConfigOutside,
   cargoEnv,
+  pathMaps,
+  selectedDeveloperDir,
   withSourceRecord,
   BUILD_OUTPUTS,
   allowlistText,
